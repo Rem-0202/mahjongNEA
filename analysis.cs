@@ -49,5 +49,24 @@ namespace mahjongNEA
             }
             return s;
         }
+
+        private bool isTaatsu(Tile a, Tile b, Tile c)
+        {
+            bool taatsu = false;
+            if (a.honour || a.bonus || b.honour || b.bonus || c.honour || c.bonus)
+            {
+                return false;
+            }
+            else
+            {
+                if (a.suit == b.suit && a.suit == c.suit)
+                {
+                    int temp;
+                    temp = Math.Min(Math.Min(a.rank, b.rank), c.rank);
+                    return temp == a.rank + b.rank + c.rank;
+                }
+            }
+            return taatsu;
+        }
     }
 }
