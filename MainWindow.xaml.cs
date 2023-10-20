@@ -26,6 +26,15 @@ namespace mahjongNEA
         }
         Random rng = new Random();
 
+        private void MenuItem_Help_Click(object sender, RoutedEventArgs e)
+        {
+            helpWindow h = new helpWindow();
+            h.Show();
+        }
 
+        private void MenuItem_Temp_Click(object sender, RoutedEventArgs e)
+        {
+            tempStackPanel.Children.Add(new Tile(1, 'z'));
+        }
     }
 }
