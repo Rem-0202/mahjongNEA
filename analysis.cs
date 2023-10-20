@@ -61,9 +61,8 @@ namespace mahjongNEA
             {
                 if (a.suit == b.suit && a.suit == c.suit)
                 {
-                    int temp;
-                    temp = Math.Min(Math.Min(a.rank, b.rank), c.rank);
-                    return temp == a.rank + b.rank + c.rank;
+                    int temp = Math.Min(Math.Min(a.rank, b.rank), c.rank);
+                    return 3*(temp+1) == a.rank + b.rank + c.rank;
                 }
             }
             return taatsu;
