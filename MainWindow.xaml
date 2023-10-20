@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:mahjongNEA"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="overallGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -21,18 +21,14 @@
                 <Separator/>
                 <MenuItem Header="_Auto Sort" IsCheckable="True" IsChecked="True" StaysOpenOnClick="True"/>
                 <Separator/>
-                <MenuItem Header="Analysis _Mode" />
+                <MenuItem Header="Analysis _Mode"/>
             </MenuItem>
             <MenuItem Header="_Help" Margin="0,0,5,0" Click="MenuItem_Help_Click"/>
-            <MenuItem Header="_Temp Add" Margin="0,0,5,0" Click="MenuItem_Temp_Click"/>
+            <MenuItem Header="_New Game Temp" Margin="0,0,5,0" 
+                      Click="MenuItem_Game_Temp_Click"/>
         </Menu>
-        <Grid x:Name="mainDisplay" Grid.Column="0" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel x:Name="tempStackPanel" Grid.Column="0" Orientation="Horizontal"
-                        Height="50"/>
+        <Grid x:Name="displayGrid" Grid.Row="1">
+            
         </Grid>
     </Grid>
 </Window>

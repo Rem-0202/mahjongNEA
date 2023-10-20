@@ -16,26 +16,13 @@ using System.Windows.Shapes;
 namespace mahjongNEA
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameView : UserControl
     {
-        public MainWindow()
+        public GameView()
         {
             InitializeComponent();
-        }
-        Random rng = new Random();
-
-        private void MenuItem_Help_Click(object sender, RoutedEventArgs e)
-        {
-            helpWindow h = new helpWindow();
-            h.Show();
-        }
-
-        private void MenuItem_Game_Temp_Click(object sender, RoutedEventArgs e)
-        {
-            GameView g = new GameView();
-            displayGrid.Children.Add(g);
         }
     }
 }
