@@ -1,0 +1,41 @@
+﻿<Window x:Class="mahjongNEA.helpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mahjongNEA"
+        mc:Ignorable="d"
+        Title="helpWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" MaxWidth="150"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="leftList" Grid.Column="0" Width="auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="=" Width="auto"
+                    FontSize="20" Click="collapseButton" 
+                    HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Transparent"
+                    BorderThickness="0" HorizontalContentAlignment="Left"/>
+            <ListView Grid.Row="1" x:Name="leftListView">
+                <ListViewItem Margin="0,0,0,1">
+                    Tile names
+                </ListViewItem>
+                <ListViewItem Margin="0,0,0,1">
+                    Round progression
+                </ListViewItem>
+                <ListViewItem Margin="0,0,0,1">
+                    Disruption to rounds
+                </ListViewItem>
+                <ListViewItem Margin="0,0,0,1">
+                    Winning hands
+                </ListViewItem>
+            </ListView>
+        </Grid>
+        <RichTextBox x:Name="RTB" Grid.Column="1" IsReadOnly="True" 
+                     ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>
