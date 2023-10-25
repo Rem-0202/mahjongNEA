@@ -48,7 +48,8 @@ namespace mahjongNEA
             bonus = suit == 'f' || suit == 'n';
             BitmapImage myBitmapImage = new BitmapImage();
             myBitmapImage.BeginInit();
-            myBitmapImage.UriSource = new Uri(@"tempImage.jpg");
+            string imageUri = $"{tileID}.jpg";
+            myBitmapImage.UriSource = new Uri(imageUri);
             myBitmapImage.DecodePixelWidth = 200;
             myBitmapImage.EndInit();
             tileImage.Source = myBitmapImage;
