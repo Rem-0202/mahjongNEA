@@ -24,5 +24,11 @@ namespace mahjongNEA
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Random rng = new Random();
+            test.Children.Add(new Tile(rng.Next(1, 10), 's'));
+        }
     }
 }

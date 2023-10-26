@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,13 +47,18 @@ namespace mahjongNEA
             suitID = suitOrder.IndexOf(suit);
             special = terminal || honour;
             bonus = suit == 'f' || suit == 'n';
-            BitmapImage myBitmapImage = new BitmapImage();
-            myBitmapImage.BeginInit();
-            string imageUri = $"{tileID}.jpg";
-            myBitmapImage.UriSource = new Uri(imageUri);
-            myBitmapImage.DecodePixelWidth = 200;
-            myBitmapImage.EndInit();
-            tileImage.Source = myBitmapImage;
+            var bitmap = new BitmapImage();
+            using (var stream = new FileStream($"../../{tileID}.jpg", FileMode.Open))
+            {
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                bitmap.Freeze(); 
+            }
+            tileImage.Height = bitmap.Height;
+            tileImage.Width = bitmap.Width;
+            tileImage.Source = bitmap;
         }
 
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;

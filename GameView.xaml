@@ -19,6 +19,9 @@
         </Grid.RowDefinitions>
         <Canvas Background="White" Grid.Row="0" Grid.RowSpan="3" 
                 Grid.Column="0" Grid.ColumnSpan="3"/>
-        
+        <Button Click="Button_Click"></Button>
+        <StackPanel Grid.Row="1" Grid.Column="1" x:Name="test" Orientation="Horizontal"> 
+            
+        </StackPanel>
     </Grid>
 </UserControl>
