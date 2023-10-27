@@ -40,6 +40,7 @@ namespace mahjongNEA
             }
             Tile temp = new Tile();
             bool sorted = false;
+            //bubble sort cuz why not :3
             while (!sorted)
             {
                 sorted = true;

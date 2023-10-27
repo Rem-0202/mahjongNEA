@@ -48,6 +48,7 @@ namespace mahjongNEA
             special = terminal || honour;
             bonus = suit == 'f' || suit == 'n';
             var bitmap = new BitmapImage();
+            //change whatever the filepath for this is cuz this somehow works
             using (var stream = new FileStream($"../../tiles/{tileID}.jpg", FileMode.Open))
             {
                 bitmap.BeginInit();
