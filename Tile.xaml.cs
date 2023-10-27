@@ -48,7 +48,7 @@ namespace mahjongNEA
             special = terminal || honour;
             bonus = suit == 'f' || suit == 'n';
             var bitmap = new BitmapImage();
-            using (var stream = new FileStream($"../../{tileID}.jpg", FileMode.Open))
+            using (var stream = new FileStream($"../../tiles/{tileID}.jpg", FileMode.Open))
             {
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
@@ -59,6 +59,8 @@ namespace mahjongNEA
             tileImage.Height = bitmap.Height;
             tileImage.Width = bitmap.Width;
             tileImage.Source = bitmap;
+            this.Height = tileImage.Height;
+            this.Width = tileImage.Width;
         }
 
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;
