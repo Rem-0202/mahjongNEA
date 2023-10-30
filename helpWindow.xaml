@@ -21,7 +21,7 @@
                     HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Transparent"
                     BorderThickness="0" HorizontalContentAlignment="Left"/>
             <ListView Grid.Row="1" x:Name="leftListView">
-                <ListViewItem Margin="0,0,0,1">
+                <ListViewItem Margin="0,0,0,1" Selected="tileNamesHelp">
                     Tile names
                 </ListViewItem>
                 <ListViewItem Margin="0,0,0,1">

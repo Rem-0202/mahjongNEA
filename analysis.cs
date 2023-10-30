@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -50,9 +51,9 @@ namespace mahjongNEA
             return s;
         }
 
-        private bool isTaatsu(Tile a, Tile b, Tile c)
+        private bool isChow(Tile a, Tile b, Tile c)
         {
-            bool taatsu = false;
+            int[] ranks = {a.rank,b.rank,c.rank};
             if (a.honour || a.bonus || b.honour || b.bonus || c.honour || c.bonus)
             {
                 return false;
@@ -61,11 +62,11 @@ namespace mahjongNEA
             {
                 if (a.suit == b.suit && a.suit == c.suit)
                 {
-                    int temp = Math.Min(Math.Min(a.rank, b.rank), c.rank);
-                    return 3*(temp+1) == a.rank + b.rank + c.rank;
+                    int min = Math.Min(Math.Min(a.rank, b.rank), c.rank);
+                    return ranks.Contains(min + 1) && ranks.Contains(min + 2);
                 }
+                else return false;
             }
-            return taatsu;
         }
     }
 }
