@@ -1,7 +1,133 @@
 ﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
               xmlns:local="clr-namespace:mahjongNEA"
               ColumnWidth="400" FontSize="14" FontFamily="Georgia">
-    <Paragraph>
-        test
+    <Paragraph FontSize="25">
+        <Bold>
+            Characters
+        </Bold>
+        : 1-9
+        <LineBreak/>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="1m.jpg"/>
+                <Image Margin="0,0,0,2" Source="2m.jpg"/>
+                <Image Margin="0,0,0,2" Source="3m.jpg"/>
+                <Image Margin="0,0,0,2" Source="4m.jpg"/>
+                <Image Margin="0,0,0,2" Source="5m.jpg"/>
+                <Image Margin="0,0,0,2" Source="6m.jpg"/>
+                <Image Margin="0,0,0,2" Source="7m.jpg"/>
+                <Image Margin="0,0,0,2" Source="8m.jpg"/>
+                <Image Margin="0,0,0,2" Source="9m.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+    </Paragraph>
+    <Paragraph FontSize="25">
+        <Bold>
+            Dots
+        </Bold>
+        : 1-9
+        <LineBreak/>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="1p.jpg"/>
+                <Image Margin="0,0,0,2" Source="2p.jpg"/>
+                <Image Margin="0,0,0,2" Source="3p.jpg"/>
+                <Image Margin="0,0,0,2" Source="4p.jpg"/>
+                <Image Margin="0,0,0,2" Source="5p.jpg"/>
+                <Image Margin="0,0,0,2" Source="6p.jpg"/>
+                <Image Margin="0,0,0,2" Source="7p.jpg"/>
+                <Image Margin="0,0,0,2" Source="8p.jpg"/>
+                <Image Margin="0,0,0,2" Source="9p.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+    </Paragraph>
+    <Paragraph FontSize="25">
+        <Bold>
+            Bamboos
+        </Bold>
+        : 1-9
+        <LineBreak/>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="1s.jpg"/>
+                <Image Margin="0,0,0,2" Source="2s.jpg"/>
+                <Image Margin="0,0,0,2" Source="3s.jpg"/>
+                <Image Margin="0,0,0,2" Source="4s.jpg"/>
+                <Image Margin="0,0,0,2" Source="5s.jpg"/>
+                <Image Margin="0,0,0,2" Source="6s.jpg"/>
+                <Image Margin="0,0,0,2" Source="7s.jpg"/>
+                <Image Margin="0,0,0,2" Source="8s.jpg"/>
+                <Image Margin="0,0,0,2" Source="9s.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+    </Paragraph>
+    <Paragraph FontSize="25">
+        <Bold>Winds</Bold>: 
+        East, South, West and North
+        <LineBreak/>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="2z.jpg"/>
+                <Image Margin="0,0,0,2" Source="3z.jpg"/>
+                <Image Margin="0,0,0,2" Source="4z.jpg"/>
+                <Image Margin="0,0,0,2" Source="5z.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+    </Paragraph>
+    <Paragraph FontSize="25">
+        <Bold>Dragons</Bold>: 
+        Red, Green and White
+        <LineBreak/>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="6z.jpg"/>
+                <Image Margin="0,0,0,2" Source="7z.jpg"/>
+                <Image Margin="0,0,0,2" Source="8z.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+    </Paragraph>
+    <Paragraph FontSize="25">
+        <Bold>Flowers</Bold>:
+        Plum blossom, Orchid, Chrysanthemum and Bamboo
+        <LineBreak/>
+        Corresponding to East, South, West and North respectively.
+        <LineBreak/>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="2f.jpg"/>
+                <Image Margin="0,0,0,2" Source="3f.jpg"/>
+                <Image Margin="0,0,0,2" Source="4f.jpg"/>
+                <Image Margin="0,0,0,2" Source="5f.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+    </Paragraph>
+    <Paragraph FontSize="25">
+        <Bold>Seasons</Bold>:
+        Spring, Summer, Autumn and Winter
+        <LineBreak/>
+        Corresponding to East, South, West and North respectively.
+        <LineBreak/>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="2n.jpg"/>
+                <Image Margin="0,0,0,2" Source="3n.jpg"/>
+                <Image Margin="0,0,0,2" Source="4n.jpg"/>
+                <Image Margin="0,0,0,2" Source="5n.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
     </Paragraph>
 </FlowDocument>

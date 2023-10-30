@@ -8,19 +8,21 @@
         Title="helpWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" MaxWidth="150"/>
+            <ColumnDefinition Width="auto" MaxWidth="160"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid x:Name="leftList" Grid.Column="0" Width="auto">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" MaxHeight="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="=" Width="auto"
-                    FontSize="20" Click="collapseButton" 
-                    HorizontalAlignment="Stretch" Margin="5,5,5,5" Background="Transparent"
-                    BorderThickness="0" HorizontalContentAlignment="Left"/>
-            <ListView Grid.Row="1" x:Name="leftListView">
+            <Button Grid.Row="0" Click="collapseButton"
+                        HorizontalAlignment="Stretch" Background="Transparent"
+                        BorderThickness="0" HorizontalContentAlignment="Left"
+                        Margin="0,5,0,5">
+                <Image Margin="5,0,0,0" Source="hamburgerMenu.png" Stretch="Fill" Height="25"/>
+            </Button>
+            <ListView Grid.Row="1" x:Name="leftListView" FontSize="16">
                 <ListViewItem Margin="0,0,0,1" Selected="tileNamesHelp">
                     Tile names
                 </ListViewItem>
@@ -36,6 +38,7 @@
             </ListView>
         </Grid>
         <RichTextBox x:Name="RTB" Grid.Column="1" IsReadOnly="True" 
-                     ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"/>
+                     ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"
+                     BorderThickness="0,0,0,0" BorderBrush="White"/>
     </Grid>
 </Window>

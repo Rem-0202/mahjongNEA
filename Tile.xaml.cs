@@ -49,7 +49,7 @@ namespace mahjongNEA
             bonus = suit == 'f' || suit == 'n';
             var bitmap = new BitmapImage();
             //change whatever the filepath for this is cuz this somehow works
-            using (var stream = new FileStream($"../../tiles/{tileID}.jpg", FileMode.Open))
+            using (var stream = new FileStream($"../../{tileID}.jpg", FileMode.Open))
             {
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
