@@ -33,7 +33,6 @@ namespace mahjongNEA
 
         void LoadXamlPackage(string fileName)
         {
-            TextRange range;
             FileStream fStream;
             if (File.Exists(fileName))
             {
@@ -46,7 +45,7 @@ namespace mahjongNEA
 
         private void tileNamesHelp(object sender, RoutedEventArgs e)
         {
-            LoadXamlPackage(@"tileNamesHelp.xaml");
+            LoadXamlPackage(@"../../tileNamesHelp.xaml");
         }
     }
 }
