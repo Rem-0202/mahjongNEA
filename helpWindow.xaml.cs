@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -36,16 +37,16 @@ namespace mahjongNEA
             FileStream fStream;
             if (File.Exists(fileName))
             {
-                range = new TextRange(RTB.Document.ContentStart, RTB.Document.ContentEnd);
                 fStream = new FileStream(fileName, FileMode.Open);
-                range.Load(fStream, DataFormats.XamlPackage);
+                FlowDocument flowDocument = XamlReader.Load(fStream) as FlowDocument;
                 fStream.Close();
+                RTB.Document = flowDocument;
             }
         }
 
         private void tileNamesHelp(object sender, RoutedEventArgs e)
         {
-            LoadXamlPackage(@"../../tileNamesHelp.xaml");
+            LoadXamlPackage(@"tileNamesHelp.xaml");
         }
     }
 }

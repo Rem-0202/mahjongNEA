@@ -2,6 +2,6 @@
               xmlns:local="clr-namespace:mahjongNEA"
               ColumnWidth="400" FontSize="14" FontFamily="Georgia">
     <Paragraph>
-        <Run Text="test"/>
+        test
     </Paragraph>
 </FlowDocument>
