@@ -16,19 +16,16 @@ using System.Windows.Shapes;
 namespace mahjongNEA
 {
     /// <summary>
-    /// Interaction logic for GameView.xaml
+    /// Interaction logic for Player.xaml
     /// </summary>
-    public partial class GameView : UserControl
+    public partial class Player : UserControl
     {
-        public GameView()
+        public Tile[] ownTiles { get; protected set; }
+        public Tile drawnTile { get; private set; }
+
+        public Player()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click_Temp(object sender, RoutedEventArgs e)
-        {
-            ComputerPlayer tc = new ComputerPlayer(new Tile[] {new Tile(1,'s'), new Tile(1,'p')});
-            tempGridPlayer.Children.Add(tc);
         }
     }
 }

@@ -31,6 +31,7 @@ namespace mahjongNEA
         public bool honour { get; private set; }
         public bool special { get; private set; }
         public bool bonus { get; private set; }
+        public bool concealed { get; private set; }
         public Tile()
         {
             InitializeComponent();
@@ -47,19 +48,8 @@ namespace mahjongNEA
             suitID = suitOrder.IndexOf(suit);
             special = terminal || honour;
             bonus = suit == 'f' || suit == 'n';
-            var bitmap = new BitmapImage();
-            //change whatever the filepath for this is cuz this somehow works
-            using (var stream = new FileStream($"../../{tileID}.jpg", FileMode.Open))
-            {
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.StreamSource = stream;
-                bitmap.EndInit();
-                bitmap.Freeze(); 
-            }
-            tileImage.Height = bitmap.Height;
-            tileImage.Width = bitmap.Width;
-            tileImage.Source = bitmap;
+            concealed = false;
+            setImage();
             this.Height = tileImage.Height;
             this.Width = tileImage.Width;
         }
@@ -71,5 +61,28 @@ namespace mahjongNEA
         public static bool operator >(Tile a, Tile b) => a.suitID > b.suitID || (a.suitID == b.suitID && a.rank > b.rank);
 
         public static bool operator <(Tile a, Tile b) => a.suitID < b.suitID || (a.suitID == b.suitID && a.rank < b.rank);
+
+        public void concealTile()
+        {
+            concealed = true;
+            tileID = "concealed";
+            setImage();
+        }
+
+        public void setImage()
+        {
+            var bitmap = new BitmapImage();
+            using (var stream = new FileStream($"../../{tileID}.jpg", FileMode.Open))
+            {
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                bitmap.Freeze();
+            }
+            tileImage.Height = bitmap.Height;
+            tileImage.Width = bitmap.Width;
+            tileImage.Source = bitmap;
+        }
     }
 }
