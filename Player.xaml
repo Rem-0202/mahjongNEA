@@ -16,6 +16,6 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal"
-                     x:Name="ownTileDisplay"/>
+                    x:Name="ownTileDisplay"/>
     </Grid>
 </UserControl>

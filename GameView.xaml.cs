@@ -20,9 +20,12 @@ namespace mahjongNEA
     /// </summary>
     public partial class GameView : UserControl
     {
-        public GameView()
+        public int prevailingWind { get; private set; }
+        public Player[] players { get; private set; }
+        public GameView(int prevailingWind)
         {
             InitializeComponent();
+            this.prevailingWind = prevailingWind;
         }
     }
 }
