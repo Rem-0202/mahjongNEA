@@ -24,11 +24,5 @@ namespace mahjongNEA
         {
             InitializeComponent();
         }
-
-        private void Button_Click_Temp(object sender, RoutedEventArgs e)
-        {
-            ComputerPlayer tc = new ComputerPlayer(new Tile[] {new Tile(1,'s'), new Tile(1,'p')});
-            tempGridPlayer.Children.Add(tc);
-        }
     }
 }
