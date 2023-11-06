@@ -32,6 +32,7 @@ namespace mahjongNEA
         public bool special { get; private set; }
         public bool bonus { get; private set; }
         public bool concealed { get; private set; }
+        public bool interactive;
         public Tile()
         {
             InitializeComponent();
@@ -40,6 +41,7 @@ namespace mahjongNEA
         public Tile(int r, char s)
         {
             InitializeComponent();
+            interactive = false;
             rank = r;
             suit = s;
             tileID = r.ToString() + s;
@@ -65,6 +67,7 @@ namespace mahjongNEA
         public void concealTile()
         {
             concealed = true;
+            interactive = false;
             setImage();
         }
 
@@ -87,14 +90,20 @@ namespace mahjongNEA
 
         private void tileImage_MouseEnter(object sender, MouseEventArgs e)
         {
-            Height += tileImage.ActualHeight / 4;
-            tileImage.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight/4);
+            if (!concealed && interactive)
+            {
+                Height += tileImage.ActualHeight / 4;
+                tileImage.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight / 4);
+            }
         }
 
         private void tileImage_MouseLeave(object sender, MouseEventArgs e)
         {
-            Height -= tileImage.ActualHeight / 4;
-            tileImage.Margin = new Thickness(1, 0, 1, 0);
+            if (!concealed && interactive)
+            {
+                Height -= tileImage.ActualHeight / 4;
+                tileImage.Margin = new Thickness(1, 0, 1, 0);
+            }
         }
     }
 }

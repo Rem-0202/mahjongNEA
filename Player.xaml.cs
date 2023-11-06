@@ -34,10 +34,9 @@ namespace mahjongNEA
             wind = w;
         }
 
-        public void addTile(Tile t)
+        public virtual void addTile(Tile t)
         {
-            ownTiles.Add(t);
-            updateTileDisplay();
+            
         }
 
         public void updateTileDisplay()

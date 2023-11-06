@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace mahjongNEA
 {
-    class ComputerPlayer : Player
+    class UserPlayer : Player
     {
-        public ComputerPlayer(int wind) : base(wind)
+        public UserPlayer(int wind) : base(wind) 
         {
             InitializeComponent();
         }
 
         public override void addTile(Tile t)
         {
-            t.concealTile();
+            t.interactive = true;
             ownTiles.Add(t);
             updateTileDisplay();
         }
