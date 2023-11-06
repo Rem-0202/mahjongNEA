@@ -87,12 +87,12 @@ namespace mahjongNEA
 
         private void tileImage_MouseEnter(object sender, MouseEventArgs e)
         {
-            tileImage.Margin = new Thickness(0, 0, 0, this.ActualHeight/4);
+            tileImage.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight/4);
         }
 
         private void tileImage_MouseLeave(object sender, MouseEventArgs e)
         {
-            tileImage.Margin = new Thickness(0, 0, 0, 0);
+            tileImage.Margin = new Thickness(1, 0, 1, 0);
         }
     }
 }
