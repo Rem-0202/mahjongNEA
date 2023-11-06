@@ -50,8 +50,8 @@ namespace mahjongNEA
             bonus = suit == 'f' || suit == 'n';
             concealed = false;
             setImage();
-            this.Height = tileImage.Height;
-            this.Width = tileImage.Width;
+            Height = tileImage.Height;
+            Width = tileImage.Width;
         }
 
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;
@@ -87,11 +87,13 @@ namespace mahjongNEA
 
         private void tileImage_MouseEnter(object sender, MouseEventArgs e)
         {
+            Height += tileImage.ActualHeight / 4;
             tileImage.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight/4);
         }
 
         private void tileImage_MouseLeave(object sender, MouseEventArgs e)
         {
+            Height -= tileImage.ActualHeight / 4;
             tileImage.Margin = new Thickness(1, 0, 1, 0);
         }
     }
