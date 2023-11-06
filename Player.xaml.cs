@@ -26,6 +26,8 @@ namespace mahjongNEA
         public Player()
         {
             InitializeComponent();
+            ownTileDisplay.Children.Add(new Tile(1, 'm'));
+            ownTileDisplay.Children.Add(new Tile(1, 'm'));
         }
     }
 }

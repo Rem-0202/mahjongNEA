@@ -10,12 +10,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal"
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Orientation="Horizontal"
                     x:Name="ownTileDisplay"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="4" Orientation="Horizontal"
+                    x:Name="walledTileDisplay"/>
     </Grid>
 </UserControl>
