@@ -8,15 +8,14 @@ namespace mahjongNEA
 {
     class ComputerPlayer : Player
     {
-        public ComputerPlayer(Tile[] startingTiles) : base()
+        public ComputerPlayer(int wind) : base(wind)
         {
             InitializeComponent();
-            ownTiles = startingTiles;
             foreach (Tile t in ownTiles)
             {
                 t.concealTile();
-                ownTileDisplay.Children.Add(t);
             }
+            updateTileDisplay();
         }
     }
 }

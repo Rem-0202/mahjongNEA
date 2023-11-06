@@ -35,7 +35,7 @@ namespace mahjongNEA
         private void MenuItem_Game_Temp_Click(object sender, RoutedEventArgs e)
         {
             //place holder
-            GameView g = new GameView(5);
+            GameView g = new GameView(3,1);
             displayGrid.Children.Add(g);
         }
     }
