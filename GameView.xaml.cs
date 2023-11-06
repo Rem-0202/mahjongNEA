@@ -26,7 +26,6 @@ namespace mahjongNEA
         {
             InitializeComponent();
             this.prevailingWind = prevailingWind;
-            userPlayerGrid.Children.Add(new Player());
         }
     }
 }
