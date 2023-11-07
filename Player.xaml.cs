@@ -24,8 +24,9 @@ namespace mahjongNEA
         public List<Tile> ownTiles { get; protected set; }
         public List<Tile> walledTiles { get; protected set; }
         public Tile drawnTile { get; private set; }
-        public int wind { get; private set; }
+        public int wind { get; private set; } //1 = 東  2 = 南  3 = 西  4 = 北
         public bool sortOn;
+        public int score { get; private set; }
 
         public Player(int w)
         {
