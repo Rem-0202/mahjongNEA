@@ -54,12 +54,6 @@ namespace mahjongNEA
             }
         }
 
-        //rename later, doesn't need any code here
-        protected virtual void temp(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         public virtual void sortTiles()
         {
             if (!MainWindow.autoSort) return;

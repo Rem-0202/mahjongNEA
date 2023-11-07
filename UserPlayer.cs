@@ -22,10 +22,5 @@ namespace mahjongNEA
             sortTiles();
             updateTileDisplay();
         }
-
-        protected override void temp(object sender, MouseButtonEventArgs e)
-        {
-            //discard mechanism, only needed when waiting for player discard, TBD how to implement
-        }
     }
 }

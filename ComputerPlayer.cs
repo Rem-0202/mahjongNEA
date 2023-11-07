@@ -21,11 +21,6 @@ namespace mahjongNEA
             sortTiles();
         }
 
-        protected override void temp(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         public override void sortTiles()
         {
             bool sorted = false;

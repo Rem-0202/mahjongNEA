@@ -21,14 +21,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Orientation="Horizontal"
-                    x:Name="ownTileDisplay" MouseUp="temp"/>
-        <!--rename mouseup method, change detect click-->
-        
+                    x:Name="ownTileDisplay"/>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="5" Orientation="Horizontal"
                     x:Name="walledTileDisplay"/>
-        <!--<TextBlock Text="東" HorizontalAlignment="Right"
-                   Grid.Row="0" Grid.Column="2"/>
-            placement works, replace with custom image + textblock of score
-        -->
     </Grid>
 </UserControl>
