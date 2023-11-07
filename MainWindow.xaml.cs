@@ -20,6 +20,8 @@ namespace mahjongNEA
     /// </summary>
     public partial class MainWindow : Window
     {
+        public GameView g;
+        public static bool autoSort = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,8 +37,26 @@ namespace mahjongNEA
         private void MenuItem_Game_Temp_Click(object sender, RoutedEventArgs e)
         {
             //place holder
-            GameView g = new GameView(3,1);
+            g = new GameView(3,1);
             displayGrid.Children.Add(g);
+        }
+
+        private void autoSortChecked(object sender, RoutedEventArgs e)
+        {
+            autoSort = true;
+            if (g != null)
+            {
+                g.toggleSort();
+            }
+        }
+
+        private void autoSortUnchecked(object sender, RoutedEventArgs e)
+        {
+            autoSort = false;
+            if (g != null)
+            {
+                g.toggleSort();
+            }
         }
     }
 }

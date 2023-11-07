@@ -32,7 +32,7 @@ namespace mahjongNEA
             this.playerWind = playerWind;
             this.prevailingWind = prevailingWind;
             players = new Player[4];
-            players[playerWind-1] = new Player(playerWind);
+            players[playerWind-1] = new UserPlayer(playerWind);
             players[playerWind % 4] = new ComputerPlayer((playerWind + 1) % 4);
             players[(playerWind + 1 ) % 4] = new ComputerPlayer((playerWind + 2) % 4);
             players[(playerWind + 2 ) % 4] = new ComputerPlayer((playerWind + 3) % 4);
@@ -80,6 +80,14 @@ namespace mahjongNEA
                     players[j].addTile(availableTiles[k]);
                     availableTiles.RemoveAt(k);
                 }
+            }
+        }
+
+        public void toggleSort()
+        {
+            foreach (Player p in players)
+            {
+                p.sortTiles();
             }
         }
     }

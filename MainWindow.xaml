@@ -19,7 +19,9 @@
                 <MenuItem Header="_New Game"/>
                 <MenuItem Header="_Restart"/>
                 <Separator/>
-                <MenuItem Header="_Auto Sort" IsCheckable="True" IsChecked="True" StaysOpenOnClick="True"/>
+                <MenuItem Header="_Auto Sort" IsCheckable="True" IsChecked="True"
+                          StaysOpenOnClick="True" Checked="autoSortChecked"
+                          Unchecked="autoSortUnchecked"/>
                 <Separator/>
                 <MenuItem Header="Analysis _Mode"/>
             </MenuItem>
