@@ -1,0 +1,14 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:local="clr-namespace:mahjongNEA"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+    <Paragraph FontSize="18">
+        Each player starts with 13 tiles and gets assigned a wind.
+        <LineBreak/>
+        <LineBreak/>
+        Starting from the dealer (the player with prevailing wind) and going in anticlockwise direction (East, North, West, South), 
+        each player draws a tile and discards a tile.
+        <LineBreak/>
+        <LineBreak/>
+        This process continues until any player declares a winning hand, or any of the disruption happen as desribed in the "Disruption to rounds" section.
+    </Paragraph>
+</FlowDocument>

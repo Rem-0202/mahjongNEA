@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Grid x:Name="leftList" Grid.Column="0" Width="auto">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" MaxHeight="35"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Click="collapseButton"
@@ -26,10 +26,10 @@
                 <ListViewItem Margin="0,0,0,1" Selected="tileNamesHelp">
                     Tile names
                 </ListViewItem>
-                <ListViewItem Margin="0,0,0,1">
+                <ListViewItem Margin="0,0,0,1" Selected="roundProgressionHelp">
                     Round progression
                 </ListViewItem>
-                <ListViewItem Margin="0,0,0,1">
+                <ListViewItem Margin="0,0,0,1" Selected="roundsDisruptions">
                     Disruption to rounds
                 </ListViewItem>
                 <ListViewItem Margin="0,0,0,1">
@@ -37,8 +37,16 @@
                 </ListViewItem>
             </ListView>
         </Grid>
-        <RichTextBox x:Name="RTB" Grid.Column="1" IsReadOnly="True" 
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="helpTitle" Grid.Row="0" VerticalAlignment="Top"
+                       FontSize="25" FontWeight="Bold" Margin="5,0,0,4"/>
+            <RichTextBox x:Name="RTB" Grid.Row="1" IsReadOnly="True"  IsDocumentEnabled="True"
                      ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"
                      BorderThickness="0,0,0,0" BorderBrush="White"/>
+        </Grid>
     </Grid>
 </Window>

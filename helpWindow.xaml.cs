@@ -31,8 +31,9 @@ namespace mahjongNEA
             leftListView.Visibility = leftListView.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        void LoadXamlPackage(string fileName)
+        private void LoadFlowDocumentToRTB(string fileName)
         {
+            //load stuff
             FileStream fStream;
             if (File.Exists(fileName))
             {
@@ -45,7 +46,20 @@ namespace mahjongNEA
 
         private void tileNamesHelp(object sender, RoutedEventArgs e)
         {
-            LoadXamlPackage(@"../../tileNamesHelp.xaml");
+            helpTitle.Text = "Tile Names: ";
+            LoadFlowDocumentToRTB(@"../../tileNamesHelp.xaml");
+        }
+
+        private void roundProgressionHelp(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "Round Progression: ";
+            LoadFlowDocumentToRTB(@"../../roundProgression.xaml");
+        }
+
+        private void roundsDisruptions(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "Disruption to Rounds";
+            LoadFlowDocumentToRTB(@"../../roundDisruptions.xaml");
         }
     }
 }
