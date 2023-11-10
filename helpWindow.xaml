@@ -18,9 +18,9 @@
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Click="collapseButton"
                         HorizontalAlignment="Stretch" Background="Transparent"
-                        BorderThickness="0" HorizontalContentAlignment="Left"
-                        Margin="0,5,0,5">
-                <Image Margin="5,0,0,0" Source="hamburgerMenu.png" Stretch="Fill" Height="25"/>
+                        BorderThickness="0" HorizontalContentAlignment="Left">
+                <Image Margin="5,0,5,0" Source="hamburgerMenu.png" 
+                       Stretch="Fill" Height="25"/>
             </Button>
             <ListView Grid.Row="1" x:Name="leftListView" FontSize="16">
                 <ListViewItem Margin="0,0,0,1" Selected="tileNamesHelp">
@@ -32,7 +32,7 @@
                 <ListViewItem Margin="0,0,0,1" Selected="roundsDisruptions">
                     Disruption to rounds
                 </ListViewItem>
-                <ListViewItem Margin="0,0,0,1">
+                <ListViewItem Margin="0,0,0,1" Selected="winningHands">
                     Winning hands
                 </ListViewItem>
             </ListView>

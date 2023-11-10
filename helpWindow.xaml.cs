@@ -61,5 +61,10 @@ namespace mahjongNEA
             helpTitle.Text = "Disruption to Rounds";
             LoadFlowDocumentToRTB(@"../../roundDisruptions.xaml");
         }
+
+        private void winningHands(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "Winning Hands";
+        }
     }
 }
