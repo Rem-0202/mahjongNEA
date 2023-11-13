@@ -48,23 +48,124 @@ namespace mahjongNEA
         {
             helpTitle.Text = "Tile Names: ";
             LoadFlowDocumentToRTB(@"../../tileNamesHelp.xaml");
+            winningHandsCollapse();
         }
 
         private void roundProgressionHelp(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "Round Progression: ";
             LoadFlowDocumentToRTB(@"../../roundProgression.xaml");
+            winningHandsCollapse();
         }
 
         private void roundsDisruptions(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "Disruption to Rounds";
             LoadFlowDocumentToRTB(@"../../roundDisruptions.xaml");
+            winningHandsCollapse();
         }
 
-        private void winningHands(object sender, RoutedEventArgs e)
+        private void winningHandsDrop(object sender, RoutedEventArgs e)
+        {
+            if (winningHandsListItem.Content.ToString() == "Winning hands ⮝")
+            {
+                winningHandsCollapse();
+            }
+            else
+            {
+                winningHandsDropDown();
+            }
+        }
+
+        private void winningHandsDropDown()
+        {
+            winningHandsItems1.Visibility = Visibility.Visible;
+            winningHandsItems2.Visibility = Visibility.Visible;
+            winningHandsItems3.Visibility = Visibility.Visible;
+            winningHandsItems5.Visibility = Visibility.Visible;
+            winningHandsItems6.Visibility = Visibility.Visible;
+            winningHandsItems7.Visibility = Visibility.Visible;
+            winningHandsItems8.Visibility = Visibility.Visible;
+            winningHandsItems10.Visibility = Visibility.Visible;
+            winningHandsItems13.Visibility = Visibility.Visible;
+            winningHandsListItem.Content = "Winning hands ⮝";
+        }
+
+        private void winningHandsCollapse()
+        {
+            winningHandsItems1.Visibility = Visibility.Hidden;
+            winningHandsItems2.Visibility = Visibility.Hidden;
+            winningHandsItems3.Visibility = Visibility.Hidden;
+            winningHandsItems5.Visibility = Visibility.Hidden;
+            winningHandsItems6.Visibility = Visibility.Hidden;
+            winningHandsItems7.Visibility = Visibility.Hidden;
+            winningHandsItems8.Visibility = Visibility.Hidden;
+            winningHandsItems10.Visibility = Visibility.Hidden;
+            winningHandsItems13.Visibility = Visibility.Hidden;
+            if (winningHandsListItem.Content.ToString() == "Winning hands ⮝")
+            {
+                winningHandsListItem.Content = "Winning hands ⮟";
+            }
+        }
+
+        private void WinningHandsItems1_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "1 Faan Winning Hands";
+            LoadFlowDocumentToRTB(@"../../faan1.xaml");
+        }
+
+        private void WinningHandsItems2_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "2 Faan Winning Hands";
+            LoadFlowDocumentToRTB(@"../../faan2.xaml");
+        }
+
+        private void WinningHandsItems3_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "3 Faan Winning Hands";
+            LoadFlowDocumentToRTB(@"../../faan3.xaml");
+        }
+
+        private void WinningHandsItems5_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "5 Faan Winning Hands";
+            LoadFlowDocumentToRTB(@"../../faan5.xaml");
+        }
+
+        private void WinningHandsItems6_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "6 Faan Winning Hands";
+            LoadFlowDocumentToRTB(@"../../faan6.xaml");
+        }
+
+        private void WinningHandsItems7_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "7 Faan Winning Hands";
+            LoadFlowDocumentToRTB(@"../../faan7.xaml");
+        }
+
+        private void WinningHandsItems8_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "8 Faan Winning Hands";
+            LoadFlowDocumentToRTB(@"../../faan8.xaml");
+        }
+
+        private void WinningHandsItems10_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "10 Faan Winning Hands";
+            LoadFlowDocumentToRTB(@"../../faan10.xaml");
+        }
+
+        private void WinningHandsItems13_Selected(object sender, RoutedEventArgs e)
+        {
+            helpTitle.Text = "13 Faan Winning Hands (Maximum Faan)";
+            LoadFlowDocumentToRTB(@"../../faan13.xaml");
+        }
+
+        private void WinningHandsListItem_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "Winning Hands";
+            LoadFlowDocumentToRTB(@"../../winningHands.xaml");
         }
     }
 }

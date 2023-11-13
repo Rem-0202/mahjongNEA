@@ -1,0 +1,9 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:local="clr-namespace:mahjongNEA"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+    <Paragraph FontSize="18">
+        <Bold FontSize="22">Bonus series:</Bold>
+        <LineBreak/>
+        Owning all 4 bonus tiles of the same suit (flower or season).
+    </Paragraph>
+</FlowDocument>

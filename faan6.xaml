@@ -1,0 +1,32 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:local="clr-namespace:mahjongNEA"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+    <Paragraph FontSize="18">
+        <Bold FontSize="22">Small winds:</Bold>
+        <LineBreak/>
+        Melds of 3 winds and a pair of the remaining wind.
+        <LineBreak/>
+        e.g.:
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="2z.jpg"/>
+                <Image Margin="0,0,0,2" Source="2z.jpg"/>
+                <Image Margin="0,0,0,2" Source="2z.jpg"/>
+                <Image Margin="0,0,0,2" Source="3z.jpg"/>
+                <Image Margin="0,0,0,2" Source="3z.jpg"/>
+                <Image Margin="0,0,0,2" Source="3z.jpg"/>
+                <Image Margin="0,0,0,2" Source="4z.jpg"/>
+                <Image Margin="0,0,0,2" Source="4z.jpg"/>
+                <Image Margin="0,0,0,2" Source="4z.jpg"/>
+                <Image Margin="0,0,0,2" Source="7m.jpg"/>
+                <Image Margin="0,0,0,2" Source="8m.jpg"/>
+                <Image Margin="0,0,0,2" Source="9m.jpg"/>
+                <Image Margin="0,0,0,2" Source="5z.jpg"/>
+                <Image Margin="0,0,0,2" Source="5z.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+        <LineBreak/>
+    </Paragraph>
+</FlowDocument>

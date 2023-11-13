@@ -1,0 +1,26 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:local="clr-namespace:mahjongNEA"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+    <Paragraph FontSize="18">
+        <Bold FontSize="22">
+            Complete Hand:
+        </Bold>
+        <LineBreak/>
+        A complete hand contains 4 melds and an eye.
+        <LineBreak/>
+        <LineBreak/>
+        A meld can be one of the following:
+        <LineBreak/>
+        <Bold FontSize="18">Kong:</Bold> 3 of the same tile.
+        <LineBreak/>
+        <Bold FontSize="18">Chow:</Bold> 3 consecutive tiles of the same suit.
+        <LineBreak/>
+        <Bold FontSize="18">Pong:</Bold> 4 of the same tile.
+        <LineBreak/>
+        <LineBreak/>
+        <Bold FontSize="18">Eye:</Bold> a pair of the same time.
+        <LineBreak/>
+        <LineBreak/>
+        This hand has a base faan value of 0.
+    </Paragraph>
+</FlowDocument>

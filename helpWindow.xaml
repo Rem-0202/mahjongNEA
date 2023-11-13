@@ -32,8 +32,45 @@
                 <ListViewItem Margin="0,0,0,1" Selected="roundsDisruptions">
                     Disruption to rounds
                 </ListViewItem>
-                <ListViewItem Margin="0,0,0,1" Selected="winningHands">
-                    Winning hands
+                <ListViewItem Margin="0,0,0,1" Selected="WinningHandsListItem_Selected"
+                              x:Name="winningHandsListItem" MouseUp="winningHandsDrop">
+                    Winning hands ⮟
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems1_Selected"
+                              x:Name="winningHandsItems1">
+                    •1 faan
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems2_Selected"
+                              x:Name="winningHandsItems2">
+                    •2 faan
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems3_Selected"
+                              x:Name="winningHandsItems3">
+                    •3 faan
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems5_Selected"
+                              x:Name="winningHandsItems5">
+                    •5 faan
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems6_Selected"
+                              x:Name="winningHandsItems6">
+                    •6 faan
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems7_Selected"
+                              x:Name="winningHandsItems7">
+                    •7 faan
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems8_Selected"
+                              x:Name="winningHandsItems8">
+                    •8 faan
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems10_Selected"
+                              x:Name="winningHandsItems10">
+                    •10 faan
+                </ListViewItem>
+                <ListViewItem Margin="18,0,0,1" Visibility="Hidden" Selected="WinningHandsItems13_Selected"
+                              x:Name="winningHandsItems13">
+                    •13 faan
                 </ListViewItem>
             </ListView>
         </Grid>
