@@ -38,6 +38,7 @@ namespace mahjongNEA
         {
             //place holder
             g = new GameView(3,1);
+            displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
         }
 

@@ -1,0 +1,37 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:local="clr-namespace:mahjongNEA"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+    <Paragraph FontSize="18">
+        <Bold FontSize="22">
+            Winning: 
+        </Bold>
+        <LineBreak/>
+        At any point of the game if any player could form a winning hand with the last discarded tile, that player can declare a win.
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+        <Bold FontSize="22">
+            Taking a tile: 
+        </Bold>
+        <LineBreak/>
+        At any point if a player can form a Pong (3 identity tiles) or a Kong (4 identity tiles), that player can take the discarded tile and wall the relevant tiles. If a Kong is formed the player would
+        draw another tile before proceeding.
+        <LineBreak/>
+        <LineBreak/>
+        If the next player can form a Chow (3 consecutive tiles), that player can take the discared tile and wall the relevant tiles. Forming a Pong or Kong has priority over this.
+        <LineBreak/>
+        <LineBreak/>
+        The round would proceed by the player discarding a tile.
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+        <Bold FontSize="22">
+            Bonus tiles:
+        </Bold>
+        <LineBreak/>
+        When a player draws a bonus tile (seasons or flowers), the tile is put to the side and another tile would be drawn, repeating if another bonus tile is drawn.
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+    </Paragraph>
+</FlowDocument>

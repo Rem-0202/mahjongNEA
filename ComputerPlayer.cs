@@ -21,6 +21,12 @@ namespace mahjongNEA
             sortTiles();
         }
 
+        //logic not needed, rename later
+        protected override void temp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
         public override void sortTiles()
         {
             bool sorted = false;

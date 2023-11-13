@@ -1,7 +1,7 @@
 ﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
               xmlns:local="clr-namespace:mahjongNEA"
               ColumnWidth="400" FontSize="14" FontFamily="Georgia">
-    <Paragraph FontSize="25">
+    <Paragraph FontSize="22">
         <Bold>
             Characters
         </Bold>
@@ -23,7 +23,7 @@
         </InlineUIContainer>
         <LineBreak/>
     </Paragraph>
-    <Paragraph FontSize="25">
+    <Paragraph FontSize="22">
         <Bold>
             Dots
         </Bold>
@@ -45,7 +45,7 @@
         </InlineUIContainer>
         <LineBreak/>
     </Paragraph>
-    <Paragraph FontSize="25">
+    <Paragraph FontSize="22">
         <Bold>
             Bamboos
         </Bold>
@@ -67,7 +67,7 @@
         </InlineUIContainer>
         <LineBreak/>
     </Paragraph>
-    <Paragraph FontSize="25">
+    <Paragraph FontSize="22">
         <Bold>Winds</Bold>: 
         East, South, West and North
         <LineBreak/>
@@ -82,7 +82,7 @@
         </InlineUIContainer>
         <LineBreak/>
     </Paragraph>
-    <Paragraph FontSize="25">
+    <Paragraph FontSize="22">
         <Bold>Dragons</Bold>: 
         Red, Green and White
         <LineBreak/>
@@ -96,7 +96,7 @@
         </InlineUIContainer>
         <LineBreak/>
     </Paragraph>
-    <Paragraph FontSize="25">
+    <Paragraph FontSize="22">
         <Bold>Flowers</Bold>:
         Plum blossom, Orchid, Chrysanthemum and Bamboo
         <LineBreak/>
@@ -113,7 +113,7 @@
         </InlineUIContainer>
         <LineBreak/>
     </Paragraph>
-    <Paragraph FontSize="25">
+    <Paragraph FontSize="22">
         <Bold>Seasons</Bold>:
         Spring, Summer, Autumn and Winter
         <LineBreak/>
