@@ -21,7 +21,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Orientation="Horizontal"
-                    x:Name="ownTileDisplay" MouseUp="temp"/>
+                    x:Name="ownTileDisplay"/>
         <!--rename mouseup method, change detect click add drag reorder tiles-->
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="5" Orientation="Horizontal"
                     x:Name="walledTileDisplay"/>

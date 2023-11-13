@@ -102,10 +102,7 @@ namespace mahjongNEA
             winningHandsItems8.Visibility = Visibility.Hidden;
             winningHandsItems10.Visibility = Visibility.Hidden;
             winningHandsItems13.Visibility = Visibility.Hidden;
-            if (winningHandsListItem.Content.ToString() == "Winning hands ⮝")
-            {
-                winningHandsListItem.Content = "Winning hands ⮟";
-            }
+            winningHandsListItem.Content = "Winning hands ⮟";
         }
 
         private void WinningHandsItems1_Selected(object sender, RoutedEventArgs e)
