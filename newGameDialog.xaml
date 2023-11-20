@@ -40,8 +40,9 @@
                    Grid.Column="1">
             <TextBlock FontSize="22" Text="Prevailing Wind: "
                        HorizontalAlignment="Center" Margin="0,10,0,0"/>
-            <ComboBox Margin="2,15,0,0" Height="25" VerticalAlignment="Top"
-                      Width="100" x:Name="pWindSelector">
+            <ComboBox Margin="2,10,0,0" Height="30" VerticalAlignment="Top"
+                      Width="100" x:Name="pWindSelector" FontSize="18" 
+                      VerticalContentAlignment="Center">
                 <ComboBoxItem Content="East" IsSelected="True"/>
                 <ComboBoxItem Content="South"/>
                 <ComboBoxItem Content="West"/>
@@ -52,8 +53,9 @@
                    Grid.Column="2">
             <TextBlock FontSize="22" Text="Player Wind: "
                        HorizontalAlignment="Center" Margin="0,10,0,0"/>
-            <ComboBox Margin="2,15,0,0" Height="25" VerticalAlignment="Top"
-                      Width="100" x:Name="uWindSelector">
+            <ComboBox Margin="2,10,0,0" Height="30" VerticalAlignment="Top"
+                      Width="100" x:Name="uWindSelector" FontSize="18" 
+                      VerticalContentAlignment="Center">
                 <ComboBoxItem Content="East" IsSelected="True"/>
                 <ComboBoxItem Content="South"/>
                 <ComboBoxItem Content="West"/>

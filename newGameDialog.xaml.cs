@@ -52,7 +52,11 @@ namespace mahjongNEA
             int ep = Convert.ToInt32(endingPoints.Text);
             if ((ep - sp) < 1000)
             {
-                MessageBox.Show("Ending points has to be at least 1000 more than starting points!");
+                MessageBox.Show("Ending points has to be at least 1000 larger than starting points!");
+            }
+            else if (sp < 1000)
+            {
+                MessageBox.Show("Starting points must be more than 1000!");
             }
             else
             {
