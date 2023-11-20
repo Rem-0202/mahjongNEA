@@ -10,7 +10,7 @@ namespace mahjongNEA
     class ComputerPlayer : Player
     {
         public List<Tile> notAvailableTiles { get; private set; }
-        public ComputerPlayer(int wind) : base(wind)
+        public ComputerPlayer(int wind, int points) : base(wind, points)
         {
             InitializeComponent();
             notAvailableTiles = new List<Tile>();

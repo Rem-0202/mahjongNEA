@@ -10,7 +10,7 @@ namespace mahjongNEA
 {
     class UserPlayer : Player
     {
-        public UserPlayer(int wind) : base(wind)
+        public UserPlayer(int wind, int points) : base(wind, points)
         {
             InitializeComponent();
         }
@@ -28,5 +28,6 @@ namespace mahjongNEA
             walledTiles.Add(t);
             updateTileDisplay();
         }
+        //used for testing display, change later
     }
 }

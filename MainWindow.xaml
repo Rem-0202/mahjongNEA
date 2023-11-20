@@ -27,6 +27,8 @@
                 <MenuItem Header="Analysis _Mode"/>
             </MenuItem>
             <MenuItem Header="_Help" Margin="0,0,5,0" Click="MenuItem_Help_Click"/>
+            <!-- easier debug temp new game -->
+            <MenuItem Header="_Temp New Game" Margin="0,0,5,0" Click="MenuItem_Click_1"/>
         </Menu>
         <Grid x:Name="displayGrid" Grid.Row="1"/>
     </Grid>
