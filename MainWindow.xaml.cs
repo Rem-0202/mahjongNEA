@@ -54,10 +54,31 @@ namespace mahjongNEA
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            restartButton.Visibility = Visibility.Visible;
             newGameDialog ngd = new newGameDialog();
-            ngd.Show();
-            g = new GameView(3, 1);
+            bool? dresult = ngd.ShowDialog();
+            switch (dresult)
+            {
+                case true:
+                    prevailingWind = ngd.pWind;
+                    playerWind = ngd.uWind;
+                    startingPoints = ngd.sPoints;
+                    endingPoints = ngd.ePoints;
+                    g = new GameView(prevailingWind, playerWind, startingPoints, endingPoints);
+                    displayGrid.Children.Clear();
+                    displayGrid.Children.Add(g);
+                    restartButton.Visibility = Visibility.Visible;
+                    restartButton.IsEnabled = true;
+                    break;
+                case false:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void restartButton_Click(object sender, RoutedEventArgs e)
+        {
+            g = new GameView(prevailingWind, playerWind, startingPoints, endingPoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
         }

@@ -5,13 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mahjongNEA"
         mc:Ignorable="d"
-        Title="newGameDialog" Height="200" Width="600">
+        Title="newGameDialog" Height="220" Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -22,21 +21,27 @@
         <Grid Grid.Row="2" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="0.3*"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="0.4*"/>
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
+            <Button Grid.Row="1" Grid.Column="1" Content="_OK"
+                    x:Name="OKButton" Click="OKButton_Click"
+                    Margin="2,2,2,2"/>
+            <Button Grid.Row="1" Grid.Column="2" Content="_Cancel"
+                    x:Name="CancelButton" Click="CancelButton_Click"
+                    Margin="2,2,2,2"/>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal"
                    Grid.Column="1">
             <TextBlock FontSize="22" Text="Prevailing Wind: "
                        HorizontalAlignment="Center" Margin="0,10,0,0"/>
             <ComboBox Margin="2,15,0,0" Height="25" VerticalAlignment="Top"
-                      Width="100">
+                      Width="100" x:Name="pWindSelector">
                 <ComboBoxItem Content="East" IsSelected="True"/>
                 <ComboBoxItem Content="South"/>
                 <ComboBoxItem Content="West"/>
@@ -48,7 +53,7 @@
             <TextBlock FontSize="22" Text="Player Wind: "
                        HorizontalAlignment="Center" Margin="0,10,0,0"/>
             <ComboBox Margin="2,15,0,0" Height="25" VerticalAlignment="Top"
-                      Width="100">
+                      Width="100" x:Name="uWindSelector">
                 <ComboBoxItem Content="East" IsSelected="True"/>
                 <ComboBoxItem Content="South"/>
                 <ComboBoxItem Content="West"/>
@@ -59,11 +64,21 @@
                    Grid.Column="1">
             <TextBlock FontSize="22" Text="Starting Points: "
                        HorizontalAlignment="Center" Margin="0,0,0,0"/>
-            <TextBox FontSize="22" Margin="2,4,0,0" Height="25" VerticalAlignment="Top"
+            <TextBox FontSize="22" Margin="2,0,0,0" Height="30" VerticalAlignment="Top"
                      Width="100" Text="15000" VerticalContentAlignment="Top"
                      PreviewTextInput="TextBox_PreviewTextInput"
                      DataObject.Pasting="TextBox_Pasting"
-                     x:Name="startingPoints"/>
+                     x:Name="startingPoints" MaxLength="5"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                   Grid.Column="2">
+            <TextBlock FontSize="22" Text="Ending Points: "
+                       HorizontalAlignment="Center" Margin="0,0,0,0"/>
+            <TextBox FontSize="22" Margin="2,0,0,0" Height="30" VerticalAlignment="Top"
+                     Width="100" Text="30000" VerticalContentAlignment="Top"
+                     PreviewTextInput="TextBox_PreviewTextInput"
+                     DataObject.Pasting="TextBox_Pasting"
+                     x:Name="endingPoints" MaxLength="5"/>
         </StackPanel>
     </Grid>
 </Window>

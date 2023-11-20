@@ -26,11 +26,15 @@ namespace mahjongNEA
         public int playerWind { get; private set; }
         public List<Tile> availableTiles { get; private set; }
         public Player[] players { get; private set; }
-        public GameView(int prevailingWind, int playerWind)
+        public int startingPoints { get; private set; }
+        public int endingPoints { get; private set; }
+        public GameView(int prevailingWind, int playerWind, int startingPoints, int endingPoints)
         {
             InitializeComponent();
             this.playerWind = playerWind;
             this.prevailingWind = prevailingWind;
+            this.startingPoints = startingPoints;
+            this.endingPoints = endingPoints;
             players = new Player[4];
             players[playerWind - 1] = new UserPlayer(playerWind);
             players[playerWind % 4] = new ComputerPlayer((playerWind + 1) % 4);
