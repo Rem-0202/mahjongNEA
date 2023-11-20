@@ -61,6 +61,9 @@
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="helpWindow.xaml.cs" />
+    <Compile Include="newGameDialog.xaml.cs">
+      <DependentUpon>newGameDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Player.xaml.cs">
       <DependentUpon>Player.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="newGameDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Player.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

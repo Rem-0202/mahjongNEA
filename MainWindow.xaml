@@ -16,8 +16,8 @@
         </Grid.RowDefinitions>
         <Menu Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" FontSize="15">
             <MenuItem Header="_Menu" Margin="0,0,5,0">
-                <MenuItem Header="_New Game"/>
-                <MenuItem Header="_Restart"/>
+                <MenuItem Header="_New Game" Click="MenuItem_Click"/>
+                <MenuItem Header="_Restart" x:Name="restartButton" Visibility="Collapsed"/>
                 <Separator/>
                 <MenuItem Header="_Auto Sort" IsCheckable="True" IsChecked="True"
                           StaysOpenOnClick="True" Checked="autoSortChecked"
@@ -26,8 +26,6 @@
                 <MenuItem Header="Analysis _Mode"/>
             </MenuItem>
             <MenuItem Header="_Help" Margin="0,0,5,0" Click="MenuItem_Help_Click"/>
-            <MenuItem Header="_New Game Temp" Margin="0,0,5,0" 
-                      Click="MenuItem_Game_Temp_Click"/>
         </Menu>
         <Grid x:Name="displayGrid" Grid.Row="1"/>
     </Grid>

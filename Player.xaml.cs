@@ -23,9 +23,9 @@ namespace mahjongNEA
     {
         public List<Tile> ownTiles { get; protected set; }
         public List<Tile> walledTiles { get; protected set; }
+        public List<Tile> bonusTiles { get; protected set; }
         public Tile drawnTile { get; private set; }
-        public int wind { get; private set; } //1 = 東  2 = 南  3 = 西  4 = 北
-        public bool sortOn;
+        public int wind { get; private set; }  //1 = 東(E)  2 = 南(S)  3 = 西(W)  4 = 北(N)
         public int score { get; private set; }
 
         public Player(int w)
@@ -33,18 +33,31 @@ namespace mahjongNEA
             InitializeComponent();
             ownTiles = new List<Tile>();
             walledTiles = new List<Tile>();
+            bonusTiles = new List<Tile>();
             wind = w;
         }
 
         public virtual void addTile(Tile t)
         {
-            
+            if (t.bonus)
+            {
+                t.interactive = false;
+                t.unconcealTile();
+                bonusTiles.Add(t);
+            }
+            else
+            {
+                ownTiles.Add(t);
+            }
+            sortTiles();
+            updateTileDisplay();
         }
 
         public void updateTileDisplay()
         {
             ownTileDisplay.Children.Clear();
             walledTileDisplay.Children.Clear();
+            bonusTileDisplay.Children.Clear();
             foreach (Tile t in ownTiles)
             {
                 ownTileDisplay.Children.Add(t);
@@ -52,6 +65,10 @@ namespace mahjongNEA
             foreach (Tile t in walledTiles)
             {
                 walledTileDisplay.Children.Add(t);
+            }
+            foreach (Tile t in bonusTiles)
+            {
+                bonusTileDisplay.Children.Add(t);
             }
         }
 
@@ -63,7 +80,7 @@ namespace mahjongNEA
             while (!sorted)
             {
                 sorted = true;
-                for (int i = 0; i < ownTiles.Count-1; i++)
+                for (int i = 0; i < ownTiles.Count - 1; i++)
                 {
                     if (ownTiles[i] > ownTiles[i + 1])
                     {
@@ -75,6 +92,11 @@ namespace mahjongNEA
                 }
             }
             updateTileDisplay();
+        }
+
+        protected virtual void OwnTileDisplay_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

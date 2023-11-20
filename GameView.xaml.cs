@@ -32,10 +32,10 @@ namespace mahjongNEA
             this.playerWind = playerWind;
             this.prevailingWind = prevailingWind;
             players = new Player[4];
-            players[playerWind-1] = new UserPlayer(playerWind);
+            players[playerWind - 1] = new UserPlayer(playerWind);
             players[playerWind % 4] = new ComputerPlayer((playerWind + 1) % 4);
-            players[(playerWind + 1 ) % 4] = new ComputerPlayer((playerWind + 2) % 4);
-            players[(playerWind + 2 ) % 4] = new ComputerPlayer((playerWind + 3) % 4);
+            players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 2) % 4);
+            players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 3) % 4);
             userPlayerGrid.Children.Add(players[playerWind - 1]);
             rightPlayerGrid.Children.Add(players[playerWind % 4]);
             topPlayerGrid.Children.Add(players[(playerWind + 1) % 4]);
@@ -46,39 +46,34 @@ namespace mahjongNEA
             availableTiles = new List<Tile>();
             for (int i = 1; i <= 9; i++)
             {
-                availableTiles.Add(new Tile(i, 'm'));
-                availableTiles.Add(new Tile(i, 'm'));
-                availableTiles.Add(new Tile(i, 'm'));
-                availableTiles.Add(new Tile(i, 'm'));
-                availableTiles.Add(new Tile(i, 's'));
-                availableTiles.Add(new Tile(i, 's'));
-                availableTiles.Add(new Tile(i, 's'));
-                availableTiles.Add(new Tile(i, 's'));
-                availableTiles.Add(new Tile(i, 'p'));
-                availableTiles.Add(new Tile(i, 'p'));
-                availableTiles.Add(new Tile(i, 'p'));
-                availableTiles.Add(new Tile(i, 'p'));
+                for (int j = 0; j < 4; j++)
+                {
+                    availableTiles.Add(new Tile(i, 'm'));
+                    availableTiles.Add(new Tile(i, 's'));
+                    availableTiles.Add(new Tile(i, 'p'));
+                }
             }
             for (int i = 2; i <= 8; i++)
             {
-                availableTiles.Add(new Tile(i, 'z'));
-                availableTiles.Add(new Tile(i, 'z'));
-                availableTiles.Add(new Tile(i, 'z'));
-                availableTiles.Add(new Tile(i, 'z'));
+                for (int j = 0; j < 4; j++)
+                {
+                    availableTiles.Add(new Tile(i, 'z'));
+                }
             }
             for (int i = 2; i <= 5; i++)
             {
                 availableTiles.Add(new Tile(i, 'n'));
                 availableTiles.Add(new Tile(i, 'f'));
             }
-            int k;
+            Tile k;
             for (int j = 0; j < 4; j++)
             {
                 for (int i = 0; i < 13; i++)
                 {
-                    k = rng.Next(availableTiles.Count);
-                    players[j].addTile(availableTiles[k]);
-                    availableTiles.RemoveAt(k);
+                    k = availableTiles[rng.Next(availableTiles.Count)];
+                    players[j].addTile(k);
+                    availableTiles.Remove(k);
+                    if (k.bonus) i--;
                 }
             }
         }

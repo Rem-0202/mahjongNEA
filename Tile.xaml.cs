@@ -32,6 +32,8 @@ namespace mahjongNEA
         public bool special { get; private set; }
         public bool bonus { get; private set; }
         public bool concealed { get; private set; }
+        public int numID { get; private set; }
+        private static int nextID = 0;
         public bool interactive;
         public Tile()
         {
@@ -54,6 +56,8 @@ namespace mahjongNEA
             setImage();
             Height = tileImage.Height;
             Width = tileImage.Width;
+            numID = nextID;
+            nextID++;
         }
 
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;
@@ -68,6 +72,12 @@ namespace mahjongNEA
         {
             concealed = true;
             interactive = false;
+            setImage();
+        }
+
+        public void unconcealTile()
+        {
+            concealed = false;
             setImage();
         }
 

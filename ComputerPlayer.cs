@@ -9,16 +9,18 @@ namespace mahjongNEA
 {
     class ComputerPlayer : Player
     {
+        public List<Tile> notAvailableTiles { get; private set; }
         public ComputerPlayer(int wind) : base(wind)
         {
             InitializeComponent();
+            notAvailableTiles = new List<Tile>();
         }
 
         public override void addTile(Tile t)
         {
             t.concealTile();
-            ownTiles.Add(t);
-            sortTiles();
+            notAvailableTiles.Add(t);
+            base.addTile(t);
         }
 
         public override void sortTiles()

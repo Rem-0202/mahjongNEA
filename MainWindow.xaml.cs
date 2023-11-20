@@ -22,6 +22,10 @@ namespace mahjongNEA
     {
         public GameView g;
         public static bool autoSort = true;
+        private static int prevailingWind;
+        private static int playerWind;
+        private static int startingPoints;
+        private static int endingPoints;
         public MainWindow()
         {
             InitializeComponent();
@@ -32,14 +36,6 @@ namespace mahjongNEA
         {
             helpWindow h = new helpWindow();
             h.Show();
-        }
-
-        private void MenuItem_Game_Temp_Click(object sender, RoutedEventArgs e)
-        {
-            //place holder
-            g = new GameView(3,1);
-            displayGrid.Children.Clear();
-            displayGrid.Children.Add(g);
         }
 
         private void autoSortChecked(object sender, RoutedEventArgs e)
@@ -54,10 +50,16 @@ namespace mahjongNEA
         private void autoSortUnchecked(object sender, RoutedEventArgs e)
         {
             autoSort = false;
-            if (g != null)
-            {
-                g.toggleSort();
-            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            restartButton.Visibility = Visibility.Visible;
+            newGameDialog ngd = new newGameDialog();
+            ngd.Show();
+            g = new GameView(3, 1);
+            displayGrid.Children.Clear();
+            displayGrid.Children.Add(g);
         }
     }
 }

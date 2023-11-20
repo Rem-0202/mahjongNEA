@@ -10,7 +10,7 @@ namespace mahjongNEA
 {
     class UserPlayer : Player
     {
-        public UserPlayer(int wind) : base(wind) 
+        public UserPlayer(int wind) : base(wind)
         {
             InitializeComponent();
         }
@@ -18,8 +18,14 @@ namespace mahjongNEA
         public override void addTile(Tile t)
         {
             t.interactive = true;
-            ownTiles.Add(t);
-            sortTiles();
+            base.addTile(t);
+        }
+
+        protected override void OwnTileDisplay_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Tile t = (Tile)e.Source;
+            ownTiles.Remove(t);
+            walledTiles.Add(t);
             updateTileDisplay();
         }
     }
