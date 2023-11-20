@@ -21,22 +21,22 @@ namespace mahjongNEA
     public partial class newGameDialog : Window
     {
         private static Regex numbersOnlyRegex = new Regex("[0-9]+");
-        public int sPoints;
-        public int ePoints;
-        public int pWind;
-        public int uWind;
+        public static int sPoints = 15000;
+        public static int ePoints = 30000;
+        public static int pWind = 1;
+        public static int uWind = 1;
         public newGameDialog()
         {
             InitializeComponent();
+            startingPoints.Text = sPoints.ToString();
+            endingPoints.Text = ePoints.ToString();
+            pWindSelector.SelectedIndex = pWind - 1;
+            uWindSelector.SelectedIndex = uWind - 1;
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !numbersOnlyRegex.IsMatch(e.Text);
-            sPoints = 15000;
-            ePoints = 30000;
-            pWind = 1;
-            uWind = 1;
         }
 
         private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)

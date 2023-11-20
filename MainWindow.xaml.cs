@@ -22,10 +22,6 @@ namespace mahjongNEA
     {
         public GameView g;
         public static bool autoSort = true;
-        private static int prevailingWind;
-        private static int playerWind;
-        private static int startingPoints;
-        private static int endingPoints;
         public MainWindow()
         {
             InitializeComponent();
@@ -54,16 +50,10 @@ namespace mahjongNEA
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            newGameDialog ngd = new newGameDialog();
-            bool? dresult = ngd.ShowDialog();
-            switch (dresult)
+            switch (new newGameDialog().ShowDialog())
             {
                 case true:
-                    prevailingWind = ngd.pWind;
-                    playerWind = ngd.uWind;
-                    startingPoints = ngd.sPoints;
-                    endingPoints = ngd.ePoints;
-                    g = new GameView(prevailingWind, playerWind, startingPoints, endingPoints);
+                    g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
                     displayGrid.Children.Clear();
                     displayGrid.Children.Add(g);
                     restartButton.Visibility = Visibility.Visible;
@@ -78,7 +68,7 @@ namespace mahjongNEA
 
         private void restartButton_Click(object sender, RoutedEventArgs e)
         {
-            g = new GameView(prevailingWind, playerWind, startingPoints, endingPoints);
+            g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
         }
