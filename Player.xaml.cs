@@ -26,14 +26,15 @@ namespace mahjongNEA
         public List<Tile> bonusTiles { get; protected set; }
         public Tile drawnTile { get; private set; }
         public int wind { get; private set; }  //1 = 東(E)  2 = 南(S)  3 = 西(W)  4 = 北(N)
-        public int score { get; private set; }
+        public int points { get; private set; }
 
-        public Player(int w)
+        public Player(int w, int points)
         {
             InitializeComponent();
             ownTiles = new List<Tile>();
             walledTiles = new List<Tile>();
             bonusTiles = new List<Tile>();
+            this.points = points;
             wind = w;
         }
 
@@ -97,6 +98,12 @@ namespace mahjongNEA
         protected virtual void OwnTileDisplay_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        public void flipTiles()
+        {
+            walledTileDisplay.LayoutTransform = new RotateTransform(180.0);
+            bonusTileDisplay.LayoutTransform = new RotateTransform(180.0);
         }
     }
 }

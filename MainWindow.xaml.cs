@@ -72,5 +72,13 @@ namespace mahjongNEA
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
         }
+
+        //temp new game for easier debug
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+            displayGrid.Children.Clear();
+            displayGrid.Children.Add(g);
+        }
     }
 }

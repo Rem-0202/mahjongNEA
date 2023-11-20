@@ -36,16 +36,17 @@ namespace mahjongNEA
             this.startingPoints = startingPoints;
             this.endingPoints = endingPoints;
             players = new Player[4];
-            players[playerWind - 1] = new UserPlayer(playerWind);
-            players[playerWind % 4] = new ComputerPlayer((playerWind + 1) % 4);
-            players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 2) % 4);
-            players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 3) % 4);
+            players[playerWind - 1] = new UserPlayer(playerWind, startingPoints);
+            players[playerWind % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints);
+            players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints);
+            players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints);
             userPlayerGrid.Children.Add(players[playerWind - 1]);
             rightPlayerGrid.Children.Add(players[playerWind % 4]);
             topPlayerGrid.Children.Add(players[(playerWind + 1) % 4]);
             leftPlayerGrid.Children.Add(players[(playerWind + 2) % 4]);
             players[playerWind % 4].LayoutTransform = new RotateTransform(270.0);
             players[(playerWind + 1) % 4].LayoutTransform = new RotateTransform(180.0);
+            players[(playerWind + 1) % 4].flipTiles();
             players[(playerWind + 2) % 4].LayoutTransform = new RotateTransform(90.0);
             availableTiles = new List<Tile>();
             for (int i = 1; i <= 9; i++)
