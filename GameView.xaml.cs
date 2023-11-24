@@ -121,7 +121,10 @@ namespace mahjongNEA
             int playerIndex = prevailingWind;
             currentPlayer = players[playerIndex];
             Action lastAction = currentPlayer.getAction(new Action(0));
+            currentPlayer.acceptAction();
             Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
+            //TODO: understand whatever is happening here idk, change it so that if interruptions it goes next loop with lastAciton = new Action(0);
+            //instead of implementing that in else if statements
             do
             {
                 currentPlayer = players[playerIndex];
@@ -129,22 +132,37 @@ namespace mahjongNEA
                 playerActions.Add(players[(playerIndex + 1) % 4], players[(playerIndex + 1) % 4].getAction(lastAction));
                 playerActions.Add(players[(playerIndex + 2) % 4], players[(playerIndex + 2) % 4].getAction(lastAction));
                 playerActions.Add(players[(playerIndex + 3) % 4], players[(playerIndex + 3) % 4].getAction(lastAction));
-                playerIndex = (playerIndex + 1) % 4;
+                int maxChoice = -1;
                 foreach (Action a in playerActions.Values)
                 {
-                    //doesn't work, will accept first action, change to check for largest action type and accept that
-                    //if (a.typeOfAction == 5)
-                    //{
-                    //    //TODO: add player win ending
-                    //    end = true;
-                    //    break;
-                    //}
-                    //else if (a.typeOfAction == 3 || a.typeOfAction == 4)
-                    //{
-                    //    playerActions.First(e => e.Value == a).Key.acceptAction();
-                    //    lastAction = a;
-                    //    break;
-                    //}
+                    maxChoice = Math.Max(a.typeOfAction, maxChoice);
+                }
+                if (maxChoice == 5)
+                {
+                    //TODO: implement win round by player
+                    end = true;
+                }
+                else if (maxChoice == 4 || maxChoice == 3)
+                {
+                    Player p = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
+                    p.acceptAction();
+                    playerIndex = (Array.IndexOf(players, p) + 1) % 4;
+                    lastAction = p.getAction(new Action(0));
+                    //TODO: implement pong kong display
+                }
+                else
+                {
+                    playerIndex = (playerIndex + 1) % 4;
+                    players[playerIndex].acceptAction();
+                    if (maxChoice == 2)
+                    {
+                        //TODO: implement chow display
+                        lastAction = players[playerIndex].getAction(new Action(0));
+                    }
+                    else
+                    {
+                        //TODO: implement discard display
+                    }
                 }
             } while (!end);
         }
