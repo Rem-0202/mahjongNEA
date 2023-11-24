@@ -26,6 +26,7 @@
                 <Separator/>
                 <MenuItem Header="Analysis _Mode"/>
             </MenuItem>
+            <!-- add messy discard option off by default -->
             <MenuItem Header="_Help" Margin="0,0,5,0" Click="MenuItem_Help_Click"/>
             <!-- easier debug temp new game -->
             <MenuItem Header="_Temp New Game" Margin="0,0,5,0" Click="MenuItem_Click_1"/>

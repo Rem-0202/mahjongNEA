@@ -43,5 +43,18 @@ namespace mahjongNEA
             }
             updateTileDisplay();
         }
+
+        public override Action getAction(Action a)
+        {
+            if (a.allTiles != null && a.allTiles.Count > 0)
+            {
+                foreach (Tile t in a.allTiles)
+                {
+                    notAvailableTiles.Add(t);
+                }
+            }
+            return new Action(0);
+            //temp return to avoid crashing for testing
+        }
     }
 }

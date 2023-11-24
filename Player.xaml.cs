@@ -21,11 +21,12 @@ namespace mahjongNEA
     /// </summary>
     public partial class Player : UserControl
     {
+        public bool ownTurn { get; protected set; }
         public List<Tile> ownTiles { get; protected set; }
         public List<Tile> walledTiles { get; protected set; }
         public List<Tile> bonusTiles { get; protected set; }
         public Tile drawnTile { get; private set; }
-        public int wind { get; private set; }  //1 = 東(E)  2 = 南(S)  3 = 西(W)  4 = 北(N)
+        public int wind { get; private set; }  //0 = 東(E)  1 = 南(S)  2 = 西(W)  3 = 北(N)
         public int points { get; private set; }
 
         public Player(int w, int points)
@@ -110,6 +111,16 @@ namespace mahjongNEA
         {
             points += c;
             return points <= 0;
+        }
+
+        public virtual Action getAction(Action a)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void acceptAction()
+        {
+
         }
     }
 }

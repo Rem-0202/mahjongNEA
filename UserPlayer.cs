@@ -10,6 +10,8 @@ namespace mahjongNEA
 {
     class UserPlayer : Player
     {
+        private Tile selectedTile;
+
         public UserPlayer(int wind, int points) : base(wind, points)
         {
             InitializeComponent();
@@ -24,10 +26,26 @@ namespace mahjongNEA
         protected override void OwnTileDisplay_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Tile t = (Tile)e.Source;
-            ownTiles.Remove(t);
-            walledTiles.Add(t);
-            updateTileDisplay();
+            if (ownTurn)
+            {
+                selectedTile = t;
+            }
+            //ownTiles.Remove(t);
+            //walledTiles.Add(t);
+            //updateTileDisplay();
         }
         //used for testing display, change later
+
+        public override Action getAction(Action a)
+        {
+
+            return new Action(1, selectedTile);
+            //temp return to avoid crashing for testing
+        }
+
+        public override void acceptAction()
+        {
+
+        }
     }
 }

@@ -25,5 +25,31 @@
         <Grid x:Name="rightPlayerGrid" Grid.Row="1" Grid.Column="2"
               Grid.RowSpan="3"/>
         <Grid x:Name="userPlayerGrid" Grid.Row="3" Grid.Column="1"/>
+        <!--<Grid Grid.Row="2" Grid.Column="1" x:Name="messyDiscardGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>-->
+        <!-- messy discard grid change to stack tiles -->
     </Grid>
 </UserControl>
