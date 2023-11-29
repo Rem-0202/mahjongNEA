@@ -45,7 +45,7 @@ namespace mahjongNEA
             this.startingPoints = startingPoints;
             this.endingPoints = endingPoints;
             players = new Player[4];
-            players[playerWind % 4] = new UserPlayer(playerWind, startingPoints);
+            players[playerWind % 4] = new UserPlayer(playerWind, startingPoints, userActionButtons);
             players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints);
             players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints);
             players[(playerWind + 3) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints);
@@ -120,6 +120,7 @@ namespace mahjongNEA
             bool end = false;
             int playerIndex = prevailingWind;
             currentPlayer = players[playerIndex];
+            //TODO: add drawing tile and accepting redraws, change actions to give drawn tiles
             Action lastAction = currentPlayer.getAction(new Action(0));
             currentPlayer.acceptAction();
             Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
@@ -128,6 +129,7 @@ namespace mahjongNEA
             do
             {
                 currentPlayer = players[playerIndex];
+                currentPlayer.ownTurn = true;
                 playerActions.Clear();
                 playerActions.Add(players[(playerIndex + 1) % 4], players[(playerIndex + 1) % 4].getAction(lastAction));
                 playerActions.Add(players[(playerIndex + 2) % 4], players[(playerIndex + 2) % 4].getAction(lastAction));
@@ -146,21 +148,23 @@ namespace mahjongNEA
                 {
                     Player p = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
                     p.acceptAction();
-                    playerIndex = (Array.IndexOf(players, p) + 1) % 4;
-                    lastAction = p.getAction(new Action(0));
+                    playerIndex = Array.IndexOf(players, p);
+                    lastAction = new Action(0);
+
                     //TODO: implement pong kong display
                 }
                 else
                 {
-                    playerIndex = (playerIndex + 1) % 4;
                     players[playerIndex].acceptAction();
-                    if (maxChoice == 2)
+                    if (playerActions[players[playerIndex]].typeOfAction == 2)
                     {
                         //TODO: implement chow display
-                        lastAction = players[playerIndex].getAction(new Action(0));
+                        playerIndex = (playerIndex + 3) % 4;
+                        lastAction = new Action(0);
                     }
                     else
                     {
+                        playerIndex = (playerIndex + 1) % 4;
                         //TODO: implement discard display
                     }
                 }

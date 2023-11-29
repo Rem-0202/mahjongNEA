@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace mahjongNEA
@@ -11,10 +12,12 @@ namespace mahjongNEA
     class UserPlayer : Player
     {
         private Tile selectedTile;
+        public StackPanel actionButtons;
 
-        public UserPlayer(int wind, int points) : base(wind, points)
+        public UserPlayer(int wind, int points, UIElement actionButtons) : base(wind, points)
         {
             InitializeComponent();
+            this.actionButtons = (StackPanel)actionButtons;
         }
 
         public override void addTile(Tile t)
@@ -29,10 +32,9 @@ namespace mahjongNEA
             if (ownTurn)
             {
                 selectedTile = t;
+                ownTiles.Remove(t);
+                updateTileDisplay();
             }
-            //ownTiles.Remove(t);
-            //walledTiles.Add(t);
-            //updateTileDisplay();
         }
         //used for testing display, change later
 

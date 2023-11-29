@@ -21,7 +21,8 @@ namespace mahjongNEA
     /// </summary>
     public partial class Player : UserControl
     {
-        public bool ownTurn { get; protected set; }
+        public bool ownTurn;
+        public Action lastAction { get; protected set; }
         public List<Tile> ownTiles { get; protected set; }
         public List<Tile> walledTiles { get; protected set; }
         public List<Tile> bonusTiles { get; protected set; }
@@ -120,7 +121,7 @@ namespace mahjongNEA
 
         public virtual void acceptAction()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

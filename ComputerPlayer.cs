@@ -46,12 +46,17 @@ namespace mahjongNEA
 
         public override Action getAction(Action a)
         {
-            if (a.allTiles != null && a.allTiles.Count > 0)
+            if (a.typeOfAction >= 2)
             {
                 foreach (Tile t in a.allTiles)
                 {
                     notAvailableTiles.Add(t);
                 }
+                return new Action(0);
+            }
+            else if (a.typeOfAction == 1)
+            {
+                //TODO: implement rob tile check
             }
             return new Action(0);
             //temp return to avoid crashing for testing

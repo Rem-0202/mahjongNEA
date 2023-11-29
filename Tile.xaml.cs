@@ -93,8 +93,8 @@ namespace mahjongNEA
                 bitmap.EndInit();
                 bitmap.Freeze();
             }
-            tileImage.Height = bitmap.Height;
-            tileImage.Width = bitmap.Width;
+            tileImage.Height = bitmap.Height * 4.1 / 5;
+            tileImage.Width = bitmap.Width * 4.1 / 5;
             tileImage.Source = bitmap;
         }
 

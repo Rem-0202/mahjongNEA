@@ -18,22 +18,17 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="0.06*"/>
+            <ColumnDefinition Width="0.02*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Orientation="Horizontal"
                     x:Name="ownTileDisplay" Mouse.MouseDown="OwnTileDisplay_MouseDown"/>
         <!-- Mouse.MouseDown="OwnTileDisplay_MouseDown" detect mouse method, detect click and drag later -->
         <!--TODO: add mouseup method, detect click and drag reorder tiles-->
-        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="7">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal"
-                    x:Name="walledTileDisplay"/>
-            <StackPanel Grid.Row="1" Orientation="Horizontal"
-                    x:Name="bonusTileDisplay"/>
-        </Grid>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
+                    Orientation="Horizontal" x:Name="walledTileDisplay"/>
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"
+                    Orientation="Horizontal" x:Name="bonusTileDisplay" 
+                    HorizontalAlignment="Left"/>
     </Grid>
 </UserControl>
