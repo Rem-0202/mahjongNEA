@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,7 +113,7 @@ namespace mahjongNEA
         {
             players[playerWind].ownTurn = true;
             Action ta = new Action(0);
-            ta = players[playerWind].getAction(ta);
+            ta = players[playerWind].getAction(new Action(0));
             MessageBox.Show(ta.representingTile.tileID);
         }
         public void toggleSort()

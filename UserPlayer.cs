@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Threading;
+using System.Windows.Navigation;
 
 namespace mahjongNEA
 {
@@ -14,6 +15,7 @@ namespace mahjongNEA
     {
         private Tile selectedTile;
         private bool clickedTile = false;
+        private ManualResetEvent mre = new ManualResetEvent(false);
         public StackPanel actionButtons;
 
         public UserPlayer(int wind, int points, UIElement actionButtons) : base(wind, points)
@@ -36,6 +38,7 @@ namespace mahjongNEA
                 if (ownTurn)
                 {
                     clickedTile = true;
+                    mre.Set();
                     selectedTile = t;
                 }
             }
@@ -48,10 +51,6 @@ namespace mahjongNEA
 
         private void waitForClick()
         {
-            while (!clickedTile)
-            {
-                Thread.Sleep(200);
-            }
             lastAction = new Action(1, selectedTile);
             selectedTile = null;
             clickedTile = false;
@@ -61,8 +60,8 @@ namespace mahjongNEA
         {
             if (a.typeOfAction == 0)
             {
-                Thread t = new Thread(waitForClick);
-                t.Start();
+                ThreadPool.QueueUserWorkItem(_ => waitForClick());
+                mre.WaitOne();
                 return lastAction;
             }
             else if (a.typeOfAction == 1)
