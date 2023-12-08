@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Threading;
 
 namespace mahjongNEA
 {
     class UserPlayer : Player
     {
         private Tile selectedTile;
+        private bool clickedTile = false;
         public StackPanel actionButtons;
 
         public UserPlayer(int wind, int points, UIElement actionButtons) : base(wind, points)
@@ -28,26 +30,52 @@ namespace mahjongNEA
 
         protected override void OwnTileDisplay_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Tile t = (Tile)e.Source;
-            if (ownTurn)
+            try
             {
-                selectedTile = t;
-                ownTiles.Remove(t);
-                updateTileDisplay();
+                Tile t = (Tile)e.Source;
+                if (ownTurn)
+                {
+                    clickedTile = true;
+                    selectedTile = t;
+                }
+            }
+            catch (Exception k)
+            {
+                MessageBox.Show(k.Message);
             }
         }
         //used for testing display, change later
 
+        private void waitForClick()
+        {
+            while (!clickedTile)
+            {
+                Thread.Sleep(200);
+            }
+            lastAction = new Action(1, selectedTile);
+            selectedTile = null;
+            clickedTile = false;
+        }
+
         public override Action getAction(Action a)
         {
+            if (a.typeOfAction == 0)
+            {
+                Thread t = new Thread(waitForClick);
+                t.Start();
+                return lastAction;
+            }
+            else if (a.typeOfAction == 1)
+            {
 
-            return new Action(1, selectedTile);
+            }
+            return new Action(0);
             //temp return to avoid crashing for testing
         }
 
         public override void acceptAction()
         {
-
+            ownTurn = true;
         }
     }
 }

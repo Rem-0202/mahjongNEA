@@ -11,7 +11,7 @@ namespace mahjongNEA
         public int typeOfAction { get; private set; }
         /* 
          * 
-         * 0 = nothing
+         * 0 = ask for discard
          * 1 = discard
          * 2 = chow
          * 3 = pong

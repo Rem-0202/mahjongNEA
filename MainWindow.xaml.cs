@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace mahjongNEA
 {
@@ -76,9 +77,21 @@ namespace mahjongNEA
         //temp new game for easier debug
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+            g = new GameView(1, 1, newGameDialog.sPoints, newGameDialog.ePoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
+            //System.Threading.SpinWait.SpinUntil(() => true, 2000);
+            //g.players[1].ownTurn = true;
+            //Action ta = g.players[1].getAction(new Action(0));
+            //MessageBox.Show(ta.representingTile.tileID);
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (g != null)
+            {
+                g.temptest();
+            }
         }
     }
 }

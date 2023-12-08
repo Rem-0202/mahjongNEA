@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 //TODO:
 //1) gameview ask each player for action with input action(last action)
 //2) each player returns their wanted action
@@ -107,6 +108,13 @@ namespace mahjongNEA
             //}
         }
 
+        public void temptest()
+        {
+            players[playerWind].ownTurn = true;
+            Action ta = new Action(0);
+            ta = players[playerWind].getAction(ta);
+            MessageBox.Show(ta.representingTile.tileID);
+        }
         public void toggleSort()
         {
             foreach (Player p in players)
@@ -120,16 +128,36 @@ namespace mahjongNEA
             bool end = false;
             int playerIndex = prevailingWind;
             currentPlayer = players[playerIndex];
-            //TODO: add drawing tile and accepting redraws, change actions to give drawn tiles
-            Action lastAction = currentPlayer.getAction(new Action(0));
-            currentPlayer.acceptAction();
+            Tile drawnTile;
             Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
-            //TODO: understand whatever is happening here idk, change it so that if interruptions it goes next loop with lastAciton = new Action(0);
-            //instead of implementing that in else if statements
+            do
+            {
+                drawnTile = availableTiles[rng.Next(availableTiles.Count)];
+                currentPlayer.addTile(drawnTile);
+                availableTiles.Remove(drawnTile);
+            } while (drawnTile.bonus);
+            Array.ForEach(players, e => e.ownTurn = false);
+            currentPlayer.ownTurn = true;
+            Action lastAction = currentPlayer.getAction(new Action(0));
             do
             {
                 currentPlayer = players[playerIndex];
+                Array.ForEach(players, e => e.ownTurn = false);
                 currentPlayer.ownTurn = true;
+                if (lastAction.typeOfAction != 3 || lastAction.typeOfAction != 2)
+                {
+                    do
+                    {
+                        drawnTile = availableTiles[rng.Next(availableTiles.Count)];
+                        currentPlayer.addTile(drawnTile);
+                        availableTiles.Remove(drawnTile);
+                    } while (drawnTile.bonus);
+                }
+                if (lastAction.typeOfAction == 4 || lastAction.typeOfAction == 3 || lastAction.typeOfAction == 2)
+                {
+                    lastAction = currentPlayer.getAction(new Action(0));
+                }
+                currentPlayer.acceptAction();
                 playerActions.Clear();
                 playerActions.Add(players[(playerIndex + 1) % 4], players[(playerIndex + 1) % 4].getAction(lastAction));
                 playerActions.Add(players[(playerIndex + 2) % 4], players[(playerIndex + 2) % 4].getAction(lastAction));
@@ -139,33 +167,30 @@ namespace mahjongNEA
                 {
                     maxChoice = Math.Max(a.typeOfAction, maxChoice);
                 }
+                currentPlayer = players[playerIndex];
                 if (maxChoice == 5)
                 {
                     //TODO: implement win round by player
                     end = true;
                 }
-                else if (maxChoice == 4 || maxChoice == 3)
+                else if (maxChoice == 3 || maxChoice == 4)
                 {
                     Player p = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
-                    p.acceptAction();
+                    lastAction = playerActions[p];
                     playerIndex = Array.IndexOf(players, p);
-                    lastAction = new Action(0);
-
                     //TODO: implement pong kong display
                 }
                 else
                 {
-                    players[playerIndex].acceptAction();
-                    if (playerActions[players[playerIndex]].typeOfAction == 2)
+                    if (playerActions[currentPlayer].typeOfAction == 2)
                     {
                         //TODO: implement chow display
-                        playerIndex = (playerIndex + 3) % 4;
-                        lastAction = new Action(0);
+                        lastAction = playerActions[currentPlayer];
                     }
                     else
                     {
-                        playerIndex = (playerIndex + 1) % 4;
                         //TODO: implement discard display
+                        playerIndex = (playerIndex + 1) % 4;
                     }
                 }
             } while (!end);

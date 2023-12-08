@@ -30,21 +30,15 @@ namespace mahjongNEA
             List<Tile> temp = new List<Tile>();
             foreach (Tile t in tiles)
             {
-                bool c = false;
                 if (t.special)
                 {
                     foreach (Tile x in temp)
                     {
-                        if (x == t)
+                        if (!temp.Contains(x))
                         {
-                            c = true;
-                            break;
+                            s++;
+                            temp.Add(x);
                         }
-                    }
-                    if (!c)
-                    {
-                        temp.Add(t);
-                        s++;
                     }
                 }
             }
@@ -53,7 +47,7 @@ namespace mahjongNEA
 
         private bool isChow(Tile a, Tile b, Tile c)
         {
-            int[] ranks = {a.rank,b.rank,c.rank};
+            int[] ranks = { a.rank, b.rank, c.rank };
             if (a.honour || a.bonus || b.honour || b.bonus || c.honour || c.bonus)
             {
                 return false;
