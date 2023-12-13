@@ -45,7 +45,7 @@ namespace mahjongNEA
             return s;
         }
 
-        private bool isChow(Tile a, Tile b, Tile c)
+        public static bool isChow(Tile a, Tile b, Tile c)
         {
             int[] ranks = { a.rank, b.rank, c.rank };
             if (a.honour || a.bonus || b.honour || b.bonus || c.honour || c.bonus)

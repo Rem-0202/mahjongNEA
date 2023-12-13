@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
+using System.Windows.Threading;
 
 
 //TODO:
@@ -31,6 +32,7 @@ namespace mahjongNEA
     public partial class GameView : UserControl
     {
         public bool messyDiscard;
+        private Action lastAction;
         public static Random rng = new Random();
         public int prevailingWind { get; private set; }
         public int playerWind { get; private set; }
@@ -39,6 +41,7 @@ namespace mahjongNEA
         public int startingPoints { get; private set; }
         public int endingPoints { get; private set; }
         public Player currentPlayer { get; private set; }
+        private List<Tile> discardedTiles = new List<Tile>();
         public GameView(int prevailingWind, int playerWind, int startingPoints, int endingPoints)
         {
             InitializeComponent();
@@ -111,11 +114,30 @@ namespace mahjongNEA
 
         public void temptest()
         {
-            players[playerWind].ownTurn = true;
+            Tile drawnTile;
+            currentPlayer = players[playerWind];
+            do
+            {
+                drawnTile = availableTiles[rng.Next(availableTiles.Count)];
+                currentPlayer.addTile(drawnTile);
+                availableTiles.Remove(drawnTile);
+            } while (drawnTile.bonus);
             Action ta = new Action(0);
-            ta = players[playerWind].getAction(new Action(0));
-            MessageBox.Show(ta.representingTile.tileID);
+            currentPlayer.ownTurn = true;
+            ta = currentPlayer.getAction(ta);
+            currentPlayer.ownTurn = false;
+            MessageBox.Show($"{ta.typeOfAction} {ta.representingTile.tileID}");
+            if (ta.typeOfAction == 1)
+            {
+                currentPlayer.acceptAction();
+                discardedTiles.Add(ta.representingTile);
+                discardPanel.Children.Add(ta.representingTile);
+                ta.representingTile.Margin = new Thickness(5, 5, 5, 5);
+                lastAction = new Action(1, ta.representingTile);
+                ta.representingTile.interactive = false;
+            }
         }
+
         public void toggleSort()
         {
             foreach (Player p in players)
@@ -139,7 +161,7 @@ namespace mahjongNEA
             } while (drawnTile.bonus);
             Array.ForEach(players, e => e.ownTurn = false);
             currentPlayer.ownTurn = true;
-            Action lastAction = currentPlayer.getAction(new Action(0));
+            lastAction = currentPlayer.getAction(new Action(0));
             do
             {
                 currentPlayer = players[playerIndex];
@@ -179,6 +201,7 @@ namespace mahjongNEA
                     Player p = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
                     lastAction = playerActions[p];
                     playerIndex = Array.IndexOf(players, p);
+                    MessageBox.Show($"{lastAction.typeOfAction} {lastAction.representingTile.tileID}");
                     //TODO: implement pong kong display
                 }
                 else
@@ -190,6 +213,7 @@ namespace mahjongNEA
                     }
                     else
                     {
+                        MessageBox.Show($"{lastAction.typeOfAction} {lastAction.representingTile.tileID}");
                         //TODO: implement discard display
                         playerIndex = (playerIndex + 1) % 4;
                     }
