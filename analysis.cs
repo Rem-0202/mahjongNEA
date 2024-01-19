@@ -62,5 +62,10 @@ namespace mahjongNEA
                 else return false;
             }
         }
+
+        public static bool isPong(Tile a, Tile b, Tile c)
+        {
+            return a == b && b == c;
+        }
     }
 }

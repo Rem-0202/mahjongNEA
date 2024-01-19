@@ -1,1 +1,16 @@
-﻿
+﻿NEW BRANCH FOR FEATURES
+	USE MAIN BRANCH FOR MAIN WINDOW + MAIN GAME LOOP CHANGES
+
+MAIN TODO:
+	finish game loop, do in main branch
+	dont break things, fix broken things
+
+TODO:
+	start menu
+		make new user control, add return type to gameloop and all displayGrid elements
+	results screen
+		same approach as start menu
+		STARTMENU => GAMEVIEW => RESULTS => STARTMENU
+	drag drop (optional, recommended)
+		make in userPlayer.cs, do last
+		might mess with click to discard

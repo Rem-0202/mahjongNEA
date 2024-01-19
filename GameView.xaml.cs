@@ -150,43 +150,47 @@ namespace mahjongNEA
         public void gameLoop()
         {
             bool end = false;
+            bool firstDraw = false;
             int playerIndex = prevailingWind;
-            currentPlayer = players[playerIndex];
+            int maxChoice;
             Tile drawnTile;
             Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
+            lastAction = new Action(0);
+            #region oldGameloop
             do
             {
-                drawnTile = availableTiles[rng.Next(availableTiles.Count)];
-                currentPlayer.addTile(drawnTile);
-                availableTiles.Remove(drawnTile);
-            } while (drawnTile.bonus);
-            Array.ForEach(players, e => e.ownTurn = false);
-            currentPlayer.ownTurn = true;
-            lastAction = currentPlayer.getAction(new Action(0));
-            do
-            {
-                currentPlayer = players[playerIndex];
                 Array.ForEach(players, e => e.ownTurn = false);
-                currentPlayer.ownTurn = true;
-                if (lastAction.typeOfAction != 3 || lastAction.typeOfAction != 2)
+                players[(playerIndex + 1) % 4].ownTurn = true;
+                currentPlayer.acceptAction();
+                firstDraw = true;
+                if (lastAction.typeOfAction == 1)
                 {
-                    do
-                    {
-                        drawnTile = availableTiles[rng.Next(availableTiles.Count)];
-                        currentPlayer.addTile(drawnTile);
-                        availableTiles.Remove(drawnTile);
-                    } while (drawnTile.bonus);
+                    //discardedTiles.Add(lastAction.representingTile);
+                    lastAction.representingTile.unconcealTile();
+                    lastAction.representingTile.unhover();
+                    lastAction.representingTile.interactive = false;
+                    lastAction.representingTile.Margin = new Thickness(5, 5, 5, 5);
+                    discardPanel.Children.Add(lastAction.representingTile);
                 }
                 if (lastAction.typeOfAction == 4 || lastAction.typeOfAction == 3 || lastAction.typeOfAction == 2)
                 {
+                    if (lastAction.typeOfAction == 4)
+                    {
+                        do
+                        {
+                            drawnTile = availableTiles[rng.Next(availableTiles.Count)];
+                            currentPlayer.addTile(drawnTile);
+                            availableTiles.Remove(drawnTile);
+                        } while (drawnTile.bonus);
+                    }
                     lastAction = currentPlayer.getAction(new Action(0));
                 }
-                currentPlayer.acceptAction();
                 playerActions.Clear();
+                firstDraw = true;
                 playerActions.Add(players[(playerIndex + 1) % 4], players[(playerIndex + 1) % 4].getAction(lastAction));
                 playerActions.Add(players[(playerIndex + 2) % 4], players[(playerIndex + 2) % 4].getAction(lastAction));
                 playerActions.Add(players[(playerIndex + 3) % 4], players[(playerIndex + 3) % 4].getAction(lastAction));
-                int maxChoice = -1;
+                maxChoice = -1;
                 foreach (Action a in playerActions.Values)
                 {
                     maxChoice = Math.Max(a.typeOfAction, maxChoice);
@@ -200,26 +204,91 @@ namespace mahjongNEA
                 else if (maxChoice == 3 || maxChoice == 4)
                 {
                     Player p = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
-                    lastAction = playerActions[p];
                     playerIndex = Array.IndexOf(players, p);
                     MessageBox.Show($"{lastAction.typeOfAction} {lastAction.representingTile.tileID}");
-                    //TODO: implement pong kong display
                 }
                 else
                 {
-                    if (playerActions[currentPlayer].typeOfAction == 2)
+                    playerIndex = (playerIndex + 1) % 4;
+                    if (maxChoice == 2 && playerActions[players[playerIndex]].typeOfAction == 2)
                     {
-                        //TODO: implement chow display
-                        lastAction = playerActions[currentPlayer];
+                        MessageBox.Show($"{lastAction.typeOfAction} {lastAction.representingTile.tileID}");
                     }
                     else
                     {
                         MessageBox.Show($"{lastAction.typeOfAction} {lastAction.representingTile.tileID}");
-                        //TODO: implement discard display
-                        playerIndex = (playerIndex + 1) % 4;
                     }
                 }
+                currentPlayer = players[playerIndex];
+                lastAction = playerActions[currentPlayer];
             } while (!end);
+            #endregion
+
+            #region new gameloop not finished, need fix
+            do
+            {
+                currentPlayer = players[playerIndex];
+                Array.ForEach(players, e => e.ownTurn = false);
+                currentPlayer.ownTurn = true;
+                if (lastAction.typeOfAction != 2 && lastAction.typeOfAction != 3)
+                {
+                    do
+                    {
+                        drawnTile = availableTiles[rng.Next(availableTiles.Count)];
+                        currentPlayer.addTile(drawnTile);
+                        availableTiles.Remove(drawnTile);
+                    } while (drawnTile.bonus);
+                }
+                if (lastAction.typeOfAction == 0)
+                {
+                    lastAction = currentPlayer.getAction(lastAction);
+                }
+                if (lastAction.typeOfAction == 1)
+                {
+                    discardedTiles.Add(lastAction.representingTile);
+                    lastAction.representingTile.unconcealTile();
+                    lastAction.representingTile.unhover();
+                    lastAction.representingTile.interactive = false;
+                    lastAction.representingTile.Margin = new Thickness(5, 5, 5, 5);
+                    discardPanel.Children.Add(lastAction.representingTile);
+                }
+                playerActions.Add(players[(playerIndex + 1) % 4], players[(playerIndex + 1) % 4].getAction(lastAction));
+                playerActions.Add(players[(playerIndex + 2) % 4], players[(playerIndex + 2) % 4].getAction(lastAction));
+                playerActions.Add(players[(playerIndex + 3) % 4], players[(playerIndex + 3) % 4].getAction(lastAction));
+                maxChoice = -1;
+                foreach (Action a in playerActions.Values)
+                {
+                    maxChoice = Math.Max(a.typeOfAction, maxChoice);
+                }
+                if (maxChoice == 5)
+                {
+                    end = true;
+                    break;
+                }
+                else if (maxChoice == 3 || maxChoice == 4)
+                {
+                    Player p = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
+                    playerIndex = Array.IndexOf(players, p);
+                    currentPlayer = players[playerIndex];
+                    MessageBox.Show($"{lastAction.typeOfAction} {lastAction.representingTile.tileID}");
+                    if (maxChoice == 4)
+                    {
+                        do
+                        {
+                            drawnTile = availableTiles[rng.Next(availableTiles.Count)];
+                            currentPlayer.addTile(drawnTile);
+                            availableTiles.Remove(drawnTile);
+                        } while (drawnTile.bonus);
+                    }
+                    currentPlayer.acceptAction();
+
+                }
+                else if (maxChoice == 2)
+                {
+
+                }
+            } while (!end);
+            #endregion
         }
     }
 }

@@ -32,9 +32,9 @@ namespace mahjongNEA
         public bool special { get; private set; }
         public bool bonus { get; private set; }
         public bool concealed { get; private set; }
-        public int numID { get; private set; }
-        private static int nextID = 0;
+
         public bool interactive;
+        public bool hovered;
         public Tile()
         {
             InitializeComponent();
@@ -56,8 +56,6 @@ namespace mahjongNEA
             setImage();
             Height = tileImage.Height;
             Width = tileImage.Width;
-            numID = nextID;
-            nextID++;
         }
 
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;
@@ -104,12 +102,23 @@ namespace mahjongNEA
             {
                 Height += tileImage.ActualHeight / 4;
                 tileImage.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight / 4);
+                hovered = true;
             }
         }
 
         private void tileImage_MouseLeave(object sender, MouseEventArgs e)
         {
             if (!concealed && interactive)
+            {
+                Height -= tileImage.ActualHeight / 4;
+                tileImage.Margin = new Thickness(1, 0, 1, 0);
+                hovered = false;
+            }
+        }
+
+        public void unhover()
+        {
+            if (hovered)
             {
                 Height -= tileImage.ActualHeight / 4;
                 tileImage.Margin = new Thickness(1, 0, 1, 0);

@@ -86,7 +86,7 @@ namespace mahjongNEA
         {
             if (g != null)
             {
-                g.temptest();
+                g.gameLoop();
             }
         }
     }

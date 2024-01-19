@@ -49,7 +49,6 @@ namespace mahjongNEA
         //used for testing display, change later
         private void WaitForEvent(EventWaitHandle eventHandle)
         {
-            //TODO: understand this
             var frame = new DispatcherFrame();
             new Thread(() =>
             {
@@ -72,27 +71,44 @@ namespace mahjongNEA
             }
             else if (a.typeOfAction == 1)
             {
-                List<Action> actionList = new List<Action>();
+                List<Action> chowList = new List<Action>();
+                List<Action> pongList = new List<Action>();
                 for (int i = 0; i < ownTiles.Count - 1; i++)
                 {
                     for (int k = i + 1; k < ownTiles.Count; k++)
                     {
                         if (Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile))
                         {
-                            actionList.Add(new Action(2, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
+                            chowList.Add(new Action(2, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
+                        }
+                        if (Analysis.isPong(ownTiles[i], ownTiles[k], a.representingTile))
+                        {
+                            pongList.Add(new Action(3, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
                         }
                     }
                 }
-                Button chowButton = new Button();
-                TextBlock tempTB = new TextBlock();
-                tempTB.Text = "Chow";
-                tempTB.FontSize = 12;
-                chowButton.Content = tempTB;
-                chowButton.Margin = new Thickness(2, 2, 2, 2);
-                chowButton.Click += chowClick;
-                actionButtons.Children.Add(chowButton);
-                ewh.Reset();
-                WaitForEvent(ewh);
+                if (ownTurn)
+                {
+                    WaitForEvent(ewh);
+                    ewh.Reset();
+                    lastAction = new Action(1, selectedTile);
+                    selectedTile = null;
+                    return lastAction;
+                }
+                //}
+                //else
+                //{
+                //    Button chowButton = new Button();
+                //    TextBlock tempTB = new TextBlock();
+                //    tempTB.Text = "Chow";
+                //    tempTB.FontSize = 12;
+                //    chowButton.Content = tempTB;
+                //    chowButton.Margin = new Thickness(2, 2, 2, 2);
+                //    chowButton.Click += chowClick;
+                //    actionButtons.Children.Add(chowButton);
+                //    ewh.Reset();
+                //    WaitForEvent(ewh);
+                //}
             }
             return new Action(0);
             //temp return to avoid crashing for testing
