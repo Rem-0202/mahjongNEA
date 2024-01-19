@@ -14,3 +14,15 @@ TODO:
 	drag drop (optional, recommended)
 		make in userPlayer.cs, do last
 		might mess with click to discard
+
+
+gameloop:
+	set current player
+	choose draw tile or not depending on last action
+	if lastAction not request tile skip one loop to let players get information
+	else discard
+	all other players .getAction(lastAction)
+	choose + set lastaction
+	set playerindex
+
+	big changes on gameview and userplayer, need add stuff to computerplayer and fix methods
