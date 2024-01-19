@@ -80,10 +80,6 @@ namespace mahjongNEA
             g = new GameView(1, 1, newGameDialog.sPoints, newGameDialog.ePoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
-            //System.Threading.SpinWait.SpinUntil(() => true, 2000);
-            //g.players[1].ownTurn = true;
-            //Action ta = g.players[1].getAction(new Action(0));
-            //MessageBox.Show(ta.representingTile.tileID);
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)

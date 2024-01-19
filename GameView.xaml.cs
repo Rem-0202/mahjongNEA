@@ -114,6 +114,7 @@ namespace mahjongNEA
 
         public void temptest()
         {
+            //can display discard, works for one click, shouldn't be used, COPY CODE TO GAMELOOP TO USE
             Tile drawnTile;
             currentPlayer = players[playerWind];
             do
