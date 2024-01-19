@@ -323,5 +323,8 @@
   <ItemGroup>
     <Resource Include="hamburgerMenu.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TODO.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
