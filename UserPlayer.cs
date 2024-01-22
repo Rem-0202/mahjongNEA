@@ -67,12 +67,12 @@ namespace mahjongNEA
                 ewh.Reset();
                 lastAction = new Action(1, selectedTile);
                 selectedTile = null;
-                return lastAction;
             }
             else if (a.typeOfAction == 1)
             {
                 List<Action> chowList = new List<Action>();
                 List<Action> pongList = new List<Action>();
+                List<Action> kongList = new List<Action>();
                 for (int i = 0; i < ownTiles.Count - 1; i++)
                 {
                     for (int k = i + 1; k < ownTiles.Count; k++)
@@ -85,6 +85,13 @@ namespace mahjongNEA
                         {
                             pongList.Add(new Action(3, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
                         }
+                        for (int j = k + 1; j < ownTiles.Count; j++)
+                        {
+                            if (Analysis.isKong(ownTiles[i], ownTiles[k], ownTiles[j], a.representingTile))
+                            {
+                                kongList.Add(new Action(4, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], a.representingTile }));
+                            }
+                        }
                     }
                 }
                 if (ownTurn)
@@ -93,24 +100,31 @@ namespace mahjongNEA
                     ewh.Reset();
                     lastAction = new Action(1, selectedTile);
                     selectedTile = null;
-                    return lastAction;
                 }
-                //}
-                //else
-                //{
-                //    Button chowButton = new Button();
-                //    TextBlock tempTB = new TextBlock();
-                //    tempTB.Text = "Chow";
-                //    tempTB.FontSize = 12;
-                //    chowButton.Content = tempTB;
-                //    chowButton.Margin = new Thickness(2, 2, 2, 2);
-                //    chowButton.Click += chowClick;
-                //    actionButtons.Children.Add(chowButton);
-                //    ewh.Reset();
-                //    WaitForEvent(ewh);
-                //}
+                else
+                {
+                    lastAction = new Action(0);
+                }
             }
-            return new Action(0);
+            else
+            {
+                lastAction = new Action(0);
+            }
+            //action buttons
+            //else
+            //{
+            //    Button chowButton = new Button();
+            //    TextBlock tempTB = new TextBlock();
+            //    tempTB.Text = "Chow";
+            //    tempTB.FontSize = 12;
+            //    chowButton.Content = tempTB;
+            //    chowButton.Margin = new Thickness(2, 2, 2, 2);
+            //    chowButton.Click += chowClick;
+            //    actionButtons.Children.Add(chowButton);
+            //    ewh.Reset();
+            //    WaitForEvent(ewh);
+            //}
+            return lastAction;
             //temp return to avoid crashing for testing
         }
 
@@ -121,10 +135,13 @@ namespace mahjongNEA
 
         public override void acceptAction()
         {
-            if (lastAction.typeOfAction == 1)
+            if (lastAction != null)
             {
-                ownTiles.Remove(lastAction.representingTile);
-                updateTileDisplay();
+                if (lastAction.typeOfAction == 1)
+                {
+                    ownTiles.Remove(lastAction.representingTile);
+                    updateTileDisplay();
+                }
             }
         }
     }

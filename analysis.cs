@@ -67,5 +67,10 @@ namespace mahjongNEA
         {
             return a == b && b == c;
         }
+
+        public static bool isKong(Tile a, Tile b, Tile c, Tile d)
+        {
+            return a == b && b == c && c == d;
+        }
     }
 }
