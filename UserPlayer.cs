@@ -96,10 +96,11 @@ namespace mahjongNEA
                 }
                 if (ownTurn)
                 {
-                    WaitForEvent(ewh);
-                    ewh.Reset();
-                    lastAction = new Action(1, selectedTile);
-                    selectedTile = null;
+                    //WaitForEvent(ewh);
+                    //ewh.Reset();
+                    //lastAction = new Action(1, selectedTile);
+                    //selectedTile = null;
+                    lastAction = new Action(0);
                 }
                 else
                 {

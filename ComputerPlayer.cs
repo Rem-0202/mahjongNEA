@@ -19,7 +19,7 @@ namespace mahjongNEA
 
         public override void addTile(Tile t)
         {
-            t.concealTile();
+            //t.concealTile();
             notAvailableTiles.Add(t);
             base.addTile(t);
         }
@@ -86,18 +86,13 @@ namespace mahjongNEA
                 {
                     lastAction = pongList[0];
                 }
-                else
-                {
-                    Tile t = ownTiles[0];
-                    lastAction = new Action(1, t);
-                }
                 
                 //TODO: implement rob tile check
             }
             else if (a.typeOfAction == 0)
             {
                 Tile t = ownTiles[0];
-                ownTiles.RemoveAt(0);
+                //ownTiles.RemoveAt(0);
                 lastAction = new Action(1, t);
             }
             return lastAction;
