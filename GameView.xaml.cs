@@ -235,6 +235,7 @@ namespace mahjongNEA
                 if (availableTiles.Count == 0)
                 {
                     //handle end turn
+                    MessageBox.Show("ended");
                     end = true;
                     break;
                 }
@@ -252,6 +253,9 @@ namespace mahjongNEA
                     roundNumber++;
                     lastAction = currentPlayer.getAction(lastAction);
                     currentPlayer.acceptAction();
+                }
+                if (lastAction.typeOfAction == 1)
+                {
                     discardedTiles.Add(lastAction.representingTile);
                     lastAction.representingTile.unconcealTile();
                     lastAction.representingTile.unhover();
@@ -278,11 +282,15 @@ namespace mahjongNEA
                 {
                     Player p = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
                     playerIndex = Array.IndexOf(players, p);
-                    playerIndex = (playerIndex + 3) % 4;
+                }
+                else if (maxChoice == 1)
+                {
+                    playerIndex = (playerIndex + 1) % 4;
                 }
                 else
                 {
-                    playerIndex = (playerIndex + 1) % 4;
+                    lastAction = new Action(0);
+                    continue;
                 }
                 currentPlayer = players[playerIndex];
                 if (lastAction.typeOfAction == 1)

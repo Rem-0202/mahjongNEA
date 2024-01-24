@@ -110,7 +110,6 @@ namespace mahjongNEA
             {
                 lastAction = new Action(0);
             }
-            //action buttons
             //else
             //{
             //    Button chowButton = new Button();
