@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Threading;
 using System.Windows.Threading;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace mahjongNEA
 {
@@ -21,6 +23,7 @@ namespace mahjongNEA
         {
             InitializeComponent();
             this.actionButtons = (StackPanel)actionButtons;
+            this.actionButtons.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(actionButtonStack_Click));
         }
 
         public override void addTile(Tile t)
@@ -46,6 +49,7 @@ namespace mahjongNEA
                 MessageBox.Show(k.Message);
             }
         }
+
         //used for testing display, change later
         private void WaitForEvent(EventWaitHandle eventHandle)
         {
@@ -61,8 +65,9 @@ namespace mahjongNEA
         public override Action getAction(Action a)
         {
             lastAction = null;
-            if (a.typeOfAction == 0)
+            if (a.typeOfAction == 0 && ownTurn)
             {
+                ewh.Reset();
                 WaitForEvent(ewh);
                 ewh.Reset();
                 lastAction = new Action(1, selectedTile);
@@ -70,6 +75,7 @@ namespace mahjongNEA
             }
             else if (a.typeOfAction == 1)
             {
+                lastAction = new Action(0);
                 List<Action> chowList = new List<Action>();
                 List<Action> pongList = new List<Action>();
                 List<Action> kongList = new List<Action>();
@@ -94,55 +100,72 @@ namespace mahjongNEA
                         }
                     }
                 }
-                if (ownTurn)
+                if (chowList.Count != 0 && nextTurn)
                 {
-                    //WaitForEvent(ewh);
-                    //ewh.Reset();
-                    //lastAction = new Action(1, selectedTile);
-                    //selectedTile = null;
-                    lastAction = new Action(0);
-                }
-                else
-                {
-                    lastAction = new Action(0);
+                    foreach (Action x in chowList)
+                    {
+                        addActionButton(x);
+                    }
+                    WaitForEvent(ewh);
+                    ewh.Reset();
+                    actionButtons.Children.Clear();
                 }
             }
             else
             {
                 lastAction = new Action(0);
             }
-            //else
-            //{
-            //    Button chowButton = new Button();
-            //    TextBlock tempTB = new TextBlock();
-            //    tempTB.Text = "Chow";
-            //    tempTB.FontSize = 12;
-            //    chowButton.Content = tempTB;
-            //    chowButton.Margin = new Thickness(2, 2, 2, 2);
-            //    chowButton.Click += chowClick;
-            //    actionButtons.Children.Add(chowButton);
-            //    ewh.Reset();
-            //    WaitForEvent(ewh);
-            //}
             return lastAction;
             //temp return to avoid crashing for testing
-        }
-
-        private void chowClick(object sender, RoutedEventArgs e)
-        {
-            ewh.Set();
         }
 
         public override void acceptAction()
         {
             if (lastAction != null)
             {
-                if (lastAction.typeOfAction == 1)
+                switch (lastAction.typeOfAction)
                 {
-                    ownTiles.Remove(lastAction.representingTile);
-                    updateTileDisplay();
+                    case 1:
+                        ownTiles.Remove(lastAction.representingTile);
+                        break;
+                    case 2:
+                        for (int i = 0; i < lastAction.allTiles.Count; i++)
+                        {
+                            Tile t = lastAction.allTiles[i];
+                            ownTiles.Remove(t);
+                            walledTiles.Add(t);
+                            t.unhover();
+                            t.unconcealTile();
+                            t.interactive = false;
+                            if (t == lastAction.representingTile)
+                            {
+                                t.LayoutTransform = new RotateTransform(270);
+                                t.VerticalAlignment = VerticalAlignment.Bottom;
+                            }
+                            if (i == lastAction.allTiles.Count - 1)
+                            {
+                                t.Margin = new Thickness(t.Margin.Left, t.Margin.Top, t.Margin.Right + 10, t.Margin.Bottom);
+                            }
+                        }
+                        break;
                 }
+                updateTileDisplay();
             }
+        }
+
+        private void addActionButton(Action a)
+        {
+            ActionButton chowButton = new ActionButton(a);
+            actionButtons.Children.Add(chowButton);
+        }
+
+        public void actionButtonStack_Click(object sender, RoutedEventArgs e)
+        {
+            ActionButton b = e.Source as ActionButton;
+            MessageBox.Show("g");
+            lastAction = b.action;
+            ewh.Set();
+            e.Handled = true;
         }
     }
 }

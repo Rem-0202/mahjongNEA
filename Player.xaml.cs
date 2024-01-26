@@ -26,9 +26,10 @@ namespace mahjongNEA
         public List<Tile> ownTiles { get; protected set; }
         public List<Tile> walledTiles { get; protected set; }
         public List<Tile> bonusTiles { get; protected set; }
-        public Tile drawnTile { get; private set; }
         public int wind { get; private set; }  //0 = 東(E)  1 = 南(S)  2 = 西(W)  3 = 北(N)
         public int points { get; private set; }
+
+        public bool nextTurn;
 
         public Player(int w, int points)
         {
@@ -38,6 +39,7 @@ namespace mahjongNEA
             bonusTiles = new List<Tile>();
             this.points = points;
             wind = w;
+            nextTurn = false;
         }
 
         public virtual void addTile(Tile t)

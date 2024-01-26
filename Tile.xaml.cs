@@ -55,7 +55,8 @@ namespace mahjongNEA
             concealed = false;
             setImage();
             Height = tileImage.Height;
-            Width = tileImage.Width;
+            Width = tileImage.Width*1.1;
+            Background = Brushes.Transparent;
         }
 
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;
@@ -101,7 +102,7 @@ namespace mahjongNEA
             if (!concealed && interactive)
             {
                 Height += tileImage.ActualHeight / 4;
-                tileImage.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight / 4);
+                tileBorder.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight / 4);
                 hovered = true;
             }
         }
@@ -111,7 +112,7 @@ namespace mahjongNEA
             if (!concealed && interactive)
             {
                 Height -= tileImage.ActualHeight / 4;
-                tileImage.Margin = new Thickness(1, 0, 1, 0);
+                tileBorder.Margin = new Thickness(1, 0, 1, 0);
                 hovered = false;
             }
         }
@@ -121,7 +122,7 @@ namespace mahjongNEA
             if (hovered)
             {
                 Height -= tileImage.ActualHeight / 4;
-                tileImage.Margin = new Thickness(1, 0, 1, 0);
+                tileBorder.Margin = new Thickness(1, 0, 1, 0);
             }
         }
     }

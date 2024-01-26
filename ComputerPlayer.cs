@@ -86,7 +86,7 @@ namespace mahjongNEA
                 {
                     lastAction = pongList[0];
                 }
-                
+
                 //TODO: implement rob tile check
             }
             else if (a.typeOfAction == 0)
