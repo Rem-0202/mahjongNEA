@@ -123,7 +123,33 @@ namespace mahjongNEA
 
         public virtual void acceptAction()
         {
-            throw new NotImplementedException();
+            if (lastAction != null)
+            {
+                switch (lastAction.typeOfAction)
+                {
+                    case 1:
+                        ownTiles.Remove(lastAction.representingTile);
+                        break;
+                    case 2:
+                        foreach (Tile t in lastAction.allTiles)
+                        {
+                            ownTiles.Remove(t);
+                            walledTiles.Add(t);
+                            t.Margin = new Thickness(2, 2, 2, 0);
+                            t.unhover();
+                            t.unconcealTile();
+                            t.interactive = false;
+                            t.VerticalAlignment = VerticalAlignment.Bottom;
+                            if (t == lastAction.representingTile)
+                            {
+                                t.Margin = new Thickness(2, 2, 10, t.Margin.Bottom);
+                                t.setRotated();
+                            }
+                        }
+                        break;
+                }
+                updateTileDisplay();
+            }
         }
     }
 }

@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 
 namespace mahjongNEA
 {
@@ -65,9 +64,8 @@ namespace mahjongNEA
         public override Action getAction(Action a)
         {
             lastAction = null;
-            if (a.typeOfAction == 0 && ownTurn)
+            if (a.typeOfAction == 0)
             {
-                ewh.Reset();
                 WaitForEvent(ewh);
                 ewh.Reset();
                 lastAction = new Action(1, selectedTile);
@@ -102,10 +100,7 @@ namespace mahjongNEA
                 }
                 if (chowList.Count != 0 && nextTurn)
                 {
-                    foreach (Action x in chowList)
-                    {
-                        addActionButton(x);
-                    }
+                    addActionButton(chowList);
                     WaitForEvent(ewh);
                     ewh.Reset();
                     actionButtons.Children.Clear();
@@ -117,40 +112,6 @@ namespace mahjongNEA
             }
             return lastAction;
             //temp return to avoid crashing for testing
-        }
-
-        public override void acceptAction()
-        {
-            if (lastAction != null)
-            {
-                switch (lastAction.typeOfAction)
-                {
-                    case 1:
-                        ownTiles.Remove(lastAction.representingTile);
-                        break;
-                    case 2:
-                        for (int i = 0; i < lastAction.allTiles.Count; i++)
-                        {
-                            Tile t = lastAction.allTiles[i];
-                            ownTiles.Remove(t);
-                            walledTiles.Add(t);
-                            t.unhover();
-                            t.unconcealTile();
-                            t.interactive = false;
-                            if (t == lastAction.representingTile)
-                            {
-                                t.LayoutTransform = new RotateTransform(270);
-                                t.VerticalAlignment = VerticalAlignment.Bottom;
-                            }
-                            if (i == lastAction.allTiles.Count - 1)
-                            {
-                                t.Margin = new Thickness(t.Margin.Left, t.Margin.Top, t.Margin.Right + 10, t.Margin.Bottom);
-                            }
-                        }
-                        break;
-                }
-                updateTileDisplay();
-            }
         }
 
         private void addActionButton(Action a)

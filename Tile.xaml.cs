@@ -33,6 +33,10 @@ namespace mahjongNEA
         public bool bonus { get; private set; }
         public bool concealed { get; private set; }
 
+        private static int uniqueTileNumber = 0;
+
+        private int tileNumber;
+
         public bool interactive;
         public bool hovered;
         public Tile()
@@ -55,8 +59,9 @@ namespace mahjongNEA
             concealed = false;
             setImage();
             Height = tileImage.Height;
-            Width = tileImage.Width*1.1;
-            Background = Brushes.Transparent;
+            Width = tileImage.Width * 1.1;
+            tileNumber = uniqueTileNumber;
+            uniqueTileNumber++;
         }
 
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;
@@ -124,6 +129,11 @@ namespace mahjongNEA
                 Height -= tileImage.ActualHeight / 4;
                 tileBorder.Margin = new Thickness(1, 0, 1, 0);
             }
+        }
+
+        public void setRotated()
+        {
+            LayoutTransform = new RotateTransform(270);
         }
     }
 }

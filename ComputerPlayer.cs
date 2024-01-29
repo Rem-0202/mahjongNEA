@@ -98,28 +98,5 @@ namespace mahjongNEA
             return lastAction;
             //temp return to avoid crashing for testing
         }
-
-        public override void acceptAction()
-        {
-            if (lastAction.typeOfAction == 1)
-            {
-                ownTiles.Remove(lastAction.representingTile);
-                updateTileDisplay();
-            }
-            else if (lastAction.typeOfAction >= 2 && lastAction.typeOfAction <= 4)
-            {
-                foreach (Tile t in lastAction.allTiles)
-                {
-                    if (ownTiles.Contains(t))
-                    {
-                        t.unconcealTile();
-                        ownTiles.Remove(t);
-                        walledTiles.Add(t);
-                    }
-                }
-                walledTiles.Add(lastAction.representingTile);
-                updateTileDisplay();
-            }
-        }
     }
 }
