@@ -106,6 +106,8 @@ namespace mahjongNEA
 
         public void flipTiles()
         {
+            ownTileDisplay.HorizontalAlignment = HorizontalAlignment.Left;
+            ownTileDisplay.LayoutTransform = new RotateTransform(180.0);
             walledTileDisplay.LayoutTransform = new RotateTransform(180.0);
             bonusTileDisplay.LayoutTransform = new RotateTransform(180.0);
         }
@@ -121,7 +123,7 @@ namespace mahjongNEA
             throw new NotImplementedException();
         }
 
-        public virtual void acceptAction()
+        public void acceptAction()
         {
             if (lastAction != null)
             {
@@ -145,6 +147,23 @@ namespace mahjongNEA
                                 t.Margin = new Thickness(2, 2, 10, t.Margin.Bottom);
                                 t.setRotated();
                             }
+                        }
+                        break;
+                    case 3:
+                        foreach (Tile t in lastAction.allTiles)
+                        {
+                            t.Margin = new Thickness(2, 2, 2, 0);
+                        }
+                        lastAction.representingTile.Margin = new Thickness(2, 2, 10, lastAction.representingTile.Margin.Bottom);
+                        lastAction.representingTile.setRotated();
+                        foreach (Tile t in lastAction.allTiles)
+                        {
+                            ownTiles.Remove(t);
+                            walledTiles.Add(t);
+                            t.unhover();
+                            t.unconcealTile();
+                            t.interactive = false;
+                            t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
                         break;
                 }

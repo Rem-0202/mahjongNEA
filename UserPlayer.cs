@@ -15,6 +15,8 @@ namespace mahjongNEA
     class UserPlayer : Player
     {
         private Tile selectedTile;
+        EventWaitHandle actionEWH = new EventWaitHandle(false, EventResetMode.ManualReset);
+
         private EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
         public StackPanel actionButtons;
 
@@ -22,7 +24,6 @@ namespace mahjongNEA
         {
             InitializeComponent();
             this.actionButtons = (StackPanel)actionButtons;
-            this.actionButtons.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(actionButtonStack_Click));
         }
 
         public override void addTile(Tile t)
@@ -49,7 +50,6 @@ namespace mahjongNEA
             }
         }
 
-        //used for testing display, change later
         private void WaitForEvent(EventWaitHandle eventHandle)
         {
             var frame = new DispatcherFrame();
@@ -100,9 +100,20 @@ namespace mahjongNEA
                 }
                 if (chowList.Count != 0 && nextTurn)
                 {
-                    addActionButton(chowList);
-                    WaitForEvent(ewh);
-                    ewh.Reset();
+                    ActionButton chowButton = new ActionButton(chowList, "Chow", ref actionEWH);
+                    ActionButton skipButton = new ActionButton(ref actionEWH);
+                    actionButtons.Children.Add(skipButton);
+                    actionButtons.Children.Add(chowButton);
+                    actionEWH.Reset();
+                    WaitForEvent(actionEWH);
+                    if (chowButton.clicked)
+                    {
+                        lastAction = chowButton.action;
+                    }
+                    else if (skipButton.clicked)
+                    {
+                        lastAction = skipButton.action;
+                    }
                     actionButtons.Children.Clear();
                 }
             }
@@ -112,21 +123,6 @@ namespace mahjongNEA
             }
             return lastAction;
             //temp return to avoid crashing for testing
-        }
-
-        private void addActionButton(Action a)
-        {
-            ActionButton chowButton = new ActionButton(a);
-            actionButtons.Children.Add(chowButton);
-        }
-
-        public void actionButtonStack_Click(object sender, RoutedEventArgs e)
-        {
-            ActionButton b = e.Source as ActionButton;
-            MessageBox.Show("g");
-            lastAction = b.action;
-            ewh.Set();
-            e.Handled = true;
         }
     }
 }

@@ -134,6 +134,8 @@ namespace mahjongNEA
         public void setRotated()
         {
             LayoutTransform = new RotateTransform(270);
+            Height = tileImage.Height;
+            Width = tileImage.Width;
         }
     }
 }
