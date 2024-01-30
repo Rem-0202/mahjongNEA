@@ -98,7 +98,7 @@ namespace mahjongNEA
                         }
                     }
                 }
-                if (chowList.Count != 0 || pongList.Count != 0 || kongList.Count != 0)
+                if ((chowList.Count != 0 && nextTurn) || pongList.Count != 0 || kongList.Count != 0)
                 {
                     //WORK ON THIS MAINLY
                     //NOT FINISHED
