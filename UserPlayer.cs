@@ -98,17 +98,43 @@ namespace mahjongNEA
                         }
                     }
                 }
-                if (chowList.Count != 0 && nextTurn)
+                if (chowList.Count != 0 || pongList.Count != 0 || kongList.Count != 0)
                 {
-                    ActionButton chowButton = new ActionButton(chowList, "Chow", ref actionEWH);
+                    //WORK ON THIS MAINLY
+                    //NOT FINISHED
                     ActionButton skipButton = new ActionButton(ref actionEWH);
                     actionButtons.Children.Add(skipButton);
-                    actionButtons.Children.Add(chowButton);
+                    ActionButton chowButton = new ActionButton(ref actionEWH);
+                    ActionButton pongButton = new ActionButton(ref actionEWH); ;
+                    ActionButton kongButton = new ActionButton(ref actionEWH); ;
+                    if (chowList.Count != 0 && nextTurn)
+                    {
+                        chowButton = new ActionButton(chowList, "Chow", ref actionEWH);
+                        actionButtons.Children.Add(chowButton);
+                    }
+                    if (pongList.Count != 0)
+                    {
+                        pongButton = new ActionButton(pongList, "Pong", ref actionEWH);
+                        actionButtons.Children.Add(pongButton);
+                    }
+                    if (kongList.Count != 0)
+                    {
+                        kongButton = new ActionButton(kongList, "Kong", ref actionEWH);
+                        actionButtons.Children.Add(kongButton);
+                    }
                     actionEWH.Reset();
                     WaitForEvent(actionEWH);
                     if (chowButton.clicked)
                     {
                         lastAction = chowButton.action;
+                    }
+                    else if (pongButton.clicked)
+                    {
+                        lastAction = pongButton.action;
+                    }
+                    else if (kongButton.clicked)
+                    {
+                        lastAction = kongButton.action;
                     }
                     else if (skipButton.clicked)
                     {
