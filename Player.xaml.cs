@@ -137,8 +137,8 @@ namespace mahjongNEA
                         {
                             ownTiles.Remove(t);
                             walledTiles.Add(t);
-                            t.Margin = new Thickness(2, 2, 2, 0);
                             t.unhover();
+                            t.Margin = new Thickness(2, 2, 2, 0);
                             t.unconcealTile();
                             t.interactive = false;
                             t.VerticalAlignment = VerticalAlignment.Bottom;
@@ -152,6 +152,7 @@ namespace mahjongNEA
                     case 3:
                         foreach (Tile t in lastAction.allTiles)
                         {
+                            t.unhover();
                             t.Margin = new Thickness(2, 2, 2, 0);
                         }
                         lastAction.representingTile.Margin = new Thickness(2, 2, 10, lastAction.representingTile.Margin.Bottom);
@@ -160,7 +161,6 @@ namespace mahjongNEA
                         {
                             ownTiles.Remove(t);
                             walledTiles.Add(t);
-                            t.unhover();
                             t.unconcealTile();
                             t.interactive = false;
                             t.VerticalAlignment = VerticalAlignment.Bottom;

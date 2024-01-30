@@ -37,8 +37,11 @@ namespace mahjongNEA
             {
                 actionSelectGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 StackPanel s = new StackPanel();
+                actionSelectGrid.Children.Add(s);
+                Grid.SetColumn(s, i);
                 s.Background = Brushes.Transparent;
-                s.Margin = new Thickness(1, 20, 10, 3);
+                s.Margin = new Thickness(1, s.ActualHeight / 4, i == allActions.Count - 1 ? 1 : 10, 0);
+                s.VerticalAlignment = VerticalAlignment.Bottom;
                 s.Orientation = Orientation.Horizontal;
                 s.MouseDown += tileGroup_MouseDown;
                 s.MouseEnter += stackPanel_MouseEnter;
@@ -48,8 +51,6 @@ namespace mahjongNEA
                     Tile x = new Tile(t.rank, t.suit);
                     s.Children.Add(x);
                 }
-                actionSelectGrid.Children.Add(s);
-                Grid.SetColumn(s, i);
             }
         }
 
@@ -86,14 +87,14 @@ namespace mahjongNEA
         {
             StackPanel u = sender as StackPanel;
             u.Height += u.ActualHeight / 4;
-            u.Margin = new Thickness(1, 0, 10, u.ActualHeight / 4);
+            u.Margin = new Thickness(1, 0, u.Margin.Right, u.ActualHeight / 4);
         }
 
         private void stackPanel_MouseLeave(object sender, MouseEventArgs e)
         {
             StackPanel u = sender as StackPanel;
             u.Height -= u.ActualHeight / 4;
-            u.Margin = new Thickness(1, 20, 10, 3);
+            u.Margin = new Thickness(1, u.ActualHeight/4, u.Margin.Right, 0);
         }
     }
 }
