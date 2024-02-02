@@ -72,6 +72,8 @@ namespace mahjongNEA
 
         public static bool operator <(Tile a, Tile b) => a.suitID < b.suitID || (a.suitID == b.suitID && a.rank < b.rank);
 
+        
+
         public void concealTile()
         {
             concealed = true;
@@ -135,7 +137,7 @@ namespace mahjongNEA
         {
             LayoutTransform = new RotateTransform(270);
             Height = tileImage.Height;
-            Width = tileImage.Width;
+            Width = tileImage.Width * 1.1;
         }
     }
 }

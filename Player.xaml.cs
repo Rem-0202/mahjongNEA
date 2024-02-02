@@ -166,6 +166,23 @@ namespace mahjongNEA
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
                         break;
+                    case 4:
+                        foreach (Tile t in lastAction.allTiles)
+                        {
+                            t.unhover();
+                            t.Margin = new Thickness(2, 2, 2, 0);
+                        }
+                        lastAction.representingTile.Margin = new Thickness(2, 2, 10, lastAction.representingTile.Margin.Bottom);
+                        lastAction.representingTile.setRotated();
+                        foreach (Tile t in lastAction.allTiles)
+                        {
+                            ownTiles.Remove(t);
+                            walledTiles.Add(t);
+                            t.unconcealTile();
+                            t.interactive = false;
+                            t.VerticalAlignment = VerticalAlignment.Bottom;
+                        }
+                        break;
                 }
                 updateTileDisplay();
             }

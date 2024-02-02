@@ -94,7 +94,7 @@ namespace mahjongNEA
         {
             StackPanel u = sender as StackPanel;
             u.Height -= u.ActualHeight / 4;
-            u.Margin = new Thickness(1, u.ActualHeight/4, u.Margin.Right, 0);
+            u.Margin = new Thickness(1, u.ActualHeight / 4, u.Margin.Right, 0);
         }
     }
 }

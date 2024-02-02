@@ -72,5 +72,15 @@ namespace mahjongNEA
         {
             return a == b && b == c && c == d;
         }
+
+        public static bool isGroup(Tile a, Tile b, Tile c)
+        {
+            return isChow(a, b, c) || isPong(a, b, c);
+        }
+
+        //public static int shantenNumber()
+        //{
+
+        //}
     }
 }

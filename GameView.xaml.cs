@@ -143,13 +143,6 @@ namespace mahjongNEA
                 currentPlayer.ownTurn = true;
                 players[(playerIndex + 1) % 4].nextTurn = true;
                 //end turn handling
-                if (availableTiles.Count == 0)
-                {
-                    //handle end turn
-                    MessageBox.Show("ended");
-                    end = true;
-                    break;
-                }
                 if (lastAction.typeOfAction == 0)
                 {
                     roundNumber++;
@@ -173,6 +166,13 @@ namespace mahjongNEA
                 foreach (Action a in playerActions.Values)
                 {
                     maxChoice = Math.Max(a.typeOfAction, maxChoice);
+                }
+                if (availableTiles.Count == 0 && (maxChoice == 4 || maxChoice == 0))
+                {
+                    //handle end turn
+                    MessageBox.Show("ended");
+                    end = true;
+                    break;
                 }
                 switch (maxChoice)
                 {

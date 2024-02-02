@@ -10,17 +10,27 @@ namespace mahjongNEA
 {
     class ComputerPlayer : Player
     {
-        public List<Tile> notAvailableTiles { get; private set; }
+        private Dictionary<string, int> tileCount;
         public ComputerPlayer(int wind, int points) : base(wind, points)
         {
             InitializeComponent();
-            notAvailableTiles = new List<Tile>();
+            tileCount = new Dictionary<string, int>();
+            for (int i = 1; i <= 9; i++)
+            {
+                tileCount.Add($"{i.ToString()}m", 4);
+                tileCount.Add($"{i.ToString()}p", 4);
+                tileCount.Add($"{i.ToString()}s", 4);
+            }
+            for (int i = 2; i <= 8; i++)
+            {
+                tileCount.Add($"{i.ToString()}z", 4);
+            }
         }
 
         public override void addTile(Tile t)
         {
             //t.concealTile();
-            notAvailableTiles.Add(t);
+            tileCount[t.tileID]--;
             base.addTile(t);
         }
 
@@ -51,13 +61,14 @@ namespace mahjongNEA
             {
                 foreach (Tile t in a.allTiles)
                 {
-                    notAvailableTiles.Add(t);
+                    tileCount[t.tileID]--;
                 }
                 lastAction = new Action(0);
             }
             else if (a.typeOfAction == 1)
             {
                 lastAction = new Action(0);
+                tileCount[a.representingTile.tileID]--;
                 List<Action> chowList = new List<Action>();
                 List<Action> pongList = new List<Action>();
                 List<Action> kongList = new List<Action>();
@@ -65,7 +76,7 @@ namespace mahjongNEA
                 {
                     for (int k = i + 1; k < ownTiles.Count; k++)
                     {
-                        if (Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile))
+                        if (Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile) && nextTurn)
                         {
                             chowList.Add(new Action(2, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
                         }
@@ -82,21 +93,27 @@ namespace mahjongNEA
                         }
                     }
                 }
-                if (pongList.Count > 0)
+                List<Action> tempActionList = new List<Action>();
+                tempActionList.AddRange(chowList);
+                tempActionList.AddRange(pongList);
+                tempActionList.AddRange(kongList);
+                Random rng = new Random();
+                if (tempActionList.Count != 0)
                 {
-                    lastAction = pongList[0];
+                    lastAction = tempActionList[rng.Next(tempActionList.Count)];
+                    foreach (Tile x in lastAction.allTiles)
+                    {
+                        tileCount[x.tileID]--;
+                    }
                 }
-
                 //TODO: implement rob tile check
             }
             else if (a.typeOfAction == 0)
             {
                 Tile t = ownTiles[0];
-                //ownTiles.RemoveAt(0);
                 lastAction = new Action(1, t);
             }
             return lastAction;
-            //temp return to avoid crashing for testing
         }
     }
 }
