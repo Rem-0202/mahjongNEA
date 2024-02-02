@@ -9,26 +9,13 @@ using System.Threading.Tasks;
 
 namespace mahjongNEA
 {
-    class Analysis
+    static class Analysis
     {
-        public List<Tile> tiles;
-        private int shanten;
-        private int pairCount;
-        private int taatsuCount;
-        private int groupCount;
-        private int specialCount;
-
-        public Analysis(List<Tile> tiles)
-        {
-            this.tiles = tiles;
-            specialCount = differentSpecialTiles();
-        }
-
-        private int differentSpecialTiles()
+        private static int differentSpecialTiles(List<Tile> ownTiles)
         {
             int s = 0;
             List<Tile> temp = new List<Tile>();
-            foreach (Tile t in tiles)
+            foreach (Tile t in ownTiles)
             {
                 if (t.special)
                 {
@@ -44,6 +31,7 @@ namespace mahjongNEA
             }
             return s;
         }
+
 
         public static bool isChow(Tile a, Tile b, Tile c)
         {
@@ -78,24 +66,18 @@ namespace mahjongNEA
             return isChow(a, b, c) || isPong(a, b, c);
         }
 
-        //public static int shantenNumber()
-        //{
+        public static bool isTaaTsu(Tile a, Tile b)
+        {
+            return a == b || (a.suit == b.suit && (Math.Abs(a.rank - b.rank) == 1 || Math.Abs(a.rank - b.rank) == 2));
+        }
 
-        //}
 
-        #region COMPUTER USER BEHAVIOR
 
-        /*
-         * 
-         * if get a tile, create instance of analysis, compare good tiles with available tiles count, choose highest
-         *      MIGHT BE TIME CONSUMING, CHECK PERFORMANCE
-         * 
-         * if get action choice, check good tiles before and after action, if 1st step performance bad need rework
-         * 
-         * after finish if too hard make computer user not always choose best action
-         * 
-         */
-
-        #endregion
+        // Standard shanten: 8-2g-t-p
+        // Kokushi shanten: 13 - diffterm - termCount>diffTerm?1:0
+        // Pair shanten: 6-p
+        // Kokushi from 13, 7 pairs from 6, standard from 8, find best as priority
+        // PRIORITY: groups => taatsu => pairs
+        // pass info to computerplayer class which handles decision
     }
 }

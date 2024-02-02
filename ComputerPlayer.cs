@@ -11,6 +11,7 @@ namespace mahjongNEA
     class ComputerPlayer : Player
     {
         private Dictionary<string, int> tileCount;
+        private int walledGroupCount;
         public ComputerPlayer(int wind, int points) : base(wind, points)
         {
             InitializeComponent();
@@ -25,6 +26,12 @@ namespace mahjongNEA
             {
                 tileCount.Add($"{i.ToString()}z", 4);
             }
+            for (int i = 2; i <= 5; i++)
+            {
+                tileCount.Add($"{i.ToString()}n", 1);
+                tileCount.Add($"{i.ToString()}f", 1);
+            }
+            walledGroupCount = 0;
         }
 
         public override void addTile(Tile t)
@@ -55,6 +62,12 @@ namespace mahjongNEA
             updateTileDisplay();
         }
 
+        public override void acceptAction()
+        {
+            walledGroupCount++;
+            base.acceptAction();
+        }
+
         public override Action getAction(Action a)
         {
             if (a.typeOfAction >= 2)
@@ -67,8 +80,8 @@ namespace mahjongNEA
             }
             else if (a.typeOfAction == 1)
             {
-                lastAction = new Action(0);
                 tileCount[a.representingTile.tileID]--;
+                lastAction = new Action(0);
                 List<Action> chowList = new List<Action>();
                 List<Action> pongList = new List<Action>();
                 List<Action> kongList = new List<Action>();
@@ -111,9 +124,11 @@ namespace mahjongNEA
             else if (a.typeOfAction == 0)
             {
                 Tile t = ownTiles[0];
+                tileCount[t.tileID]--;
                 lastAction = new Action(1, t);
             }
             return lastAction;
+            //temp return to avoid crashing for testing
         }
     }
 }

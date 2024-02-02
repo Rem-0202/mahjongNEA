@@ -123,7 +123,7 @@ namespace mahjongNEA
             throw new NotImplementedException();
         }
 
-        public void acceptAction()
+        public virtual void acceptAction()
         {
             if (lastAction != null)
             {
