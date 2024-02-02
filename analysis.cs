@@ -82,5 +82,20 @@ namespace mahjongNEA
         //{
 
         //}
+
+        #region COMPUTER USER BEHAVIOR
+
+        /*
+         * 
+         * if get a tile, create instance of analysis, compare good tiles with available tiles count, choose highest
+         *      MIGHT BE TIME CONSUMING, CHECK PERFORMANCE
+         * 
+         * if get action choice, check good tiles before and after action, if 1st step performance bad need rework
+         * 
+         * after finish if too hard make computer user not always choose best action
+         * 
+         */
+
+        #endregion
     }
 }
