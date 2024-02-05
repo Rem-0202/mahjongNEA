@@ -199,7 +199,7 @@ namespace mahjongNEA
             originalCopy.AddRange(ts);
             int oShanten = countShanten(originalCopy, s);
             int nShanten;
-            int[] neededTileCount = new int[ts.Count - 1];
+            int[] neededTileCount = new int[ts.Count];
             for (int i = 0; i < ts.Count; i++)
             {
                 foreach (string t in tileCount.Keys)
@@ -207,11 +207,12 @@ namespace mahjongNEA
                     nShanten = 100;
                     originalCopy.Clear();
                     originalCopy.AddRange(ts);
+                    originalCopy.RemoveAt(i);
                     originalCopy.Add(Tile.stringToTile(t));
                     nShanten = countShanten(originalCopy, s);
                     if (nShanten < oShanten)
                     {
-                        neededTileCount[i] += tileCount[t];
+                        neededTileCount[i] += 4;
                     }
                 }
             }

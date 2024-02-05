@@ -22,7 +22,7 @@ namespace mahjongNEA
     public partial class Player : UserControl
     {
         public bool ownTurn;
-        private int walledGroupCount;
+        protected int walledGroupCount;
         public Action lastAction { get; protected set; }
         public List<Tile> ownTiles;
         public List<Tile> walledTiles { get; protected set; }

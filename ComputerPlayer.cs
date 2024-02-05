@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace mahjongNEA
 {
@@ -25,17 +26,16 @@ namespace mahjongNEA
             {
                 tileCount.Add($"{i.ToString()}z", 4);
             }
-            for (int i = 2; i <= 5; i++)
-            {
-                tileCount.Add($"{i.ToString()}n", 1);
-                tileCount.Add($"{i.ToString()}f", 1);
-            }
+            
         }
 
         public override void addTile(Tile t)
         {
             //t.concealTile();
-            tileCount[t.tileID]--;
+            if (!t.bonus)
+            {
+                tileCount[t.tileID]--;
+            }
             base.addTile(t);
         }
 
@@ -116,9 +116,8 @@ namespace mahjongNEA
             }
             else if (a.typeOfAction == 0)
             {
-                Tile t = ownTiles[0];
-                tileCount[t.tileID]--;
-                lastAction = new Action(1, t);
+                lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
+                tileCount[lastAction.representingTile.tileID]--;
             }
             return lastAction;
             //temp return to avoid crashing for testing

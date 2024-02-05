@@ -159,7 +159,7 @@ namespace mahjongNEA
 
         public static Tile stringToTile(string s)
         {
-            return new Tile(Convert.ToInt32(s[0]), s[1], false);
+            return new Tile(Convert.ToInt32(s[0].ToString()), s[1], false);
         }
     }
 }
