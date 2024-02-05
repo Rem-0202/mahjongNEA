@@ -105,8 +105,8 @@ namespace mahjongNEA
                     ActionButton skipButton = new ActionButton(ref actionEWH);
                     actionButtons.Children.Add(skipButton);
                     ActionButton chowButton = new ActionButton(ref actionEWH);
-                    ActionButton pongButton = new ActionButton(ref actionEWH); ;
-                    ActionButton kongButton = new ActionButton(ref actionEWH); ;
+                    ActionButton pongButton = new ActionButton(ref actionEWH);
+                    ActionButton kongButton = new ActionButton(ref actionEWH);
                     if (chowList.Count != 0 && nextTurn)
                     {
                         chowButton = new ActionButton(chowList, "Chow", ref actionEWH);

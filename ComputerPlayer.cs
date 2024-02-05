@@ -11,7 +11,6 @@ namespace mahjongNEA
     class ComputerPlayer : Player
     {
         private Dictionary<string, int> tileCount;
-        private int walledGroupCount;
         public ComputerPlayer(int wind, int points) : base(wind, points)
         {
             InitializeComponent();
@@ -31,7 +30,6 @@ namespace mahjongNEA
                 tileCount.Add($"{i.ToString()}n", 1);
                 tileCount.Add($"{i.ToString()}f", 1);
             }
-            walledGroupCount = 0;
         }
 
         public override void addTile(Tile t)
@@ -60,12 +58,7 @@ namespace mahjongNEA
                 }
             }
             updateTileDisplay();
-        }
 
-        public override void acceptAction()
-        {
-            walledGroupCount++;
-            base.acceptAction();
         }
 
         public override Action getAction(Action a)

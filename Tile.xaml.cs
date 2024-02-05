@@ -64,6 +64,25 @@ namespace mahjongNEA
             uniqueTileNumber++;
         }
 
+        public Tile(int r, char s, bool u)
+        {
+            InitializeComponent();
+            interactive = false;
+            rank = r;
+            suit = s;
+            tileID = r.ToString() + s;
+            terminal = (suit == 'm' || suit == 'p' || suit == 's') && (rank == 1 || rank == 9);
+            honour = suit == 'z';
+            suitID = suitOrder.IndexOf(suit);
+            special = terminal || honour;
+            bonus = suit == 'f' || suit == 'n';
+            concealed = false;
+            setImage();
+            Height = tileImage.Height;
+            Width = tileImage.Width * 1.1;
+            tileNumber = -1;
+        }
+
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;
 
         public static bool operator !=(Tile a, Tile b) => a.tileID != b.tileID;
@@ -71,8 +90,6 @@ namespace mahjongNEA
         public static bool operator >(Tile a, Tile b) => a.suitID > b.suitID || (a.suitID == b.suitID && a.rank > b.rank);
 
         public static bool operator <(Tile a, Tile b) => a.suitID < b.suitID || (a.suitID == b.suitID && a.rank < b.rank);
-
-        
 
         public void concealTile()
         {
@@ -138,6 +155,11 @@ namespace mahjongNEA
             LayoutTransform = new RotateTransform(270);
             Height = tileImage.Height;
             Width = tileImage.Width * 1.1;
+        }
+
+        public static Tile stringToTile(string s)
+        {
+            return new Tile(Convert.ToInt32(s[0]), s[1], false);
         }
     }
 }

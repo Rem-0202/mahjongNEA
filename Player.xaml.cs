@@ -22,8 +22,9 @@ namespace mahjongNEA
     public partial class Player : UserControl
     {
         public bool ownTurn;
+        private int walledGroupCount;
         public Action lastAction { get; protected set; }
-        public List<Tile> ownTiles { get; protected set; }
+        public List<Tile> ownTiles;
         public List<Tile> walledTiles { get; protected set; }
         public List<Tile> bonusTiles { get; protected set; }
         public int wind { get; private set; }  //0 = 東(E)  1 = 南(S)  2 = 西(W)  3 = 北(N)
@@ -40,6 +41,7 @@ namespace mahjongNEA
             this.points = points;
             wind = w;
             nextTurn = false;
+            walledGroupCount = 0;
         }
 
         public virtual void addTile(Tile t)
@@ -148,6 +150,7 @@ namespace mahjongNEA
                                 t.setRotated();
                             }
                         }
+                        walledGroupCount++;
                         break;
                     case 3:
                         foreach (Tile t in lastAction.allTiles)
@@ -165,6 +168,7 @@ namespace mahjongNEA
                             t.interactive = false;
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
+                        walledGroupCount++;
                         break;
                     case 4:
                         foreach (Tile t in lastAction.allTiles)
@@ -182,6 +186,7 @@ namespace mahjongNEA
                             t.interactive = false;
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
+                        walledGroupCount++;
                         break;
                 }
                 updateTileDisplay();
