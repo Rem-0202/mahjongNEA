@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+
 
 namespace mahjongNEA
 {
@@ -103,8 +103,9 @@ namespace mahjongNEA
 
         private static int countGroups(ref List<Tile> ts, int g)
         {
-            List<Tile> temp = new List<Tile>();
-            temp.AddRange(ts);
+            sortTiles(ref ts);
+            List<Tile> tempList = new List<Tile>();
+            tempList.AddRange(ts);
             if (ts.Count >= 3)
             {
                 for (int i = 0; i < ts.Count - 2; i++)
@@ -116,11 +117,11 @@ namespace mahjongNEA
                             if (isGroup(ts[i], ts[k], ts[j]))
                             {
                                 g += 1;
-                                temp.Remove(ts[i]);
-                                temp.Remove(ts[j]);
-                                temp.Remove(ts[k]);
+                                tempList.Remove(ts[i]);
+                                tempList.Remove(ts[j]);
+                                tempList.Remove(ts[k]);
                                 ts.Clear();
-                                ts.AddRange(temp);
+                                ts.AddRange(tempList);
                                 return countGroups(ref ts, g);
                             }
                         }
@@ -130,32 +131,10 @@ namespace mahjongNEA
             return g;
         }
 
-        //private static int countPairs(ref List<Tile> ts, int p)
-        //{
-        //    sortTiles(ref ts);
-        //    List<Tile> tempList = new List<Tile>();
-        //    tempList.AddRange(ts);
-        //    for (int i = 0; i < ts.Count - 2; i++)
-        //    {
-        //        for (int k = i + 1; k < ts.Count - 1 && k < i + 5; k++)
-        //        {
-        //            if (ts[i] == ts[k])
-        //            {
-        //                p += 1;
-        //                tempList.Remove(ts[i]);
-        //                tempList.Remove(ts[k]);
-        //                ts.Clear();
-        //                ts.AddRange(tempList);
-        //                return countPairs(ref ts, p);
-        //            }
-        //        }
-        //    }
-        //    return p;
-        //}
-
-        private static int[] countProto(List<Tile> ts)
+        private static int[] countProto(ref List<Tile> ts)
         {
-            int[] temp = new int[2] { 0, 0 };
+            sortTiles(ref ts);
+            int[] temp = new int[2];
             for (int i = 0; i < ts.Count - 1; i++)
             {
                 if (ts[i] == ts[i + 1])
@@ -171,68 +150,101 @@ namespace mahjongNEA
             }
             return temp;
         }
+        
 
         private static int countShanten(List<Tile> ts, int g)
         {
-            {
-                //List<Tile> ownTiles = new List<Tile>();
-                //ownTiles.AddRange(ts);
-                //int uniqueSpecialCount;
-                //if (ownTiles.Count >= 13)
-                //{
-                //    uniqueSpecialCount = differentSpecialTiles(ownTiles);
-                //}
-                //else uniqueSpecialCount = -100;
-                //int specialCount = specialTiles(ownTiles);
-                //int g = countGroups(ref ownTiles, s);
-                ////int p = countPairs(ref ownTiles, 0);
-                //int[] pt = countProto(ref ownTiles);
-                //int p = pt[0];
-                //int t = pt[1];
-                //return Math.Min(8 - g - p - t, 13 - uniqueSpecialCount - (specialCount > uniqueSpecialCount ? 1 : 0));
-            }
-            List<Tile> ownTiles = new List<Tile>();
-            ownTiles.AddRange(ts);
-            sortTiles(ref ownTiles);
-            int uniqueSpecialCount = differentSpecialTiles(ownTiles);
-            int specialCount = specialTiles(ownTiles);
-            g = countGroups(ref ownTiles, g);
-            int[] temp = countProto(ownTiles);
-            int p = temp[0];
-            int t = temp[1];
-            int s;
-            if (p + t > ownTiles.Count / 3)
-            {
-                s = 8 - 2 * g - ownTiles.Count / 3 - (p > 0 ? 1 : 0);
-            }
-            else s = 8 - 2 * g - p - t;
-            if (ownTiles.Count >= 13)
+            int s = 8;
+            int t = 0;
+            int p = 0;
+            List<Tile> tempCopy = new List<Tile>();
+            sortTiles(ref ts);
+            int uniqueSpecialCount = differentSpecialTiles(ts);
+            int specialCount = specialTiles(ts);
+            if (ts.Count >= 13)
             {
                 s = Math.Min(s, 13 - uniqueSpecialCount - (specialCount > uniqueSpecialCount ? 1 : 0));
+            }
+            if (ts.Count > 3)
+            {
+                for (int i = 0; i < ts.Count - 2; i++)
+                {
+                    for (int j = i + 1; j < ts.Count - 1 && j < i + 5; j++)
+                    {
+                        for (int k = j + 1; k < ts.Count && k < j + 5; k++)
+                        {
+                            if (isGroup(ts[i], ts[j], ts[k]))
+                            {
+                                tempCopy.Clear();
+                                tempCopy.AddRange(ts);
+                                tempCopy.Remove(ts[i]);
+                                tempCopy.Remove(ts[j]);
+                                tempCopy.Remove(ts[k]);
+                                s = Math.Min(s, countShanten(tempCopy, g + 1));
+                            }
+                            if (ts[i] == ts[j] && ts[i] == ts[k])
+                            {
+                                i++;
+                                j = 20;
+                                k = 20;
+                            }
+                        }
+                    }
+                }
+            }
+            if (ts.Count > 1)
+            {
+                for (int i = 0; i < ts.Count - 1; i++)
+                {
+                    if (ts[i] == ts[i+1])
+                    {
+                        p++;
+                        i++;
+                    }
+                    else if (i < ts.Count - 2 && ts[i] == ts[i+2])
+                    {
+                        p++;
+                        i += 2;
+                    }
+                    else if (isTaatsu(ts[i], ts[i+1]))
+                    {
+                        t++;
+                        i++;
+                    }
+                }
+            }
+
+            if (p + t > ts.Count/3)
+            {
+                s = Math.Min(s, 8 - 2 * g - ts.Count / 3 - (p > 0 ? 1 : 0));
+            }
+            else
+            {
+                s = Math.Min(s, 8 - 2 * g - p - t);
             }
             return s;
         }
 
-        public static Action chooseDiscard(List<Tile> ts, int s, Dictionary<string, int> tileCount)
+        public static Action chooseDiscard(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
             List<Tile> originalCopy = new List<Tile>();
             originalCopy.AddRange(ts);
-            int oShanten = countShanten(originalCopy, s);
+            int oShanten = countShanten(originalCopy, k);
             int nShanten;
             int[] neededTileCount = new int[ts.Count];
             for (int i = 0; i < ts.Count; i++)
             {
-                foreach (string t in tileCount.Keys)
+                foreach (string rtile in tileCount.Keys)
                 {
                     nShanten = 100;
                     originalCopy.Clear();
                     originalCopy.AddRange(ts);
                     originalCopy.Remove(ts[i]);
-                    originalCopy.Add(Tile.stringToTile(t));
-                    nShanten = countShanten(originalCopy, s);
+                    originalCopy.Add(Tile.stringToTile(rtile));
+                    nShanten = countShanten(originalCopy, k);
                     if (nShanten < oShanten)
                     {
-                        neededTileCount[i] += tileCount[t];
+                        neededTileCount[i] += tileCount[rtile];
                     }
                 }
             }
@@ -245,6 +257,14 @@ namespace mahjongNEA
                 }
             }
             return new Action(1, ts[maxTile]);
+        }
+
+        public static Action chooseAction(List<Tile> ts, int k, List<Action> ats, Dictionary<string, int> tileCount)
+        {
+            List<Tile> tempTS = new List<Tile>();
+            int oShanten;
+            int nShanten;
+            
         }
 
         // Standard shanten: 8-2g-t-p

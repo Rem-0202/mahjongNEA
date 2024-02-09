@@ -11,7 +11,6 @@ namespace mahjongNEA
 {
     class ComputerPlayer : Player
     {
-        private Dictionary<string, int> tileCount;
         public ComputerPlayer(int wind, int points) : base(wind, points)
         {
             InitializeComponent();
@@ -68,6 +67,7 @@ namespace mahjongNEA
                 {
                     tileCount[t.tileID]--;
                 }
+                tileCount[a.representingTile.tileID]++;
                 lastAction = new Action(0);
             }
             else if (a.typeOfAction == 1)
@@ -106,17 +106,12 @@ namespace mahjongNEA
                 if (tempActionList.Count != 0)
                 {
                     lastAction = tempActionList[rng.Next(tempActionList.Count)];
-                    foreach (Tile x in lastAction.allTiles)
-                    {
-                        tileCount[x.tileID]--;
-                    }
                 }
                 //TODO: implement rob tile check
             }
             else if (a.typeOfAction == 0)
             {
                 lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
-                tileCount[lastAction.representingTile.tileID]--;
             }
             return lastAction;
             //temp return to avoid crashing for testing
