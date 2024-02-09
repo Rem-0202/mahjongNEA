@@ -200,7 +200,12 @@ namespace mahjongNEA
             int[] temp = countProto(ownTiles);
             int p = temp[0];
             int t = temp[1];
-            int s = 8 - 2 * g - p - t;
+            int s;
+            if (p + t > ownTiles.Count / 3)
+            {
+                s = 8 - 2 * g - ownTiles.Count / 3 - (p > 0 ? 1 : 0);
+            }
+            else s = 8 - 2 * g - p - t;
             if (ownTiles.Count >= 13)
             {
                 s = Math.Min(s, 13 - uniqueSpecialCount - (specialCount > uniqueSpecialCount ? 1 : 0));

@@ -26,7 +26,6 @@ namespace mahjongNEA
             {
                 tileCount.Add($"{i.ToString()}z", 4);
             }
-            
         }
 
         public override void addTile(Tile t)
