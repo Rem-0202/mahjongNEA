@@ -12,7 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Threading;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace mahjongNEA
 {
@@ -123,22 +125,26 @@ namespace mahjongNEA
 
         private void tileImage_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (!concealed && interactive)
-            {
-                Height += tileImage.ActualHeight / 4;
-                tileBorder.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight / 4);
-                hovered = true;
-            }
+            Dispatcher.Invoke(DispatcherPriority.Render, new System.Action(() => {
+                if (!concealed && interactive)
+                {
+                    Height += tileImage.ActualHeight / 4;
+                    tileBorder.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight / 4);
+                    hovered = true;
+                }
+            }));
         }
 
         private void tileImage_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (!concealed && interactive)
-            {
-                Height -= tileImage.ActualHeight / 4;
-                tileBorder.Margin = new Thickness(1, 0, 1, 0);
-                hovered = false;
-            }
+            Dispatcher.Invoke(DispatcherPriority.Render, new System.Action(() => {
+                if (!concealed && interactive)
+                {
+                    Height -= tileImage.ActualHeight / 4;
+                    tileBorder.Margin = new Thickness(1, 0, 1, 0);
+                    hovered = false;
+                }
+            }));
         }
 
         public void unhover()

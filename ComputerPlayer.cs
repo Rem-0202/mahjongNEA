@@ -102,10 +102,9 @@ namespace mahjongNEA
                 tempActionList.AddRange(chowList);
                 tempActionList.AddRange(pongList);
                 tempActionList.AddRange(kongList);
-                Random rng = new Random();
                 if (tempActionList.Count != 0)
                 {
-                    lastAction = tempActionList[rng.Next(tempActionList.Count)];
+                    lastAction = Analysis.chooseAction(ownTiles, walledGroupCount, tempActionList, tileCount);
                 }
                 //TODO: implement rob tile check
             }

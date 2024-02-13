@@ -150,7 +150,7 @@ namespace mahjongNEA
             }
             return temp;
         }
-        
+
 
         private static int countShanten(List<Tile> ts, int g)
         {
@@ -196,17 +196,17 @@ namespace mahjongNEA
             {
                 for (int i = 0; i < ts.Count - 1; i++)
                 {
-                    if (ts[i] == ts[i+1])
+                    if (ts[i] == ts[i + 1])
                     {
                         p++;
                         i++;
                     }
-                    else if (i < ts.Count - 2 && ts[i] == ts[i+2])
+                    else if (i < ts.Count - 2 && ts[i] == ts[i + 2])
                     {
                         p++;
                         i += 2;
                     }
-                    else if (isTaatsu(ts[i], ts[i+1]))
+                    else if (isTaatsu(ts[i], ts[i + 1]))
                     {
                         t++;
                         i++;
@@ -214,7 +214,7 @@ namespace mahjongNEA
                 }
             }
 
-            if (p + t > ts.Count/3)
+            if (p + t > ts.Count / 3)
             {
                 s = Math.Min(s, 8 - 2 * g - ts.Count / 3 - (p > 0 ? 1 : 0));
             }
@@ -225,13 +225,12 @@ namespace mahjongNEA
             return s;
         }
 
-        public static Action chooseDiscard(List<Tile> ts, int k, Dictionary<string, int> tileCount)
+        public static int[] getImprovingTileCount_removedTile(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
             List<Tile> originalCopy = new List<Tile>();
-            originalCopy.AddRange(ts);
             int oShanten = countShanten(originalCopy, k);
             int nShanten;
-            int[] neededTileCount = new int[ts.Count];
+            int[] neededTileScore = new int[ts.Count];
             for (int i = 0; i < ts.Count; i++)
             {
                 foreach (string rtile in tileCount.Keys)
@@ -244,14 +243,42 @@ namespace mahjongNEA
                     nShanten = countShanten(originalCopy, k);
                     if (nShanten < oShanten)
                     {
-                        neededTileCount[i] += tileCount[rtile];
+                        neededTileScore[i] += tileCount[rtile];
                     }
                 }
             }
-            int maxTile = 0;
-            for (int i = 1; i < neededTileCount.Length; i++)
+            return neededTileScore;
+        }
+
+        public static int getImprovingTileCount(List<Tile> ts, int k, Dictionary<string, int> tileCount)
+        {
+            List<Tile> originalCopy = new List<Tile>();
+            int oShanten = countShanten(originalCopy, k);
+            int nShanten;
+            int neededTileScore = 0;
+            foreach (string rtile in tileCount.Keys)
             {
-                if (neededTileCount[i] > neededTileCount[maxTile])
+                nShanten = 100;
+                originalCopy.Clear();
+                originalCopy.AddRange(ts);
+                originalCopy.Add(Tile.stringToTile(rtile));
+                nShanten = countShanten(originalCopy, k);
+                if (nShanten < oShanten)
+                {
+                    neededTileScore += tileCount[rtile];
+                }
+            }
+            return neededTileScore;
+        }
+
+        public static Action chooseDiscard(List<Tile> ts, int k, Dictionary<string, int> tileCount)
+        {
+            int[] neededTileScore = new int[ts.Count];
+            neededTileScore = getImprovingTileCount_removedTile(ts, k, tileCount);
+            int maxTile = 0;
+            for (int i = 1; i < neededTileScore.Length; i++)
+            {
+                if (neededTileScore[i] > neededTileScore[maxTile])
                 {
                     maxTile = i;
                 }
@@ -262,9 +289,69 @@ namespace mahjongNEA
         public static Action chooseAction(List<Tile> ts, int k, List<Action> ats, Dictionary<string, int> tileCount)
         {
             List<Tile> tempTS = new List<Tile>();
-            int oShanten;
-            int nShanten;
-            
+            ats.Add(new Action(0));
+            int maxTileNum = 0;
+            int[] improvingTileCount = new int[ats.Count];
+            for (int i = 0; i < ats.Count; i++)
+            {
+                tempTS = useAction(ts, ats[i]);
+                switch (ats[i].typeOfAction)
+                {
+                    case 0:
+                        improvingTileCount[i] = getImprovingTileCount(tempTS, k, tileCount);
+                        break;
+                    case 4:
+                        improvingTileCount[i] = getImprovingTileCount(tempTS, k + 1, tileCount);
+                        break;
+                    default:
+                        int[] improvingTileNumbers = new int[tempTS.Count];
+                        int n = 0;
+                        improvingTileNumbers = getImprovingTileCount_removedTile(tempTS, k + 1, tileCount);
+                        for (int j = 0; j < improvingTileNumbers.Length; j++)
+                        {
+                            if (improvingTileNumbers[n] < improvingTileNumbers[j])
+                            {
+                                n = j;
+                            }
+                        }
+                        improvingTileCount[i] = improvingTileNumbers[n];
+                        break;
+                }
+            }
+            for (int i = improvingTileCount.Length - 2; i >= 1; i--)
+            {
+                if (improvingTileCount[maxTileNum] < improvingTileCount[i])
+                {
+                    maxTileNum = i;
+                }
+            }
+            if (improvingTileCount[maxTileNum]  < improvingTileCount[improvingTileCount.Length-1])
+            {
+                maxTileNum = improvingTileCount.Length - 1;
+            }
+            return ats[maxTileNum];
+        }
+
+        public static List<Tile> useAction(List<Tile> ts, Action a)
+        {
+            List<Tile> tempts = new List<Tile>();
+            tempts.AddRange(ts);
+            if (a.typeOfAction == 0)
+            {
+                return tempts;
+            }
+            else
+            {
+                foreach (Tile t in a.allTiles)
+                {
+                    if (tempts.Contains(t))
+                    {
+                        tempts.Remove(t);
+                    }
+                }
+                tempts.Add(a.representingTile);
+                return tempts;
+            }
         }
 
         // Standard shanten: 8-2g-t-p

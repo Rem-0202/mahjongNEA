@@ -33,6 +33,7 @@ namespace mahjongNEA
     {
         public bool messyDiscard;
         private Action lastAction;
+        private Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
         public static Random rng = new Random();
         public int prevailingWind { get; private set; }
         public int playerWind { get; private set; }
@@ -127,7 +128,6 @@ namespace mahjongNEA
             int roundNumber = 0;
             int playerIndex = prevailingWind;
             int maxChoice;
-            Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
             #region new new gameloop start ACTUALLY WORKS
             currentPlayer = players[playerIndex];
             lastAction = new Action(0);
@@ -293,6 +293,5 @@ namespace mahjongNEA
             }).Start();
             Dispatcher.PushFrame(frame);
         }
-
     }
 }
