@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace mahjongNEA
 {
@@ -29,13 +30,15 @@ namespace mahjongNEA
         public List<Tile> walledTiles { get; protected set; }
         public List<Tile> bonusTiles { get; protected set; }
         public int wind { get; private set; }  //0 = 東(E)  1 = 南(S)  2 = 西(W)  3 = 北(N)
+        public int pWind { get; set; }
         public int points { get; private set; }
 
         public bool nextTurn;
 
-        public Player(int w, int points)
+        public Player(int w, int points, int pWind)
         {
             InitializeComponent();
+            this.pWind = pWind;
             ownTiles = new List<Tile>();
             walledTiles = new List<Tile>();
             bonusTiles = new List<Tile>();
@@ -59,6 +62,17 @@ namespace mahjongNEA
             }
             sortTiles();
             updateTileDisplay();
+        }
+
+        protected void WaitForEvent(EventWaitHandle eventHandle)
+        {
+            var frame = new DispatcherFrame();
+            new Thread(() =>
+            {
+                eventHandle.WaitOne();
+                frame.Continue = false;
+            }).Start();
+            Dispatcher.PushFrame(frame);
         }
 
         public void updateTileDisplay()

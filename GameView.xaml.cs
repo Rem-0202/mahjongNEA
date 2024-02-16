@@ -33,7 +33,6 @@ namespace mahjongNEA
     {
         public bool messyDiscard;
         private Action lastAction;
-        private Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
         public static Random rng = new Random();
         public int prevailingWind { get; private set; }
         public int playerWind { get; private set; }
@@ -51,10 +50,10 @@ namespace mahjongNEA
             this.startingPoints = startingPoints;
             this.endingPoints = endingPoints;
             players = new Player[4];
-            players[playerWind % 4] = new UserPlayer(playerWind, startingPoints, userActionButtons);
-            players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints);
-            players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints);
-            players[(playerWind + 3) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints);
+            players[playerWind % 4] = new UserPlayer(playerWind, startingPoints, userActionButtons, prevailingWind);
+            players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints, prevailingWind);
+            players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints, prevailingWind);
+            players[(playerWind + 3) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints, prevailingWind);
             userPlayerGrid.Children.Add(players[playerWind % 4]);
             rightPlayerGrid.Children.Add(players[(playerWind + 1) % 4]);
             topPlayerGrid.Children.Add(players[(playerWind + 2) % 4]);
@@ -128,12 +127,13 @@ namespace mahjongNEA
             int roundNumber = 0;
             int playerIndex = prevailingWind;
             int maxChoice;
+            Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
             #region new new gameloop start ACTUALLY WORKS
             currentPlayer = players[playerIndex];
             lastAction = new Action(0);
             drawTile(currentPlayer);
             DispatcherTimer dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(1);
+            dt.Interval = TimeSpan.FromSeconds(0.5);
             dt.Tick += timer_Tick;
             do
             {
@@ -151,11 +151,17 @@ namespace mahjongNEA
                 }
                 if (lastAction.typeOfAction == 1)
                 {
+                    if (discardPanel.Children.Count > 0)
+                    {
+                        Tile temp = (Tile)discardPanel.Children[discardPanel.Children.Count - 1];
+                        temp.unGlow();
+                    }
                     discardedTiles.Add(lastAction.representingTile);
                     lastAction.representingTile.unconcealTile();
                     lastAction.representingTile.unhover();
                     lastAction.representingTile.interactive = false;
-                    lastAction.representingTile.Margin = new Thickness(5, 5, 5, 5);
+                    lastAction.representingTile.Margin = new Thickness(10, 10, 10, 10);
+                    lastAction.representingTile.glow();
                     discardPanel.Children.Add(lastAction.representingTile);
                 }
                 playerActions.Clear();
@@ -183,7 +189,7 @@ namespace mahjongNEA
                     case 4:
                         currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
                         playerIndex = Array.IndexOf(players, currentPlayer);
-                        if (!(currentPlayer is UserPlayer))
+                        if (currentPlayer is ComputerPlayer)
                         {
                             dt.Start();
                             WaitForEvent(ewh);
@@ -195,6 +201,7 @@ namespace mahjongNEA
                         {
                             discardedTiles.Remove(lastAction.representingTile);
                             discardPanel.Children.Remove(lastAction.representingTile);
+                            lastAction.representingTile.unGlow();
                         }
                         currentPlayer.acceptAction();
                         drawTile(currentPlayer);
@@ -203,7 +210,7 @@ namespace mahjongNEA
                     case 3:
                         currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
                         playerIndex = Array.IndexOf(players, currentPlayer);
-                        if (!(currentPlayer is UserPlayer))
+                        if (currentPlayer is ComputerPlayer)
                         {
                             dt.Start();
                             WaitForEvent(ewh);
@@ -215,6 +222,7 @@ namespace mahjongNEA
                         {
                             discardedTiles.Remove(lastAction.representingTile);
                             discardPanel.Children.Remove(lastAction.representingTile);
+                            lastAction.representingTile.unGlow();
                         }
                         currentPlayer.acceptAction();
                         lastAction = new Action(0);
@@ -236,6 +244,7 @@ namespace mahjongNEA
                             {
                                 discardedTiles.Remove(lastAction.representingTile);
                                 discardPanel.Children.Remove(lastAction.representingTile);
+                                lastAction.representingTile.unGlow();
                             }
                             currentPlayer.acceptAction();
                             lastAction = new Action(0);

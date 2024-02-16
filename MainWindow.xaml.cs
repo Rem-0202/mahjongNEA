@@ -27,12 +27,11 @@ namespace mahjongNEA
         {
             InitializeComponent();
         }
-        Random rng = new Random();
 
         private void MenuItem_Help_Click(object sender, RoutedEventArgs e)
         {
             helpWindow h = new helpWindow();
-            h.Show();
+            h.ShowDialog();
         }
 
         private void autoSortChecked(object sender, RoutedEventArgs e)

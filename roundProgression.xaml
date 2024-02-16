@@ -2,13 +2,14 @@
               xmlns:local="clr-namespace:mahjongNEA"
               ColumnWidth="400" FontSize="14" FontFamily="Georgia">
     <Paragraph FontSize="18">
-        Each player starts with 13 tiles and gets assigned a wind.
+        Each player starts with 13 tiles and gets assigned a wind, this decides where each player is seated.
         <LineBreak/>
         <LineBreak/>
-        Starting from the dealer (the player with prevailing wind) and going in anticlockwise direction (East, North, West, South), 
-        each player draws a tile and discards a tile.
+        Starting from the dealer (the player with starting wind) each player draws a tile then discards a tile.
+        <LineBreak/>
+        This is repeated by the next player going in anticlockwise direction (East, North, West, South).
         <LineBreak/>
         <LineBreak/>
-        This process continues until any player declares a winning hand, or any of the disruption happen as desribed in the "Disruption to rounds" section.
+        This process continues until any of the disruptions described in the "Disruption to rounds" section happens.
     </Paragraph>
 </FlowDocument>

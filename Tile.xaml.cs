@@ -12,9 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Threading;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace mahjongNEA
 {
@@ -25,6 +23,8 @@ namespace mahjongNEA
     public partial class Tile : UserControl
     {
         public static List<char> suitOrder = new List<char>() { 'm', 'p', 's', 'z', 'f', 'n' };
+
+        private bool glowing;
         public int rank { get; private set; }
         public char suit { get; private set; }
         public int suitID { get; private set; }
@@ -50,6 +50,7 @@ namespace mahjongNEA
         {
             InitializeComponent();
             interactive = false;
+            glowing = false;
             rank = r;
             suit = s;
             tileID = r.ToString() + s;
@@ -125,26 +126,22 @@ namespace mahjongNEA
 
         private void tileImage_MouseEnter(object sender, MouseEventArgs e)
         {
-            Dispatcher.Invoke(DispatcherPriority.Render, new System.Action(() => {
-                if (!concealed && interactive)
-                {
-                    Height += tileImage.ActualHeight / 4;
-                    tileBorder.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight / 4);
-                    hovered = true;
-                }
-            }));
+            if (!concealed && interactive)
+            {
+                Height += tileImage.ActualHeight / 4;
+                tileBorder.Margin = new Thickness(1, 0, 1, tileImage.ActualHeight / 4);
+                hovered = true;
+            }
         }
 
         private void tileImage_MouseLeave(object sender, MouseEventArgs e)
         {
-            Dispatcher.Invoke(DispatcherPriority.Render, new System.Action(() => {
-                if (!concealed && interactive)
-                {
-                    Height -= tileImage.ActualHeight / 4;
-                    tileBorder.Margin = new Thickness(1, 0, 1, 0);
-                    hovered = false;
-                }
-            }));
+            if (!concealed && interactive)
+            {
+                Height -= tileImage.ActualHeight / 4;
+                tileBorder.Margin = new Thickness(1, 0, 1, 0);
+                hovered = false;
+            }
         }
 
         public void unhover()
@@ -166,6 +163,27 @@ namespace mahjongNEA
         public static Tile stringToTile(string s)
         {
             return new Tile(Convert.ToInt32(s[0].ToString()), s[1], false);
+        }
+
+        public void glow()
+        {
+            Height += 10;
+            Width += 10;
+            tileBorder.BorderThickness = new Thickness(5, 5, 5, 5);
+            tileBorder.BorderBrush = Brushes.Yellow;
+            glowing = true;
+        }
+
+        public void unGlow()
+        {
+            if (glowing)
+            {
+                Height -= 10;
+                Width -= 10;
+                tileBorder.BorderThickness = new Thickness(1);
+                tileBorder.BorderBrush = Brushes.Black;
+                glowing = false;
+            }
         }
     }
 }
