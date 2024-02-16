@@ -46,6 +46,13 @@ namespace mahjongNEA
             wind = w;
             nextTurn = false;
             walledGroupCount = 0;
+            string windNames = "東E南S西W北N";
+            windText.Text = $"{windNames[wind * 2]}{windNames[wind * 2 + 1]}";
+            if (pWind == w)
+            {
+                windText.Text = $"P {windText.Text}";
+            }
+            scoreText.Text = points.ToString();
         }
 
         public virtual void addTile(Tile t)
@@ -127,17 +134,32 @@ namespace mahjongNEA
             ownTileDisplay.LayoutTransform = new RotateTransform(180.0);
             walledTileDisplay.LayoutTransform = new RotateTransform(180.0);
             bonusTileDisplay.LayoutTransform = new RotateTransform(180.0);
+            windText.LayoutTransform = new RotateTransform(180.0);
+            scoreText.LayoutTransform = new RotateTransform(180.0);
         }
 
         public bool changePointsByAmount(int c)
         {
             points += c;
+            scoreText.Text = points.ToString();
             return points <= 0;
         }
 
         public virtual Action getAction(Action a)
         {
             throw new NotImplementedException();
+        }
+
+        public void glow()
+        {
+            indicatorBar.BorderBrush = Brushes.Red;
+            indicatorBar.BorderThickness = new Thickness(1.5);
+        }
+
+        public void unglow()
+        {
+            indicatorBar.BorderBrush = Brushes.Black;
+            indicatorBar.BorderThickness = new Thickness(0.5);
         }
 
         public virtual void acceptAction()

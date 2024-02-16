@@ -133,11 +133,13 @@ namespace mahjongNEA
             lastAction = new Action(0);
             drawTile(currentPlayer);
             DispatcherTimer dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(0.5);
+            dt.Interval = TimeSpan.FromSeconds(1);
             dt.Tick += timer_Tick;
             do
             {
                 currentPlayer = players[playerIndex];
+                Array.ForEach(players, (e) => e.unglow());
+                currentPlayer.glow();
                 Array.ForEach(players, e => e.ownTurn = false);
                 Array.ForEach(players, e => e.nextTurn = false);
                 currentPlayer.ownTurn = true;
@@ -188,8 +190,10 @@ namespace mahjongNEA
                         break;
                     case 4:
                         currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
+                        Array.ForEach(players, (e) => e.unglow());
+                        currentPlayer.glow();
                         playerIndex = Array.IndexOf(players, currentPlayer);
-                        if (currentPlayer is ComputerPlayer)
+                        if (!(currentPlayer is UserPlayer))
                         {
                             dt.Start();
                             WaitForEvent(ewh);
@@ -210,7 +214,9 @@ namespace mahjongNEA
                     case 3:
                         currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
                         playerIndex = Array.IndexOf(players, currentPlayer);
-                        if (currentPlayer is ComputerPlayer)
+                        Array.ForEach(players, (e) => e.unglow());
+                        currentPlayer.glow();
+                        if (!(currentPlayer is UserPlayer))
                         {
                             dt.Start();
                             WaitForEvent(ewh);
@@ -230,6 +236,8 @@ namespace mahjongNEA
                     case 2:
                         playerIndex = (playerIndex + 1) % 4;
                         currentPlayer = players[playerIndex];
+                        Array.ForEach(players, (e) => e.unglow());
+                        currentPlayer.glow();
                         if (!(currentPlayer is UserPlayer))
                         {
                             dt.Start();
@@ -259,6 +267,8 @@ namespace mahjongNEA
                         currentPlayer = players[playerIndex];
                         lastAction = new Action(0);
                         drawTile(currentPlayer);
+                        Array.ForEach(players, (e) => e.unglow());
+                        currentPlayer.glow();
                         break;
                     default:
                         MessageBox.Show("this line shouldn't run, check switch case in gameview.cs");
