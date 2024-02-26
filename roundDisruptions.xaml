@@ -3,25 +3,36 @@
               ColumnWidth="400" FontSize="14" FontFamily="Georgia">
     <Paragraph FontSize="18">
         <Bold FontSize="22">
-            Winning: 
+            Winning:
         </Bold>
         <LineBreak/>
         At any point of the game if any player could form a winning hand with the last discarded tile, that player can declare a win.
         <LineBreak/>
+        This would end the game immediately and scores would be calculated base on the faan value of the winning hand. See the "Winning Hands" section for more information
+        <LineBreak/>
         <LineBreak/>
         <LineBreak/>
         <Bold FontSize="22">
-            Taking a tile: 
+            Taking a tile:
         </Bold>
         <LineBreak/>
-        At any point if a player can form a Pong (3 identity tiles) or a Kong (4 identity tiles), that player can take the discarded tile and wall the relevant tiles. If a Kong is formed the player would
-        draw another tile before proceeding.
+        At any point if a player can form a Pong (3 identical tiles) or a Kong (4 identical tiles), that player can take the discarded tile and wall the relevant tiles.
+        <LineBreak/>
+        If a Kong is formed the player would draw another tile before proceeding.
         <LineBreak/>
         <LineBreak/>
-        If the next player can form a Chow (3 consecutive tiles), that player can take the discared tile and wall the relevant tiles. Forming a Pong or Kong has priority over this.
+        If the next player can form a Chow (3 consecutive ranked tiles), that player can take the discared tile and wall the relevant tiles.
+        <LineBreak/>
+        A chow can only happen if the tile forming the Chow is discarded by the previous player.
+        <LineBreak/>
+        Other players forming a Pong or Kong has priority over this.
         <LineBreak/>
         <LineBreak/>
-        The round would proceed by the player discarding a tile.
+        Taking a tile this way would wall the relevant tiles.
+        <LineBreak/>
+        Walled tiles cannot be discarded or taken and would count towards the 4 melds needed for a winning hand. (See the "Winning Hands" section for mroe information)
+        <LineBreak/>
+        The round progression would continue by that player discarding a tile.
         <LineBreak/>
         <LineBreak/>
         <LineBreak/>
@@ -29,7 +40,9 @@
             Bonus tiles:
         </Bold>
         <LineBreak/>
-        When a player draws a bonus tile (seasons or flowers), the tile is put to the side and another tile would be drawn, repeating if another bonus tile is drawn.
+        When a player draws a bonus tile (seasons or flowers), the tile is put to the side and another tile would be drawn.
+        <LineBreak/>
+        This process is repeated if another bonus tile is drawn.
         <LineBreak/>
         <LineBreak/>
         <LineBreak/>

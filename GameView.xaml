@@ -29,7 +29,7 @@
               Grid.RowSpan="4"/>
         <Grid x:Name="userPlayerGrid" Grid.Row="4" Grid.Column="1"/>
         <WrapPanel x:Name="discardPanel" Grid.Row="2" Grid.Column="1"
-                   Orientation="Horizontal" />
+                   Orientation="Horizontal"/>
         <!--<Grid Grid.Row="2" Grid.Column="1" x:Name="messyDiscardGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

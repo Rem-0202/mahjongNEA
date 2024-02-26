@@ -27,12 +27,11 @@ namespace mahjongNEA
         {
             InitializeComponent();
         }
-        Random rng = new Random();
 
         private void MenuItem_Help_Click(object sender, RoutedEventArgs e)
         {
             helpWindow h = new helpWindow();
-            h.Show();
+            h.ShowDialog();
         }
 
         private void autoSortChecked(object sender, RoutedEventArgs e)
@@ -77,7 +76,7 @@ namespace mahjongNEA
         //temp new game for easier debug
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            g = new GameView(1, 1, newGameDialog.sPoints, newGameDialog.ePoints);
+            g = new GameView(1, 0, newGameDialog.sPoints, newGameDialog.ePoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
         }

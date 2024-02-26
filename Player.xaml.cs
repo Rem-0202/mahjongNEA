@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace mahjongNEA
 {
@@ -22,24 +23,36 @@ namespace mahjongNEA
     public partial class Player : UserControl
     {
         public bool ownTurn;
+        protected Dictionary<string, int> tileCount;
+        protected int walledGroupCount;
         public Action lastAction { get; protected set; }
-        public List<Tile> ownTiles { get; protected set; }
+        public List<Tile> ownTiles;
         public List<Tile> walledTiles { get; protected set; }
         public List<Tile> bonusTiles { get; protected set; }
         public int wind { get; private set; }  //0 = 東(E)  1 = 南(S)  2 = 西(W)  3 = 北(N)
+        public int pWind { get; set; }
         public int points { get; private set; }
 
         public bool nextTurn;
 
-        public Player(int w, int points)
+        public Player(int w, int points, int pWind)
         {
             InitializeComponent();
+            this.pWind = pWind;
             ownTiles = new List<Tile>();
             walledTiles = new List<Tile>();
             bonusTiles = new List<Tile>();
             this.points = points;
             wind = w;
             nextTurn = false;
+            walledGroupCount = 0;
+            string windNames = "東E南S西W北N";
+            windText.Text = $"{windNames[wind * 2]}{windNames[wind * 2 + 1]}";
+            if (pWind == w)
+            {
+                windText.Text = $"P {windText.Text}";
+            }
+            scoreText.Text = points.ToString();
         }
 
         public virtual void addTile(Tile t)
@@ -56,6 +69,17 @@ namespace mahjongNEA
             }
             sortTiles();
             updateTileDisplay();
+        }
+
+        protected void WaitForEvent(EventWaitHandle eventHandle)
+        {
+            var frame = new DispatcherFrame();
+            new Thread(() =>
+            {
+                eventHandle.WaitOne();
+                frame.Continue = false;
+            }).Start();
+            Dispatcher.PushFrame(frame);
         }
 
         public void updateTileDisplay()
@@ -110,11 +134,14 @@ namespace mahjongNEA
             ownTileDisplay.LayoutTransform = new RotateTransform(180.0);
             walledTileDisplay.LayoutTransform = new RotateTransform(180.0);
             bonusTileDisplay.LayoutTransform = new RotateTransform(180.0);
+            windText.LayoutTransform = new RotateTransform(180.0);
+            scoreText.LayoutTransform = new RotateTransform(180.0);
         }
 
         public bool changePointsByAmount(int c)
         {
             points += c;
+            scoreText.Text = points.ToString();
             return points <= 0;
         }
 
@@ -123,7 +150,19 @@ namespace mahjongNEA
             throw new NotImplementedException();
         }
 
-        public void acceptAction()
+        public void glow()
+        {
+            indicatorBar.BorderBrush = Brushes.Red;
+            indicatorBar.BorderThickness = new Thickness(1.5);
+        }
+
+        public void unglow()
+        {
+            indicatorBar.BorderBrush = Brushes.Black;
+            indicatorBar.BorderThickness = new Thickness(0.5);
+        }
+
+        public virtual void acceptAction()
         {
             if (lastAction != null)
             {
@@ -148,6 +187,7 @@ namespace mahjongNEA
                                 t.setRotated();
                             }
                         }
+                        walledGroupCount++;
                         break;
                     case 3:
                         foreach (Tile t in lastAction.allTiles)
@@ -165,6 +205,7 @@ namespace mahjongNEA
                             t.interactive = false;
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
+                        walledGroupCount++;
                         break;
                     case 4:
                         foreach (Tile t in lastAction.allTiles)
@@ -182,6 +223,7 @@ namespace mahjongNEA
                             t.interactive = false;
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
+                        walledGroupCount++;
                         break;
                 }
                 updateTileDisplay();

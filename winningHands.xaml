@@ -13,14 +13,27 @@
         <LineBreak/>
         <Bold FontSize="18">Kong:</Bold> 3 of the same tile.
         <LineBreak/>
-        <Bold FontSize="18">Chow:</Bold> 3 consecutive tiles of the same suit.
-        <LineBreak/>
         <Bold FontSize="18">Pong:</Bold> 4 of the same tile.
+        <LineBreak/>
+        <Bold FontSize="18">Chow:</Bold> 3 consecutive tiles of the same suit.
         <LineBreak/>
         <LineBreak/>
         <Bold FontSize="18">Eye:</Bold> a pair of the same time.
         <LineBreak/>
         <LineBreak/>
+        Melds formed counts towards the 4 needed whether it is walled or not.
+        <LineBreak/>
+        However, tiles in walled melds cannot be changed anymore while tiles in unwalled melds can be changed.
+        <LineBreak/>
+        <LineBreak/>
         This hand has a base faan value of 0.
+        <LineBreak/>
+        Higher faan value hands are formed by satisfying certain conditions with the 4 melds and eye.
+        <LineBreak/>
+        If a hand satisfies the conditions of multiple different hands, the faan value is additive unless specified.
+        <LineBreak/>
+        Some special hands doesn't consist of 4 melds and an eye but instead requires specific conditions to be met.
+        <LineBreak/>
+        For all faan values of hands, see the menu in the drop down by clicking on the "Winning Hands" section.
     </Paragraph>
 </FlowDocument>

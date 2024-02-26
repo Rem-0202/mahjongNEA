@@ -50,10 +50,10 @@ namespace mahjongNEA
             this.startingPoints = startingPoints;
             this.endingPoints = endingPoints;
             players = new Player[4];
-            players[playerWind % 4] = new UserPlayer(playerWind, startingPoints, userActionButtons);
-            players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints);
-            players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints);
-            players[(playerWind + 3) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints);
+            players[playerWind % 4] = new UserPlayer(playerWind, startingPoints, userActionButtons, prevailingWind);
+            players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints, prevailingWind);
+            players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints, prevailingWind);
+            players[(playerWind + 3) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints, prevailingWind);
             userPlayerGrid.Children.Add(players[playerWind % 4]);
             rightPlayerGrid.Children.Add(players[(playerWind + 1) % 4]);
             topPlayerGrid.Children.Add(players[(playerWind + 2) % 4]);
@@ -138,6 +138,8 @@ namespace mahjongNEA
             do
             {
                 currentPlayer = players[playerIndex];
+                Array.ForEach(players, (e) => e.unglow());
+                currentPlayer.glow();
                 Array.ForEach(players, e => e.ownTurn = false);
                 Array.ForEach(players, e => e.nextTurn = false);
                 currentPlayer.ownTurn = true;
@@ -151,11 +153,17 @@ namespace mahjongNEA
                 }
                 if (lastAction.typeOfAction == 1)
                 {
+                    if (discardPanel.Children.Count > 0)
+                    {
+                        Tile temp = (Tile)discardPanel.Children[discardPanel.Children.Count - 1];
+                        temp.unGlow();
+                    }
                     discardedTiles.Add(lastAction.representingTile);
                     lastAction.representingTile.unconcealTile();
                     lastAction.representingTile.unhover();
                     lastAction.representingTile.interactive = false;
-                    lastAction.representingTile.Margin = new Thickness(5, 5, 5, 5);
+                    lastAction.representingTile.Margin = new Thickness(10, 10, 10, 10);
+                    lastAction.representingTile.glow();
                     discardPanel.Children.Add(lastAction.representingTile);
                 }
                 playerActions.Clear();
@@ -182,6 +190,8 @@ namespace mahjongNEA
                         break;
                     case 4:
                         currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
+                        Array.ForEach(players, (e) => e.unglow());
+                        currentPlayer.glow();
                         playerIndex = Array.IndexOf(players, currentPlayer);
                         if (!(currentPlayer is UserPlayer))
                         {
@@ -195,6 +205,7 @@ namespace mahjongNEA
                         {
                             discardedTiles.Remove(lastAction.representingTile);
                             discardPanel.Children.Remove(lastAction.representingTile);
+                            lastAction.representingTile.unGlow();
                         }
                         currentPlayer.acceptAction();
                         drawTile(currentPlayer);
@@ -203,6 +214,8 @@ namespace mahjongNEA
                     case 3:
                         currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
                         playerIndex = Array.IndexOf(players, currentPlayer);
+                        Array.ForEach(players, (e) => e.unglow());
+                        currentPlayer.glow();
                         if (!(currentPlayer is UserPlayer))
                         {
                             dt.Start();
@@ -215,6 +228,7 @@ namespace mahjongNEA
                         {
                             discardedTiles.Remove(lastAction.representingTile);
                             discardPanel.Children.Remove(lastAction.representingTile);
+                            lastAction.representingTile.unGlow();
                         }
                         currentPlayer.acceptAction();
                         lastAction = new Action(0);
@@ -222,6 +236,8 @@ namespace mahjongNEA
                     case 2:
                         playerIndex = (playerIndex + 1) % 4;
                         currentPlayer = players[playerIndex];
+                        Array.ForEach(players, (e) => e.unglow());
+                        currentPlayer.glow();
                         if (!(currentPlayer is UserPlayer))
                         {
                             dt.Start();
@@ -236,6 +252,7 @@ namespace mahjongNEA
                             {
                                 discardedTiles.Remove(lastAction.representingTile);
                                 discardPanel.Children.Remove(lastAction.representingTile);
+                                lastAction.representingTile.unGlow();
                             }
                             currentPlayer.acceptAction();
                             lastAction = new Action(0);
@@ -250,6 +267,8 @@ namespace mahjongNEA
                         currentPlayer = players[playerIndex];
                         lastAction = new Action(0);
                         drawTile(currentPlayer);
+                        Array.ForEach(players, (e) => e.unglow());
+                        currentPlayer.glow();
                         break;
                     default:
                         MessageBox.Show("this line shouldn't run, check switch case in gameview.cs");
@@ -293,6 +312,5 @@ namespace mahjongNEA
             }).Start();
             Dispatcher.PushFrame(frame);
         }
-
     }
 }

@@ -20,7 +20,7 @@ namespace mahjongNEA
         private EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
         public StackPanel actionButtons;
 
-        public UserPlayer(int wind, int points, UIElement actionButtons) : base(wind, points)
+        public UserPlayer(int wind, int points, UIElement actionButtons, int pWind) : base(wind, points, pWind)
         {
             InitializeComponent();
             this.actionButtons = (StackPanel)actionButtons;
@@ -50,17 +50,6 @@ namespace mahjongNEA
             }
         }
 
-        private void WaitForEvent(EventWaitHandle eventHandle)
-        {
-            var frame = new DispatcherFrame();
-            new Thread(() =>
-            {
-                eventHandle.WaitOne();
-                frame.Continue = false;
-            }).Start();
-            Dispatcher.PushFrame(frame);
-        }
-
         public override Action getAction(Action a)
         {
             lastAction = null;
@@ -81,7 +70,7 @@ namespace mahjongNEA
                 {
                     for (int k = i + 1; k < ownTiles.Count; k++)
                     {
-                        if (Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile))
+                        if (Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile) && nextTurn)
                         {
                             chowList.Add(new Action(2, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
                         }
@@ -98,15 +87,13 @@ namespace mahjongNEA
                         }
                     }
                 }
-                if ((chowList.Count != 0 && nextTurn) || pongList.Count != 0 || kongList.Count != 0)
+                if (chowList.Count != 0 || pongList.Count != 0 || kongList.Count != 0)
                 {
-                    //WORK ON THIS MAINLY
-                    //NOT FINISHED
                     ActionButton skipButton = new ActionButton(ref actionEWH);
                     actionButtons.Children.Add(skipButton);
                     ActionButton chowButton = new ActionButton(ref actionEWH);
-                    ActionButton pongButton = new ActionButton(ref actionEWH); ;
-                    ActionButton kongButton = new ActionButton(ref actionEWH); ;
+                    ActionButton pongButton = new ActionButton(ref actionEWH);
+                    ActionButton kongButton = new ActionButton(ref actionEWH);
                     if (chowList.Count != 0 && nextTurn)
                     {
                         chowButton = new ActionButton(chowList, "Chow", ref actionEWH);

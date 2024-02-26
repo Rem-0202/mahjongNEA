@@ -23,6 +23,8 @@ namespace mahjongNEA
     public partial class Tile : UserControl
     {
         public static List<char> suitOrder = new List<char>() { 'm', 'p', 's', 'z', 'f', 'n' };
+
+        private bool glowing;
         public int rank { get; private set; }
         public char suit { get; private set; }
         public int suitID { get; private set; }
@@ -48,6 +50,7 @@ namespace mahjongNEA
         {
             InitializeComponent();
             interactive = false;
+            glowing = false;
             rank = r;
             suit = s;
             tileID = r.ToString() + s;
@@ -64,6 +67,25 @@ namespace mahjongNEA
             uniqueTileNumber++;
         }
 
+        public Tile(int r, char s, bool u)
+        {
+            InitializeComponent();
+            interactive = false;
+            rank = r;
+            suit = s;
+            tileID = r.ToString() + s;
+            terminal = (suit == 'm' || suit == 'p' || suit == 's') && (rank == 1 || rank == 9);
+            honour = suit == 'z';
+            suitID = suitOrder.IndexOf(suit);
+            special = terminal || honour;
+            bonus = suit == 'f' || suit == 'n';
+            concealed = false;
+            setImage();
+            Height = tileImage.Height;
+            Width = tileImage.Width * 1.1;
+            tileNumber = -1;
+        }
+
         public static bool operator ==(Tile a, Tile b) => a.tileID == b.tileID;
 
         public static bool operator !=(Tile a, Tile b) => a.tileID != b.tileID;
@@ -71,8 +93,6 @@ namespace mahjongNEA
         public static bool operator >(Tile a, Tile b) => a.suitID > b.suitID || (a.suitID == b.suitID && a.rank > b.rank);
 
         public static bool operator <(Tile a, Tile b) => a.suitID < b.suitID || (a.suitID == b.suitID && a.rank < b.rank);
-
-        
 
         public void concealTile()
         {
@@ -138,6 +158,32 @@ namespace mahjongNEA
             LayoutTransform = new RotateTransform(270);
             Height = tileImage.Height;
             Width = tileImage.Width * 1.1;
+        }
+
+        public static Tile stringToTile(string s)
+        {
+            return new Tile(Convert.ToInt32(s[0].ToString()), s[1], false);
+        }
+
+        public void glow()
+        {
+            Height += 10;
+            Width += 10;
+            tileBorder.BorderThickness = new Thickness(5, 5, 5, 5);
+            tileBorder.BorderBrush = Brushes.Yellow;
+            glowing = true;
+        }
+
+        public void unGlow()
+        {
+            if (glowing)
+            {
+                Height -= 10;
+                Width -= 10;
+                tileBorder.BorderThickness = new Thickness(1);
+                tileBorder.BorderBrush = Brushes.Black;
+                glowing = false;
+            }
         }
     }
 }
