@@ -23,6 +23,8 @@ namespace mahjongNEA
     public partial class Tile : UserControl
     {
         public static List<char> suitOrder = new List<char>() { 'm', 'p', 's', 'z', 'f', 'n' };
+
+        private bool glowing;
         public int rank { get; private set; }
         public char suit { get; private set; }
         public int suitID { get; private set; }
@@ -48,6 +50,7 @@ namespace mahjongNEA
         {
             InitializeComponent();
             interactive = false;
+            glowing = false;
             rank = r;
             suit = s;
             tileID = r.ToString() + s;
@@ -108,7 +111,7 @@ namespace mahjongNEA
         {
             var bitmap = new BitmapImage();
             string imageName = concealed ? "concealed" : tileID;
-            using (var stream = new FileStream($"../../{imageName}.jpg", FileMode.Open))
+            using (FileStream stream = new FileStream($"../../{imageName}.jpg", FileMode.Open, FileAccess.Read))
             {
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
@@ -116,8 +119,8 @@ namespace mahjongNEA
                 bitmap.EndInit();
                 bitmap.Freeze();
             }
-            tileImage.Height = bitmap.Height * 4.1 / 5;
-            tileImage.Width = bitmap.Width * 4.1 / 5;
+            tileImage.Height = bitmap.Height * 4 / 5;
+            tileImage.Width = bitmap.Width * 4 / 5;
             tileImage.Source = bitmap;
         }
 
@@ -160,6 +163,27 @@ namespace mahjongNEA
         public static Tile stringToTile(string s)
         {
             return new Tile(Convert.ToInt32(s[0].ToString()), s[1], false);
+        }
+
+        public void glow()
+        {
+            Height += 10;
+            Width += 10;
+            tileBorder.BorderThickness = new Thickness(5, 5, 5, 5);
+            tileBorder.BorderBrush = Brushes.Yellow;
+            glowing = true;
+        }
+
+        public void unGlow()
+        {
+            if (glowing)
+            {
+                Height -= 10;
+                Width -= 10;
+                tileBorder.BorderThickness = new Thickness(1);
+                tileBorder.BorderBrush = Brushes.Black;
+                glowing = false;
+            }
         }
     }
 }

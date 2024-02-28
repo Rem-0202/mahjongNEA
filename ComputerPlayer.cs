@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Threading;
 
 namespace mahjongNEA
 {
     class ComputerPlayer : Player
     {
-        private Dictionary<string, int> tileCount;
-        public ComputerPlayer(int wind, int points) : base(wind, points)
+        public ComputerPlayer(int wind, int points, int pWind) : base(wind, points, pWind)
         {
             InitializeComponent();
             tileCount = new Dictionary<string, int>();
@@ -26,12 +25,11 @@ namespace mahjongNEA
             {
                 tileCount.Add($"{i.ToString()}z", 4);
             }
-            
         }
 
         public override void addTile(Tile t)
         {
-            //t.concealTile();
+            t.concealTile();
             if (!t.bonus)
             {
                 tileCount[t.tileID]--;
@@ -63,64 +61,76 @@ namespace mahjongNEA
 
         public override Action getAction(Action a)
         {
-            if (a.typeOfAction >= 2)
+            EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
+            Thread at = new Thread(() =>
             {
-                foreach (Tile t in a.allTiles)
+                if (a.typeOfAction >= 2)
                 {
-                    tileCount[t.tileID]--;
-                }
-                lastAction = new Action(0);
-            }
-            else if (a.typeOfAction == 1)
-            {
-                tileCount[a.representingTile.tileID]--;
-                lastAction = new Action(0);
-                List<Action> chowList = new List<Action>();
-                List<Action> pongList = new List<Action>();
-                List<Action> kongList = new List<Action>();
-                for (int i = 0; i < ownTiles.Count - 1; i++)
-                {
-                    for (int k = i + 1; k < ownTiles.Count; k++)
+                    foreach (Tile t in a.allTiles)
                     {
-                        if (Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile) && nextTurn)
+                        tileCount[t.tileID]--;
+                    }
+                    tileCount[a.representingTile.tileID]++;
+                    lastAction = new Action(0);
+                }
+                else if (a.typeOfAction == 1)
+                {
+                    tileCount[a.representingTile.tileID]--;
+                    lastAction = new Action(0);
+                    List<Action> chowList = new List<Action>();
+                    List<Action> pongList = new List<Action>();
+                    List<Action> kongList = new List<Action>();
+                    for (int i = 0; i < ownTiles.Count - 1; i++)
+                    {
+                        for (int k = i + 1; k < ownTiles.Count; k++)
                         {
-                            chowList.Add(new Action(2, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
-                        }
-                        if (Analysis.isPong(ownTiles[i], ownTiles[k], a.representingTile))
-                        {
-                            pongList.Add(new Action(3, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
-                        }
-                        for (int j = k + 1; j < ownTiles.Count; j++)
-                        {
-                            if (Analysis.isKong(ownTiles[i], ownTiles[k], ownTiles[j], a.representingTile))
+                            if (nextTurn && Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile))
                             {
-                                kongList.Add(new Action(4, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], a.representingTile }));
+                                chowList.Add(new Action(2, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
+                            }
+                            if (Analysis.isPong(ownTiles[i], ownTiles[k], a.representingTile))
+                            {
+                                pongList.Add(new Action(3, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
+                            }
+                            for (int j = k + 1; j < ownTiles.Count; j++)
+                            {
+                                if (Analysis.isKong(ownTiles[i], ownTiles[k], ownTiles[j], a.representingTile))
+                                {
+                                    kongList.Add(new Action(4, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], a.representingTile }));
+                                }
                             }
                         }
                     }
-                }
-                List<Action> tempActionList = new List<Action>();
-                tempActionList.AddRange(chowList);
-                tempActionList.AddRange(pongList);
-                tempActionList.AddRange(kongList);
-                Random rng = new Random();
-                if (tempActionList.Count != 0)
-                {
-                    lastAction = tempActionList[rng.Next(tempActionList.Count)];
-                    foreach (Tile x in lastAction.allTiles)
+                    List<Action> tempActionList = new List<Action>();
+                    tempActionList.AddRange(chowList);
+                    tempActionList.AddRange(pongList);
+                    tempActionList.AddRange(kongList);
+                    if (tempActionList.Count != 0)
                     {
-                        tileCount[x.tileID]--;
+                        lastAction = Analysis.chooseAction(ownTiles, walledGroupCount, tempActionList, tileCount);
                     }
+                    //TODO: implement rob tile check
                 }
-                //TODO: implement rob tile check
-            }
-            else if (a.typeOfAction == 0)
-            {
-                lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
-                tileCount[lastAction.representingTile.tileID]--;
-            }
+                else if (a.typeOfAction == 0)
+                {
+                    lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
+                }
+                ewh.Set();
+            });
+            at.SetApartmentState(ApartmentState.STA);
+            at.Start();
+            WaitForEvent(ewh);
             return lastAction;
             //temp return to avoid crashing for testing
+        }
+
+        public override void updateTileDisplay()
+        {
+            foreach (Tile t in ownTiles)
+            {
+                t.concealTile();
+            }
+            base.updateTileDisplay();
         }
     }
 }
