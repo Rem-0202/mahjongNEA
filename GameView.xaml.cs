@@ -120,6 +120,14 @@ namespace mahjongNEA
             }
         }
 
+        public void toggleExposeTiles()
+        {
+            foreach (Player p in players)
+            {
+                p.toggleExposeTile();
+            }
+        }
+
         public void gameLoop()
         {
             Player currentPlayer;
@@ -128,7 +136,6 @@ namespace mahjongNEA
             int playerIndex = prevailingWind;
             int maxChoice;
             Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
-            #region new new gameloop start ACTUALLY WORKS
             currentPlayer = players[playerIndex];
             lastAction = new Action(0);
             drawTile(currentPlayer);
@@ -283,7 +290,6 @@ namespace mahjongNEA
                 }
                 if (end) break;
             } while (!end);
-            #endregion
         }
 
         private void timer_Tick(object sender, EventArgs e)

@@ -111,7 +111,7 @@ namespace mahjongNEA
         {
             var bitmap = new BitmapImage();
             string imageName = concealed ? "concealed" : tileID;
-            using (var stream = new FileStream($"../../{imageName}.jpg", FileMode.Open))
+            using (FileStream stream = new FileStream($"../../{imageName}.jpg", FileMode.Open, FileAccess.Read))
             {
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
@@ -119,8 +119,8 @@ namespace mahjongNEA
                 bitmap.EndInit();
                 bitmap.Freeze();
             }
-            tileImage.Height = bitmap.Height * 4.1 / 5;
-            tileImage.Width = bitmap.Width * 4.1 / 5;
+            tileImage.Height = bitmap.Height * 4 / 5;
+            tileImage.Width = bitmap.Width * 4 / 5;
             tileImage.Source = bitmap;
         }
 

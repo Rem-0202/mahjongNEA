@@ -80,7 +80,7 @@ namespace mahjongNEA
             return a.suit == b.suit && (Math.Abs(a.rank - b.rank) == 1 || Math.Abs(a.rank - b.rank) == 2) && !a.honour && !b.honour;
         }
 
-        private static void sortTiles(ref List<Tile> ts)
+        public static void sortTiles(ref List<Tile> ts)
         {
             bool sorted = false;
             Tile temp;
@@ -152,7 +152,7 @@ namespace mahjongNEA
         }
 
 
-        private static int countShanten(List<Tile> ts, int g)
+        public static int countShanten(List<Tile> ts, int g)
         {
             int s = 8;
             int t = 0;
@@ -247,11 +247,11 @@ namespace mahjongNEA
                     }
                 }
             }
-            for (int i = 0; i < neededTileScore.Length; i++)
-            {
-                //defensive play, add slider to choose difficulty
-                neededTileScore[i] -= tileCount[ts[i].tileID] - 1;
-            }
+            //for (int i = 0; i < neededTileScore.Length; i++)
+            //{
+            //    //defensive play, add slider to choose difficulty
+            //    neededTileScore[i] -= (tileCount[ts[i].tileID] - 1);
+            //}
             return neededTileScore;
         }
 
@@ -273,12 +273,15 @@ namespace mahjongNEA
         public static Action chooseAction(List<Tile> ts, int k, List<Action> ats, Dictionary<string, int> tileCount)
         {
             List<Tile> tempTS = new List<Tile>();
+            tempTS.AddRange(ts);
             ats.Add(new Action(0));
             int[] improvingTileCount = new int[ats.Count + 1];
             int maxTileNum = -1;
             for (int i = 0; i < ats.Count; i++)
             {
-                tempTS = useAction(ts, ats[i]);
+                tempTS.Clear();
+                tempTS.AddRange(ts);
+                tempTS = useAction(tempTS, ats[i]);
                 maxTileNum = -1;
                 foreach (int j in getImprovingTileCount(tempTS, k + 1, tileCount))
                 {

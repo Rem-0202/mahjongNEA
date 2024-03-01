@@ -54,14 +54,14 @@ namespace mahjongNEA
             }
         }
 
-        public ActionButton(ref EventWaitHandle ewh)
+        public ActionButton(ref EventWaitHandle ewh, bool w)
         {
             InitializeComponent();
             this.ewh = ewh;
-            action = new Action(0);
+            action = new Action(w ? 5 : 0);
             actionButton.Click -= actionButton_Click;
             actionButton.Click += actionButton_Click_Skip;
-            actionButton.Content = "Skip";
+            actionButton.Content = w ? "Mahjong" : "Skip";
         }
 
         private void actionButton_Click(object sender, RoutedEventArgs e)

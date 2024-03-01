@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -19,18 +19,17 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="0.02*"/>
+            <ColumnDefinition Width="0.04*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="2" Grid.RowSpan="5" Orientation="Horizontal"
                     x:Name="ownTileDisplay" Mouse.MouseDown="OwnTileDisplay_MouseDown"/>
         <!-- Mouse.MouseDown="OwnTileDisplay_MouseDown" detect mouse method, detect click and drag later -->
         <!--TODO: add mouseup method, detect click and drag reorder tiles-->
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="4"
                     Orientation="Horizontal" x:Name="walledTileDisplay" HorizontalAlignment="Left"/>
-        <StackPanel Grid.Row="5" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"
-                    Orientation="Horizontal" x:Name="bonusTileDisplay" 
-                    HorizontalAlignment="Left"/>
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.RowSpan="4" HorizontalAlignment="Left"
+                    Orientation="Horizontal" x:Name="bonusTileDisplay"/>
         <Border x:Name="indicatorBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" MaxWidth="500"
                 BorderBrush="Black" BorderThickness="0.5">
             <Grid>
@@ -39,9 +38,9 @@
                     <ColumnDefinition Width="0.1*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="windText" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center"
+                <TextBlock x:Name="windText" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"
                            Grid.Column="0"/>
-                <TextBlock x:Name="scoreText" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"
+                <TextBlock x:Name="scoreText" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
                            Grid.Column="2"/>
             </Grid>
         </Border>

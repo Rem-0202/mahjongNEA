@@ -23,6 +23,7 @@ namespace mahjongNEA
     public partial class Player : UserControl
     {
         public bool ownTurn;
+        protected static string windNames = "東E南S西W北N";
         protected Dictionary<string, int> tileCount;
         protected int walledGroupCount;
         public Action lastAction { get; protected set; }
@@ -35,6 +36,8 @@ namespace mahjongNEA
 
         public bool nextTurn;
 
+        public bool exposeAllTiles = false;
+
         public Player(int w, int points, int pWind)
         {
             InitializeComponent();
@@ -46,11 +49,10 @@ namespace mahjongNEA
             wind = w;
             nextTurn = false;
             walledGroupCount = 0;
-            string windNames = "東E南S西W北N";
             windText.Text = $"{windNames[wind * 2]}{windNames[wind * 2 + 1]}";
             if (pWind == w)
             {
-                windText.Text = $"P {windText.Text}";
+                windText.Foreground = Brushes.DarkRed;
             }
             scoreText.Text = points.ToString();
         }
@@ -82,7 +84,13 @@ namespace mahjongNEA
             Dispatcher.PushFrame(frame);
         }
 
-        public void updateTileDisplay()
+        public void toggleExposeTile()
+        {
+            exposeAllTiles = !exposeAllTiles;
+            updateTileDisplay();
+        }
+
+        public virtual void updateTileDisplay()
         {
             ownTileDisplay.Children.Clear();
             walledTileDisplay.Children.Clear();
@@ -90,6 +98,10 @@ namespace mahjongNEA
             foreach (Tile t in ownTiles)
             {
                 ownTileDisplay.Children.Add(t);
+                if (exposeAllTiles)
+                {
+                    t.unconcealTile();
+                }
             }
             foreach (Tile t in walledTiles)
             {

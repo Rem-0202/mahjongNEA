@@ -29,7 +29,7 @@ namespace mahjongNEA
 
         public override void addTile(Tile t)
         {
-            //t.concealTile();
+            t.concealTile();
             if (!t.bonus)
             {
                 tileCount[t.tileID]--;
@@ -84,7 +84,7 @@ namespace mahjongNEA
                     {
                         for (int k = i + 1; k < ownTiles.Count; k++)
                         {
-                            if (Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile) && nextTurn)
+                            if (nextTurn && Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile))
                             {
                                 chowList.Add(new Action(2, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
                             }
@@ -122,6 +122,15 @@ namespace mahjongNEA
             WaitForEvent(ewh);
             return lastAction;
             //temp return to avoid crashing for testing
+        }
+
+        public override void updateTileDisplay()
+        {
+            foreach (Tile t in ownTiles)
+            {
+                t.concealTile();
+            }
+            base.updateTileDisplay();
         }
     }
 }

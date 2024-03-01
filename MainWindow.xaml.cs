@@ -88,5 +88,13 @@ namespace mahjongNEA
                 g.gameLoop();
             }
         }
+
+        private void ExposeTileMenuItem_Checked(object sender, RoutedEventArgs e)
+        {
+            if (g != null)
+            {
+                g.toggleExposeTiles();
+            }
+        }
     }
 }
