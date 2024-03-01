@@ -26,7 +26,7 @@
                     x:Name="ownTileDisplay" Mouse.MouseDown="OwnTileDisplay_MouseDown"/>
         <!-- Mouse.MouseDown="OwnTileDisplay_MouseDown" detect mouse method, detect click and drag later -->
         <!--TODO: add mouseup method, detect click and drag reorder tiles-->
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="4"
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" VerticalAlignment="Top"
                     Orientation="Horizontal" x:Name="walledTileDisplay" HorizontalAlignment="Left"/>
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.RowSpan="4" HorizontalAlignment="Left"
                     Orientation="Horizontal" x:Name="bonusTileDisplay"/>

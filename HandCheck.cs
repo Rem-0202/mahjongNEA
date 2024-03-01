@@ -30,17 +30,17 @@ namespace mahjongNEA
             faan = 0;
         }
 
+        #region 1faan
         private bool noBonuses() => bonuses.Count == 0;
         private bool closedHand() => walledTS.Count == 0;
-        private bool windBonus()
+        private int windBonus()
         {
-            bool b = false;
+            int b = 0;
             foreach (Tile t in bonuses)
             {
                 if (t.bonus && t.rank - 2 == selfWind)
                 {
-                    faan++;
-                    b = true;
+                    b++;
                 }
             }
             return b;
@@ -80,5 +80,30 @@ namespace mahjongNEA
             }
             return tempTS.Count == 2 && tempTS[0] == tempTS[1] && b;
         }
+        private bool selfPick() => selfDrawn;
+        private int honour()
+        {
+            int b = 0;
+            foreach (Action a in walledTS)
+            {
+                if (a.typeOfAction == 3)
+                {
+                    
+                }
+            }
+        }
+        private bool isHonourGroup_Dragon(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.dragon;
+        private bool isHonourGroup_SelfWind(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.rank - 2 == selfWind;
+        private bool isHonourGroup_RoundWind(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.rank - 2 == roundWind;
+        private bool isHonourGroup_Dragon(Tile a, Tile b, Tile c, Tile d) => Analysis.isKong(a, b, c, d) && a.dragon;
+        private bool isHonourGroup_SelfWind(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.rank - 2 == selfWind;
+        private bool isHonourGroup_RoundWind(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.rank - 2 == roundWind;
+        private int honourGroupFaan(Tile a, Tile b, Tile c)
+        {
+            int f = 0;
+            if (isHonourGroup_Dragon(a, b, c)) return 1;
+            return Convert.ToInt32(isHonourGroup_SelfWind(a, b, c)) + Convert.ToInt32(isHonourGroup_RoundWind(a, b, c));
+        }
+        #endregion
     }
 }

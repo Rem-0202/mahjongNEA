@@ -34,6 +34,7 @@ namespace mahjongNEA
         public bool special { get; private set; }
         public bool bonus { get; private set; }
         public bool concealed { get; private set; }
+        public bool dragon { get; private set; }
 
         private static int uniqueTileNumber = 0;
 
@@ -56,6 +57,7 @@ namespace mahjongNEA
             tileID = r.ToString() + s;
             terminal = (suit == 'm' || suit == 'p' || suit == 's') && (rank == 1 || rank == 9);
             honour = suit == 'z';
+            dragon = honour && rank > 5 && rank < 9;
             suitID = suitOrder.IndexOf(suit);
             special = terminal || honour;
             bonus = suit == 'f' || suit == 'n';
