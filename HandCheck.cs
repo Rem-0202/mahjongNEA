@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -50,6 +51,30 @@ namespace mahjongNEA
             {
                 fullTileString += t.tileID;
             }
+        }
+
+        public int getFaan()
+        {
+            faan = 0;
+            if (greatBonus()) return 8; else if (smallBonus()) return 3;
+            if (thirteenOrphans() || allKongs() || greatWinds()) return 13;
+            if (allHonours() || orphans() || nineGates()) return 10;
+            if (bonusSeries()) return 2;
+            if (selftriplets()) return 8; else if (triplets()) faan += 3;
+            if (greatDragons()) faan += 8;
+            if (allOneSuit()) faan += 7;
+            if (smallWinds()) faan += 6;
+            if (smallDragons()) faan += 5;
+            if (smallBonus()) faan += 3;
+            if (mixedOneSuit()) faan += 3;
+            if (mixedOrphan()) faan += 1;
+            if (noBonuses()) faan += 1;
+            faan += windBonus();
+            faan += honour();
+            if (commonHand()) faan += 1;
+            if (closedHand()) faan += 1;
+            if (selfPick()) faan += 1;
+            return faan;
         }
 
         #region 1faan

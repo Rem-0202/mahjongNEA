@@ -193,7 +193,8 @@ namespace mahjongNEA
                 {
                     case 5:
                         end = true;
-                        //handle end
+                        HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
+                        MessageBox.Show(Convert.ToString(h.getFaan()));
                         break;
                     case 4:
                         currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
