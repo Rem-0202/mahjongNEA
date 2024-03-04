@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace mahjongNEA
 {
@@ -15,6 +18,8 @@ namespace mahjongNEA
         private int roundWind;
         private int selfWind;
         private int faan;
+        private string tileString;
+        private string fullTileString;
 
         public HandCheck(List<Tile> ts, List<Action> walledTS, List<Tile> bonuses, bool selfDrawn, int roundWind, int selfWind)
         {
@@ -28,6 +33,23 @@ namespace mahjongNEA
             this.roundWind = roundWind;
             this.selfWind = selfWind;
             faan = 0;
+            tileString = "";
+            foreach (Tile t in ts)
+            {
+                tileString += t.tileID;
+            }
+            fullTileString = "";
+            List<Tile> tempFullTS = new List<Tile>();
+            tempFullTS.AddRange(ts);
+            foreach (Action a in walledTS)
+            {
+                tempFullTS.AddRange(a.allTiles);
+            }
+            Analysis.sortTiles(ref tempFullTS);
+            foreach (Tile t in tempFullTS)
+            {
+                fullTileString += t.tileID;
+            }
         }
 
         #region 1faan
@@ -86,23 +108,196 @@ namespace mahjongNEA
             int b = 0;
             foreach (Action a in walledTS)
             {
-                if (a.typeOfAction == 3)
+                if (a.typeOfAction == 3 || a.typeOfAction == 4)
                 {
-                    
+                    if (a.representingTile.dragon)
+                    {
+                        b++;
+                    }
+                    if (a.representingTile.honour && a.representingTile.rank - 2 == selfWind)
+                    {
+                        b++;
+                    }
+                    if (a.representingTile.honour && a.representingTile.rank - 2 == roundWind)
+                    {
+                        b++;
+                    }
                 }
             }
+            Regex dragonRegex = new Regex(@"([6-8]z)\1\1");
+            Regex windRegex = new Regex(@"(" + (selfWind + 2) + @"z|" + (roundWind + 2) + @"z){3}");
+            MatchCollection md = dragonRegex.Matches(tileString);
+            b += md.Count;
+            md = windRegex.Matches(tileString);
+            if (selfWind == roundWind) b += 2 * md.Count; else b += md.Count;
+            return b;
         }
-        private bool isHonourGroup_Dragon(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.dragon;
-        private bool isHonourGroup_SelfWind(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.rank - 2 == selfWind;
-        private bool isHonourGroup_RoundWind(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.rank - 2 == roundWind;
-        private bool isHonourGroup_Dragon(Tile a, Tile b, Tile c, Tile d) => Analysis.isKong(a, b, c, d) && a.dragon;
-        private bool isHonourGroup_SelfWind(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.rank - 2 == selfWind;
-        private bool isHonourGroup_RoundWind(Tile a, Tile b, Tile c) => Analysis.isPong(a, b, c) && a.rank - 2 == roundWind;
-        private int honourGroupFaan(Tile a, Tile b, Tile c)
+        private bool mixedOrphan() => !new Regex(@"([2-8][spm])").IsMatch(fullTileString);
+        #endregion
+
+        #region 2faan
+        private bool bonusSeries()
         {
-            int f = 0;
-            if (isHonourGroup_Dragon(a, b, c)) return 1;
-            return Convert.ToInt32(isHonourGroup_SelfWind(a, b, c)) + Convert.ToInt32(isHonourGroup_RoundWind(a, b, c));
+            bool b = false;
+            List<int> f = new List<int>() { 1, 2, 3, 4 };
+            List<int> n = new List<int>() { 1, 2, 3, 4 };
+            if (bonuses.Count < 4) return false;
+            else
+            {
+                foreach (Tile t in bonuses)
+                {
+                    if (t.suit == 'f') f.Remove(t.rank);
+                    if (t.suit == 'n') n.Remove(t.rank);
+                }
+            }
+            return f.Count == 0 || n.Count == 0;
+        }
+        #endregion
+
+        #region 3faan
+        private bool smallBonus() => bonuses.Count == 7;
+        private bool triplets()
+        {
+            Regex removeTripletRegex = new Regex(@"((\d\w)\2\2)");
+            string tileStringCopy = $"{tileString}";
+            removeTripletRegex.Replace(tileStringCopy,"");
+            bool b = tileStringCopy.Length == 4 && tileStringCopy[0] == tileStringCopy[2] && tileStringCopy[1] == tileStringCopy[3];
+            foreach (Action a in walledTS)
+            {
+                b = b && (a.typeOfAction == 3 || a.typeOfAction == 4);
+            }
+            return b;
+        }
+        private bool mixedOneSuit()
+        {
+            string distinctSuits = "";
+            foreach (Tile t in ts)
+            {
+                if (!distinctSuits.Contains(t.suit))
+                {
+                    distinctSuits += t.suit;
+                }
+            }
+            foreach (Action a in walledTS)
+            {
+                foreach (Tile t in a.allTiles)
+                {
+                    if (!distinctSuits.Contains(t.suit))
+                    {
+                        distinctSuits += t.suit;
+                    }
+                }
+            }
+            return distinctSuits.EndsWith("z") && distinctSuits.Length == 2;
+        }
+        #endregion
+
+        #region 5faan
+        private bool smallDragons()
+        {
+            Regex removeDragonsRegex = new Regex(@"(([6-8]z)\2\2\2?)");
+            string tileStringCopy = $"{fullTileString}";
+            removeDragonsRegex.Replace(fullTileString, "", 2);
+            removeDragonsRegex = new Regex(@"(([6-8]z)\2)");
+            removeDragonsRegex.Replace(fullTileString, "", 1);
+            return tileStringCopy.Length == 6 || tileStringCopy.Length == 8;
+        }
+        #endregion
+
+        #region 6faan
+        private bool smallWinds()
+        {
+            Regex removeWindsRegex = new Regex(@"(([2-5]z)\2\2\2?)");
+            string tileStringCopy = $"{fullTileString}";
+            removeWindsRegex.Replace(fullTileString, "", 3);
+            removeWindsRegex = new Regex(@"(([2-5]z)\2)");
+            removeWindsRegex.Replace(fullTileString, "", 1);
+            return tileStringCopy.Length == 6 || tileStringCopy.Length == 8;
+        }
+        #endregion
+
+        #region 7faan
+        private bool allOneSuit()
+        {
+            string distinctSuits = "";
+            foreach (Tile t in ts)
+            {
+                if (!distinctSuits.Contains(t.suit))
+                {
+                    distinctSuits += t.suit;
+                }
+            }
+            foreach (Action a in walledTS)
+            {
+                foreach (Tile t in a.allTiles)
+                {
+                    if (!distinctSuits.Contains(t.suit))
+                    {
+                        distinctSuits += t.suit;
+                    }
+                }
+            }
+            return distinctSuits == "s" || distinctSuits == "p" || distinctSuits == "m";
+        }
+        #endregion
+
+        #region 8faan
+        private bool greatDragons() => new Regex(@"(([6-8]z)\2\2\2?)").Matches(fullTileString).Count == 3;
+        private bool greatBonus() => bonuses.Count == 8;
+        private bool selftriplets()
+        {
+            bool b = triplets();
+            return b && closedHand();
+        }
+        #endregion
+
+        #region 10faan
+        private bool allHonours()
+        {
+            string distinctSuits = "";
+            foreach (Tile t in ts)
+            {
+                if (!distinctSuits.Contains(t.suit))
+                {
+                    distinctSuits += t.suit;
+                }
+            }
+            foreach (Action a in walledTS)
+            {
+                foreach (Tile t in a.allTiles)
+                {
+                    if (!distinctSuits.Contains(t.suit))
+                    {
+                        distinctSuits += t.suit;
+                    }
+                }
+            }
+            return distinctSuits == "z";
+        }
+        private bool orphans() => !new Regex(@"([2-8][spmz])").IsMatch(fullTileString);
+        private bool nineGates()
+        {
+            Regex nineGatesRegex = new Regex(@"^1111?22?33?44?55?66?77?88?9999?$");
+            string tileStringCopy = $"{tileString}";
+            Regex removeSuitRegex = new Regex(@"([mspz])");
+            removeSuitRegex.Replace(tileStringCopy, "");
+            return nineGatesRegex.IsMatch(tileStringCopy) && tileStringCopy.Length == 14 && allOneSuit();
+        }
+        #endregion
+
+        #region 13faan
+        private bool thirteenOrphans()
+        {
+            Regex thirteenOrphanRegex = new Regex(@"[1m]{1,2}[9m]{1,2}[1p]{1,2}[9p]{1,2}[1s]{1,2}[9s]{1,2}[2z]{1,2}[3z]{1,2}[4z]{1,2}[5z]{1,2}[6z]{1,2}[7z]{1,2}[8z]{1,2}");
+            return thirteenOrphanRegex.IsMatch(fullTileString) && fullTileString.Length == 28;
+        }
+        private bool allKongs() => fullTileString.Length == 36;
+        private bool greatWinds()
+        {
+            Regex removeWindsRegex = new Regex(@"(([2-5]z)\2\2\2?)");
+            string tileStringCopy = $"{fullTileString}";
+            removeWindsRegex.Replace(fullTileString, "", 4);
+            return tileStringCopy.Length == 4;
         }
         #endregion
     }
