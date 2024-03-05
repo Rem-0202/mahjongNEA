@@ -76,6 +76,7 @@ namespace mahjongNEA
         //temp new game for easier debug
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
+            exposeTileToggle.IsChecked = false;
             g = new GameView(1, 0, newGameDialog.sPoints, newGameDialog.ePoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);

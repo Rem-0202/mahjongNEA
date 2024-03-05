@@ -64,7 +64,7 @@ namespace mahjongNEA
             EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
             Thread at = new Thread(() =>
             {
-                if (a.typeOfAction >= 2)
+                if (a.typeOfAction >= 2 && a.typeOfAction != 5)
                 {
                     foreach (Tile t in a.allTiles)
                     {
@@ -115,6 +115,7 @@ namespace mahjongNEA
                 {
                     lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
                 }
+                else lastAction = new Action(0);
                 ewh.Set();
             });
             at.SetApartmentState(ApartmentState.STA);

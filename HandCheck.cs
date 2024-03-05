@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace mahjongNEA
 {
@@ -60,7 +58,11 @@ namespace mahjongNEA
             if (thirteenOrphans() || allKongs() || greatWinds()) return 13;
             if (allHonours() || orphans() || nineGates()) return 10;
             if (bonusSeries()) return 2;
-            if (selftriplets()) return 8; else if (triplets()) faan += 3;
+            if (triplets())
+            {
+                if (closedHand()) faan += 8; else faan += 3;
+            }
+            else if (closedHand()) faan += 8;
             if (greatDragons()) faan += 8;
             if (allOneSuit()) faan += 7;
             if (smallWinds()) faan += 6;
@@ -72,7 +74,6 @@ namespace mahjongNEA
             faan += windBonus();
             faan += honour();
             if (commonHand()) faan += 1;
-            if (closedHand()) faan += 1;
             if (selfPick()) faan += 1;
             return faan;
         }
@@ -185,7 +186,7 @@ namespace mahjongNEA
         {
             Regex removeTripletRegex = new Regex(@"((\d\w)\2\2)");
             string tileStringCopy = $"{tileString}";
-            removeTripletRegex.Replace(tileStringCopy,"");
+            tileStringCopy = removeTripletRegex.Replace(tileStringCopy, "");
             bool b = tileStringCopy.Length == 4 && tileStringCopy[0] == tileStringCopy[2] && tileStringCopy[1] == tileStringCopy[3];
             foreach (Action a in walledTS)
             {
@@ -222,9 +223,9 @@ namespace mahjongNEA
         {
             Regex removeDragonsRegex = new Regex(@"(([6-8]z)\2\2\2?)");
             string tileStringCopy = $"{fullTileString}";
-            removeDragonsRegex.Replace(fullTileString, "", 2);
+            tileStringCopy = removeDragonsRegex.Replace(tileStringCopy, "", 2);
             removeDragonsRegex = new Regex(@"(([6-8]z)\2)");
-            removeDragonsRegex.Replace(fullTileString, "", 1);
+            tileStringCopy = removeDragonsRegex.Replace(tileStringCopy, "", 1);
             return tileStringCopy.Length == 6 || tileStringCopy.Length == 8;
         }
         #endregion
@@ -234,9 +235,9 @@ namespace mahjongNEA
         {
             Regex removeWindsRegex = new Regex(@"(([2-5]z)\2\2\2?)");
             string tileStringCopy = $"{fullTileString}";
-            removeWindsRegex.Replace(fullTileString, "", 3);
+            tileStringCopy = removeWindsRegex.Replace(tileStringCopy, "", 3);
             removeWindsRegex = new Regex(@"(([2-5]z)\2)");
-            removeWindsRegex.Replace(fullTileString, "", 1);
+            tileStringCopy = removeWindsRegex.Replace(tileStringCopy, "", 1);
             return tileStringCopy.Length == 6 || tileStringCopy.Length == 8;
         }
         #endregion
@@ -305,7 +306,7 @@ namespace mahjongNEA
             Regex nineGatesRegex = new Regex(@"^1111?22?33?44?55?66?77?88?9999?$");
             string tileStringCopy = $"{tileString}";
             Regex removeSuitRegex = new Regex(@"([mspz])");
-            removeSuitRegex.Replace(tileStringCopy, "");
+            tileStringCopy = removeSuitRegex.Replace(tileStringCopy, "");
             return nineGatesRegex.IsMatch(tileStringCopy) && tileStringCopy.Length == 14 && allOneSuit();
         }
         #endregion
@@ -321,7 +322,7 @@ namespace mahjongNEA
         {
             Regex removeWindsRegex = new Regex(@"(([2-5]z)\2\2\2?)");
             string tileStringCopy = $"{fullTileString}";
-            removeWindsRegex.Replace(fullTileString, "", 4);
+            tileStringCopy = removeWindsRegex.Replace(fullTileString, "", 4);
             return tileStringCopy.Length == 4;
         }
         #endregion
