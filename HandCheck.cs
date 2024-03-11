@@ -99,13 +99,11 @@ namespace mahjongNEA
             }
             else
             {
+                faanPairs.Add("Honours", honour());
+                faanPairs.Add("Bonuses", windBonus());
                 if (greatBonus()) faanPairs.Add("Great Bonus", 8);
-                else if (smallBonus()) faanPairs.Add("Small Bonus", 3);
-                else
-                {
-                    faanPairs.Add("Bonuses", windBonus());
-                    if (bonusSeries()) faanPairs.Add("Bonus Series", 2);
-                }
+                if (smallBonus()) faanPairs.Add("Small Bonus", 3);
+                if (bonusSeries()) faanPairs.Add("Bonus Series", 2);
                 if (thirteenOrphans()) faanPairs.Add("Thirteen Orphans", 13);
                 if (allKongs()) faanPairs.Add("All Kongs", 13);
                 if (greatWinds()) faanPairs.Add("Great Winds", 13);
@@ -121,7 +119,6 @@ namespace mahjongNEA
                 if (mixedOneSuit()) faanPairs.Add("Mixed One Suit", 3);
                 if (mixedOrphan()) faanPairs.Add("Mixed Orphan", 1);
                 if (noBonuses()) faanPairs.Add("No Bonuses", 1);
-                faanPairs.Add("Honours", honour());
                 if (commonHand()) faanPairs.Add("Common Hand", 1);
                 if (selfPick()) faanPairs.Add("Self Pick", 1);
             }
