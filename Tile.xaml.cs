@@ -121,8 +121,8 @@ namespace mahjongNEA
                 bitmap.EndInit();
                 bitmap.Freeze();
             }
-            tileImage.Height = bitmap.Height * 4 / 5;
-            tileImage.Width = bitmap.Width * 4 / 5;
+            tileImage.Height = bitmap.Height * 3.7 / 5;
+            tileImage.Width = bitmap.Width * 3.7 / 5;
             tileImage.Source = bitmap;
         }
 
@@ -157,6 +157,7 @@ namespace mahjongNEA
 
         public void setRotated()
         {
+            setImage();
             LayoutTransform = new RotateTransform(270);
             Height = tileImage.Height;
             Width = tileImage.Width * 1.1;
@@ -171,7 +172,7 @@ namespace mahjongNEA
         {
             Height += 10;
             Width += 10;
-            tileBorder.BorderThickness = new Thickness(5, 5, 5, 5);
+            tileBorder.BorderThickness = new Thickness(3);
             tileBorder.BorderBrush = Brushes.Yellow;
             glowing = true;
         }

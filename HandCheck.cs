@@ -19,6 +19,7 @@ namespace mahjongNEA
         private int faan;
         private string tileString;
         private string fullTileString;
+        private Dictionary<string, int> faanPairs;
 
         public HandCheck(List<Tile> ts, List<Action> walledTS, List<Tile> bonuses, bool selfDrawn, int roundWind, int selfWind)
         {
@@ -49,33 +50,81 @@ namespace mahjongNEA
             {
                 fullTileString += t.tileID;
             }
+            faanPairs = new Dictionary<string, int>();
         }
 
         public int getFaan()
         {
             faan = 0;
-            if (greatBonus()) return 8; else if (smallBonus()) return 3;
-            if (thirteenOrphans() || allKongs() || greatWinds()) return 13;
-            if (allHonours() || orphans() || nineGates()) return 10;
-            if (bonusSeries()) return 2;
-            if (triplets())
+            if (Analysis.countShanten(ts, walledTS.Count) != -1)
             {
-                if (closedHand()) faan += 8; else faan += 3;
+                if (greatBonus()) return 8; else if (smallBonus()) return 3;
             }
-            else if (closedHand()) faan += 8;
-            if (greatDragons()) faan += 8;
-            if (allOneSuit()) faan += 7;
-            if (smallWinds()) faan += 6;
-            if (smallDragons()) faan += 5;
-            if (smallBonus()) faan += 3;
-            if (mixedOneSuit()) faan += 3;
-            if (mixedOrphan()) faan += 1;
-            if (noBonuses()) faan += 1;
-            faan += windBonus();
-            faan += honour();
-            if (commonHand()) faan += 1;
-            if (selfPick()) faan += 1;
+            else
+            {
+                if (greatBonus()) faan += 8;
+                else if (smallBonus()) faan += 3;
+                else
+                {
+                    faan += windBonus();
+                    if (bonusSeries()) faan++;
+                }
+                if (thirteenOrphans() || allKongs() || greatWinds()) return 13;
+                if (allHonours() || orphans() || nineGates()) return 10;
+                if (triplets())
+                {
+                    if (closedHand()) faan += 8; else faan += 3;
+                }
+                else if (closedHand()) faan += 1;
+                if (greatDragons()) faan += 5;
+                if (allOneSuit()) faan += 7;
+                if (smallWinds()) faan += 3;
+                if (smallDragons()) faan += 3;
+                if (mixedOneSuit()) faan += 3;
+                if (mixedOrphan()) faan += 1;
+                if (noBonuses()) faan += 1;
+                faan += honour();
+                if (commonHand()) faan += 1;
+                if (selfPick()) faan += 1;
+            }
             return faan;
+        }
+
+        private void setFaanPairs()
+        {
+            if (Analysis.countShanten(ts, walledTS.Count) != -1)
+            {
+                if (greatBonus()) faanPairs.Add("Great Bonus", 8); else if (smallBonus()) faanPairs.Add("Small Bonus", 3);
+                return;
+            }
+            else
+            {
+                if (greatBonus()) faanPairs.Add("Great Bonus", 8);
+                else if (smallBonus()) faanPairs.Add("Small Bonus", 3);
+                else
+                {
+                    faanPairs.Add("Bonuses", windBonus());
+                    if (bonusSeries()) faanPairs.Add("Bonus Series", 2);
+                }
+                if (thirteenOrphans()) faanPairs.Add("Thirteen Orphans", 13);
+                if (allKongs()) faanPairs.Add("All Kongs", 13);
+                if (greatWinds()) faanPairs.Add("Great Winds", 13);
+                if (allHonours()) faanPairs.Add("All Honours", 10);
+                if (orphans()) faanPairs.Add("Orphans", 10);
+                if (nineGates()) faanPairs.Add("Nine Gates", 10);
+                if (triplets()) faanPairs.Add("Triplets", 3);
+                if (selftriplets()) faanPairs.Add("Self Triplets", 8);
+                if (greatDragons()) faanPairs.Add("Great Dragons", 5);
+                if (allOneSuit()) faanPairs.Add("All One Suit", 7);
+                if (smallWinds()) faanPairs.Add("Small Winds", 3);
+                if (smallDragons()) faanPairs.Add("Small Dragons", 3);
+                if (mixedOneSuit()) faanPairs.Add("Mixed One Suit", 3);
+                if (mixedOrphan()) faanPairs.Add("Mixed Orphan", 1);
+                if (noBonuses()) faanPairs.Add("No Bonuses", 1);
+                faanPairs.Add("Honours", honour());
+                if (commonHand()) faanPairs.Add("Common Hand", 1);
+                if (selfPick()) faanPairs.Add("Self Pick", 1);
+            }
         }
 
         #region 1faan
@@ -182,6 +231,15 @@ namespace mahjongNEA
 
         #region 3faan
         private bool smallBonus() => bonuses.Count == 7;
+        private bool smallWinds()
+        {
+            Regex removeWindsRegex = new Regex(@"(([2-5]z)\2\2\2?)");
+            string tileStringCopy = $"{fullTileString}";
+            tileStringCopy = removeWindsRegex.Replace(tileStringCopy, "", 3);
+            removeWindsRegex = new Regex(@"(([2-5]z)\2)");
+            tileStringCopy = removeWindsRegex.Replace(tileStringCopy, "", 1);
+            return tileStringCopy.Length == 6 || tileStringCopy.Length == 8;
+        }
         private bool triplets()
         {
             Regex removeTripletRegex = new Regex(@"((\d\w)\2\2)");
@@ -230,18 +288,6 @@ namespace mahjongNEA
         }
         #endregion
 
-        #region 6faan
-        private bool smallWinds()
-        {
-            Regex removeWindsRegex = new Regex(@"(([2-5]z)\2\2\2?)");
-            string tileStringCopy = $"{fullTileString}";
-            tileStringCopy = removeWindsRegex.Replace(tileStringCopy, "", 3);
-            removeWindsRegex = new Regex(@"(([2-5]z)\2)");
-            tileStringCopy = removeWindsRegex.Replace(tileStringCopy, "", 1);
-            return tileStringCopy.Length == 6 || tileStringCopy.Length == 8;
-        }
-        #endregion
-
         #region 7faan
         private bool allOneSuit()
         {
@@ -268,13 +314,13 @@ namespace mahjongNEA
         #endregion
 
         #region 8faan
-        private bool greatDragons() => new Regex(@"(([6-8]z)\2\2\2?)").Matches(fullTileString).Count == 3;
         private bool greatBonus() => bonuses.Count == 8;
         private bool selftriplets()
         {
             bool b = triplets();
             return b && closedHand();
         }
+        private bool greatDragons() => new Regex(@"(([6-8]z)\2\2\2?)").Matches(fullTileString).Count == 3;
         #endregion
 
         #region 10faan

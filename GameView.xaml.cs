@@ -42,6 +42,7 @@ namespace mahjongNEA
         public int endingPoints { get; private set; }
         private EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
         private List<Tile> discardedTiles = new List<Tile>();
+        private bool lastDiscard = false;
         public GameView(int prevailingWind, int playerWind, int startingPoints, int endingPoints)
         {
             InitializeComponent();
@@ -156,6 +157,14 @@ namespace mahjongNEA
                 {
                     roundNumber++;
                     lastAction = currentPlayer.getAction(lastAction);
+                    if (lastAction.typeOfAction == 5)
+                    {
+                        end = true;
+                        HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
+                        //need show win window
+                        MessageBox.Show(Convert.ToString(h.getFaan()));
+                        break;
+                    }
                     currentPlayer.acceptAction();
                 }
                 if (lastAction.typeOfAction == 1)
@@ -169,7 +178,7 @@ namespace mahjongNEA
                     lastAction.representingTile.unconcealTile();
                     lastAction.representingTile.unhover();
                     lastAction.representingTile.interactive = false;
-                    lastAction.representingTile.Margin = new Thickness(10, 10, 10, 10);
+                    lastAction.representingTile.Margin = new Thickness(6, 6, 6, 6);
                     lastAction.representingTile.glow();
                     discardPanel.Children.Add(lastAction.representingTile);
                 }
@@ -182,22 +191,71 @@ namespace mahjongNEA
                 {
                     maxChoice = Math.Max(a.typeOfAction, maxChoice);
                 }
-                if (availableTiles.Count == 0 && (maxChoice == 4 || maxChoice == 0))
+                if (availableTiles.Count == 0)
                 {
-                    //handle end turn
-                    MessageBox.Show("ended");
-                    end = true;
-                    break;
+                    lastDiscard = true;
+                    if (maxChoice == 4)
+                    {
+                        //handle end turn
+                        MessageBox.Show("ended");
+                        end = true;
+                        break;
+                    }
+                    else
+                    {
+                        if (lastAction.typeOfAction == 0)
+                        {
+                            roundNumber++;
+                            lastAction = currentPlayer.getAction(lastAction);
+                            if (lastAction.typeOfAction == 5)
+                            {
+                                end = true;
+                                if (currentPlayer is ComputerPlayer)
+                                {
+                                    currentPlayer.toggleExposeTile();
+                                }
+                                HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
+                                //need show win window
+                                MessageBox.Show(Convert.ToString(h.getFaan()));
+                                break;
+                            }
+                            currentPlayer.acceptAction();
+                            if (lastAction.typeOfAction == 1)
+                            {
+                                if (discardPanel.Children.Count > 0)
+                                {
+                                    Tile temp = (Tile)discardPanel.Children[discardPanel.Children.Count - 1];
+                                    temp.unGlow();
+                                }
+                                discardedTiles.Add(lastAction.representingTile);
+                                lastAction.representingTile.unconcealTile();
+                                lastAction.representingTile.unhover();
+                                lastAction.representingTile.interactive = false;
+                                lastAction.representingTile.Margin = new Thickness(6, 6, 6, 6);
+                                lastAction.representingTile.glow();
+                                discardPanel.Children.Add(lastAction.representingTile);
+                            }
+                        }
+                    }
                 }
                 switch (maxChoice)
                 {
                     case 5:
+                        currentPlayer = playerActions.First(e => e.Value.typeOfAction == 5).Key;
                         end = true;
-                        HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
+                        if (currentPlayer is ComputerPlayer)
+                        {
+                            if (!currentPlayer.exposeAllTiles)
+                            {
+                                currentPlayer.toggleExposeTile();
+                            }
+                        }
+                        HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
+                        //need show win window
                         MessageBox.Show(Convert.ToString(h.getFaan()));
                         break;
                     case 4:
-                        currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
+                        currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4).Key;
                         Array.ForEach(players, (e) => e.unglow());
                         currentPlayer.glow();
                         playerIndex = Array.IndexOf(players, currentPlayer);
@@ -220,7 +278,7 @@ namespace mahjongNEA
                         lastAction = new Action(0);
                         break;
                     case 3:
-                        currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4 || e.Value.typeOfAction == 3).Key;
+                        currentPlayer = playerActions.First(e => e.Value.typeOfAction == 3).Key;
                         playerIndex = Array.IndexOf(players, currentPlayer);
                         Array.ForEach(players, (e) => e.unglow());
                         currentPlayer.glow();

@@ -56,7 +56,6 @@ namespace mahjongNEA
                 }
             }
             updateTileDisplay();
-
         }
 
         public override Action getAction(Action a)
@@ -105,15 +104,28 @@ namespace mahjongNEA
                     tempActionList.AddRange(chowList);
                     tempActionList.AddRange(pongList);
                     tempActionList.AddRange(kongList);
-                    if (tempActionList.Count != 0)
+                    List<Tile> tempTS = new List<Tile>();
+                    tempTS.AddRange(ownTiles);
+                    tempTS.Add(a.representingTile);
+                    if (Analysis.countShanten(tempTS, walledGroupCount) == -1)
+                    {
+                        lastAction = new Action(5);
+                    }
+                    else if (tempActionList.Count != 0)
                     {
                         lastAction = Analysis.chooseAction(ownTiles, walledGroupCount, tempActionList, tileCount);
                     }
-                    //TODO: implement rob tile check
                 }
                 else if (a.typeOfAction == 0)
                 {
-                    lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
+                    if (Analysis.countShanten(ownTiles, walledGroupCount) == -1)
+                    {
+                        lastAction = new Action(5);
+                    }
+                    else
+                    {
+                        lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
+                    }
                 }
                 else lastAction = new Action(0);
                 ewh.Set();

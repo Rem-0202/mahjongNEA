@@ -11,6 +11,7 @@ namespace mahjongNEA
 {
     static class Analysis
     {
+        public static int safety = 5;
         private static int differentSpecialTiles(List<Tile> ownTiles)
         {
             int s = 0;
@@ -100,58 +101,6 @@ namespace mahjongNEA
             }
         }
 
-
-        private static int countGroups(ref List<Tile> ts, int g)
-        {
-            sortTiles(ref ts);
-            List<Tile> tempList = new List<Tile>();
-            tempList.AddRange(ts);
-            if (ts.Count >= 3)
-            {
-                for (int i = 0; i < ts.Count - 2; i++)
-                {
-                    for (int k = i + 1; k < ts.Count - 1 && k < i + 5; k++)
-                    {
-                        for (int j = k + 1; j < ts.Count && j < k + 5; j++)
-                        {
-                            if (isGroup(ts[i], ts[k], ts[j]))
-                            {
-                                g += 1;
-                                tempList.Remove(ts[i]);
-                                tempList.Remove(ts[j]);
-                                tempList.Remove(ts[k]);
-                                ts.Clear();
-                                ts.AddRange(tempList);
-                                return countGroups(ref ts, g);
-                            }
-                        }
-                    }
-                }
-            }
-            return g;
-        }
-
-        private static int[] countProto(ref List<Tile> ts)
-        {
-            sortTiles(ref ts);
-            int[] temp = new int[2];
-            for (int i = 0; i < ts.Count - 1; i++)
-            {
-                if (ts[i] == ts[i + 1])
-                {
-                    temp[0]++;
-                    i++;
-                }
-                else if (isTaatsu(ts[i], ts[i + 1]))
-                {
-                    temp[1]++;
-                    i++;
-                }
-            }
-            return temp;
-        }
-
-
         public static int countShanten(List<Tile> ts, int g)
         {
             int s = 8;
@@ -225,9 +174,10 @@ namespace mahjongNEA
             return s;
         }
 
-        public static int[] getImprovingTileCount(List<Tile> ts, int k, Dictionary<string, int> tileCount)
+        public static int[] getImprovingTileScores(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
             List<Tile> originalCopy = new List<Tile>();
+            originalCopy.AddRange(ts);
             int oShanten = countShanten(originalCopy, k);
             int nShanten;
             int[] neededTileScore = new int[ts.Count];
@@ -243,22 +193,21 @@ namespace mahjongNEA
                     nShanten = countShanten(originalCopy, k);
                     if (nShanten < oShanten)
                     {
-                        neededTileScore[i] += tileCount[rtile];
+                        neededTileScore[i] += tileCount[rtile] * 10;
                     }
                 }
             }
-            //for (int i = 0; i < neededTileScore.Length; i++)
-            //{
-            //    //defensive play, add slider to choose difficulty
-            //    neededTileScore[i] -= (tileCount[ts[i].tileID] - 1);
-            //}
+            for (int i = 0; i < neededTileScore.Length; i++)
+            {
+                //defensive play, add slider to choose difficulty
+                neededTileScore[i] -= (tileCount[ts[i].tileID] - 1) * safety;
+            }
             return neededTileScore;
         }
 
         public static Action chooseDiscard(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
-            int[] neededTileScore = new int[ts.Count];
-            neededTileScore = getImprovingTileCount(ts, k, tileCount);
+            int[] neededTileScore = getImprovingTileScores(ts, k, tileCount);
             int maxTile = 0;
             for (int i = 1; i < neededTileScore.Length; i++)
             {
@@ -274,16 +223,20 @@ namespace mahjongNEA
         {
             List<Tile> tempTS = new List<Tile>();
             tempTS.AddRange(ts);
-            ats.Add(new Action(0));
             int[] improvingTileCount = new int[ats.Count + 1];
             int maxTileNum = -1;
+            foreach (int j in getImprovingTileScores(tempTS, k, tileCount))
+            {
+                maxTileNum = Math.Max(j, maxTileNum);
+            }
+            improvingTileCount[ats.Count] = maxTileNum;
             for (int i = 0; i < ats.Count; i++)
             {
                 tempTS.Clear();
                 tempTS.AddRange(ts);
                 tempTS = useAction(tempTS, ats[i]);
                 maxTileNum = -1;
-                foreach (int j in getImprovingTileCount(tempTS, k + 1, tileCount))
+                foreach (int j in getImprovingTileScores(tempTS, k + 1, tileCount))
                 {
                     maxTileNum = Math.Max(j, maxTileNum);
                 }
@@ -297,6 +250,7 @@ namespace mahjongNEA
                     maxTileNum = i;
                 }
             }
+            ats.Add(new Action(0));
             return ats[maxTileNum];
         }
 
@@ -315,16 +269,13 @@ namespace mahjongNEA
                         ts.Remove(t);
                     }
                 }
-                ts.Add(a.representingTile);
                 return ts;
             }
         }
 
         // Standard shanten: 8-2g-t-p
         // Kokushi shanten: 13 - diffterm - termCount>diffTerm?1:0
-        // Pair shanten: 6-p
-        // Kokushi from 13, 7 pairs from 6, standard from 8, find best as priority
+        // Kokushi from 13, standard from 8, find best as priority
         // PRIORITY: groups => pairs => taatsu
-        // pass info to computerplayer class which handles decision
     }
 }

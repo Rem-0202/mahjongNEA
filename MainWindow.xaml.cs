@@ -58,6 +58,7 @@ namespace mahjongNEA
                     displayGrid.Children.Add(g);
                     restartButton.Visibility = Visibility.Visible;
                     restartButton.IsEnabled = true;
+                    g.gameLoop();
                     break;
                 case false:
                     break;
