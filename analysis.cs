@@ -282,14 +282,14 @@ namespace mahjongNEA
                 else
                 {
                     pongImprovingTileScores = getImprovingTileScores_OneTileLess(tempTS, k + 1, tileCount);
-                    if (pongImprovingTileScores.Item2 == lowestShanten)
+                    if (pongImprovingTileScores.Item2 <= lowestShanten)
                     {
                         improvingTileCount[i] = pongImprovingTileScores.Item1;
                     }
                 }
             }
             maxTileNum = 0;
-            if (noneActionImprovingTileScores.Item2 == lowestShanten)
+            if (noneActionImprovingTileScores.Item2 <= lowestShanten)
             {
                 improvingTileCount[ats.Count] = noneActionImprovingTileScores.Item1;
             }
