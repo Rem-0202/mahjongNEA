@@ -19,7 +19,7 @@ namespace mahjongNEA
         private int faan;
         private string tileString;
         private string fullTileString;
-        private Dictionary<string, int> faanPairs;
+        public Dictionary<string, int> faanPairs;
 
         public HandCheck(List<Tile> ts, List<Action> walledTS, List<Tile> bonuses, bool selfDrawn, int roundWind, int selfWind)
         {
@@ -51,42 +51,12 @@ namespace mahjongNEA
                 fullTileString += t.tileID;
             }
             faanPairs = new Dictionary<string, int>();
+            setFaanPairs();
         }
 
         public int getFaan()
         {
             faan = 0;
-            if (Analysis.countShanten(ts, walledTS.Count) != -1)
-            {
-                if (greatBonus()) return 8; else if (smallBonus()) return 3;
-            }
-            else
-            {
-                if (greatBonus()) faan += 8;
-                else if (smallBonus()) faan += 3;
-                else
-                {
-                    faan += windBonus();
-                    if (bonusSeries()) faan++;
-                }
-                if (thirteenOrphans() || allKongs() || greatWinds()) return 13;
-                if (allHonours() || orphans() || nineGates()) return 10;
-                if (triplets())
-                {
-                    if (closedHand()) faan += 8; else faan += 3;
-                }
-                else if (closedHand()) faan += 1;
-                if (greatDragons()) faan += 5;
-                if (allOneSuit()) faan += 7;
-                if (smallWinds()) faan += 3;
-                if (smallDragons()) faan += 3;
-                if (mixedOneSuit()) faan += 3;
-                if (mixedOrphan()) faan += 1;
-                if (noBonuses()) faan += 1;
-                faan += honour();
-                if (commonHand()) faan += 1;
-                if (selfPick()) faan += 1;
-            }
             return faan;
         }
 

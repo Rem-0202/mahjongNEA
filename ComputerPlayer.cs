@@ -124,7 +124,36 @@ namespace mahjongNEA
                     }
                     else
                     {
-                        lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
+                        bool konged = false;
+                        for (int i = 0; i < ownTiles.Count - 3; i++)
+                        {
+                            for (int j = i + 1; j < ownTiles.Count - 2; j++)
+                            {
+                                for (int k = j + 1; k < ownTiles.Count - 1; k++)
+                                {
+                                    for (int l = k + 1; l < ownTiles.Count; l++)
+                                    {
+                                        if (Analysis.isKong(ownTiles[i], ownTiles[j], ownTiles[k], ownTiles[l]))
+                                        {
+                                            konged = true;
+                                            i = j = k = l = 9999;
+                                            List<Action> kongList = new List<Action>();
+                                            kongList.Add(new Action(4, ownTiles[i], new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], ownTiles[l] }));
+                                            List<Action> tempActionList = new List<Action>();
+                                            tempActionList.AddRange(kongList);
+                                            List<Tile> tempTS = new List<Tile>();
+                                            tempTS.AddRange(ownTiles);
+                                            tempTS.Add(a.representingTile);
+                                            if (tempActionList.Count != 0)
+                                            {
+                                                lastAction = Analysis.chooseAction(ownTiles, walledGroupCount, tempActionList, tileCount);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (!konged) lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
                     }
                 }
                 else lastAction = new Action(0);

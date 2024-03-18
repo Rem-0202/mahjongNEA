@@ -19,9 +19,35 @@ namespace mahjongNEA
     /// </summary>
     public partial class WinWindow : Window
     {
-        public WinWindow(int pw, int uw, List<Tile> ts, Dictionary<string, int> faanPairs)
+        private static string windNames = "東E南S西W北N";
+        public WinWindow(int pw, int uw, List<Tile> ts, Dictionary<string, int> faanPairs, int points)
         {
+            InitializeComponent();
+            pWindTB.Text = $"{windNames[pw * 2]}{windNames[pw * 2 + 1]}";
+            uWindTB.Text = $"{windNames[uw * 2]}{windNames[uw * 2 + 1]}";
+            scoreTB.Text = points.ToString();
+            foreach (Tile t in ts)
+            {
+                tileDisplay.Children.Add(Tile.stringToTile(t.tileID));
+            }
+            for (int i = 0; i < faanPairs.Keys.Count; i++)
+            {
+                TextBlock tb = new TextBlock();
+                tb.Text = faanPairs.Keys.ElementAt(i);
+                Grid.SetColumn(tb, i > 6 ? 3 : 0);
+                Grid.SetRow(tb, i % 7);
+                faanDisplayGrid.Children.Add(tb);
+                tb = new TextBlock();
+                tb.Text = faanPairs.Values.ElementAt(i).ToString();
+                Grid.SetColumn(tb, i > 6 ? 4 : 1);
+                Grid.SetRow(tb, i % 7);
+                faanDisplayGrid.Children.Add(tb);
+            }
+        }
 
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -35,6 +35,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="20"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="0.2*"/>
                     </Grid.ColumnDefinitions>
@@ -76,9 +77,9 @@
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"/>
                     <Separator Grid.Row="4" Grid.ColumnSpan="3"></Separator>
-                    <TextBlock Text="Score: " Grid.Row="5" Grid.Column="0"
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Points:"
                                HorizontalAlignment="Center" FontSize="14"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center"></TextBlock>
                     <TextBlock Grid.Row="1" Grid.Column="2" FontSize="14"
                                HorizontalAlignment="Center" x:Name="pWindTB"
                                VerticalAlignment="Center"/>
@@ -100,7 +101,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="10"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="OKButton" Content="OK" Grid.Column="1"></Button>
+                    <Button x:Name="OKButton" Content="Continue" Grid.Column="1"
+                            Click="OKButton_Click"></Button>
                 </Grid>
             </Border>
         </Grid>

@@ -205,6 +205,42 @@ namespace mahjongNEA
             return neededTileScore;
         }
 
+        public static (int, int) getImprovingTileScores_OneTileLess(List<Tile> ts, int k, Dictionary<string, int> tileCount)
+        {
+            Dictionary<string, int> tileShantens = new Dictionary<string, int>();
+            foreach (string x in tileCount.Keys)
+            {
+                if (tileCount[x] > 0) tileShantens.Add(x, 0);
+            }
+            List<Tile> originalCopy = new List<Tile>();
+            originalCopy.AddRange(ts);
+            int nShanten;
+            int neededTileScore = 0;
+            foreach (string rtile in tileCount.Keys)
+            {
+                if (tileCount[rtile] < 0) continue;
+                nShanten = 100;
+                originalCopy.Clear();
+                originalCopy.AddRange(ts);
+                originalCopy.Add(Tile.stringToTile(rtile));
+                nShanten = countShanten(originalCopy, k);
+                tileShantens[rtile] = nShanten;
+            }
+            int lowest = 999;
+            foreach (string s in tileShantens.Keys)
+            {
+                lowest = Math.Min(tileShantens[s], lowest);
+            }
+            foreach (string s in tileShantens.Keys)
+            {
+                if (tileShantens[s] == lowest)
+                {
+                    neededTileScore += tileCount[s] * 10;
+                }
+            }
+            return (neededTileScore, lowest);
+        }
+
         public static Action chooseDiscard(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
             int[] neededTileScore = getImprovingTileScores(ts, k, tileCount);
@@ -225,30 +261,41 @@ namespace mahjongNEA
             tempTS.AddRange(ts);
             int[] improvingTileCount = new int[ats.Count + 1];
             int maxTileNum = -1;
-            foreach (int j in getImprovingTileScores(tempTS, k, tileCount))
-            {
-                maxTileNum = Math.Max(j, maxTileNum);
-            }
-            improvingTileCount[ats.Count] = maxTileNum;
+            (int, int) noneActionImprovingTileScores = getImprovingTileScores_OneTileLess(tempTS, k, tileCount);
+            (int, int) pongImprovingTileScores;
+            int lowestShanten = 999;
             for (int i = 0; i < ats.Count; i++)
             {
                 tempTS.Clear();
                 tempTS.AddRange(ts);
                 tempTS = useAction(tempTS, ats[i]);
                 maxTileNum = -1;
-                foreach (int j in getImprovingTileScores(tempTS, k + 1, tileCount))
+                lowestShanten = Math.Min(lowestShanten, countShanten(tempTS, k + 1));
+                if (ats[i].typeOfAction != 4)
                 {
-                    maxTileNum = Math.Max(j, maxTileNum);
+                    foreach (int j in getImprovingTileScores(tempTS, k + 1, tileCount))
+                    {
+                        maxTileNum = Math.Max(j, maxTileNum);
+                    }
+                    improvingTileCount[i] = maxTileNum;
                 }
-                improvingTileCount[i] = maxTileNum;
+                else
+                {
+                    pongImprovingTileScores = getImprovingTileScores_OneTileLess(tempTS, k + 1, tileCount);
+                    if (pongImprovingTileScores.Item2 == lowestShanten)
+                    {
+                        improvingTileCount[i] = pongImprovingTileScores.Item1;
+                    }
+                }
             }
             maxTileNum = 0;
-            for (int i = 1; i < improvingTileCount.Length; i++)
+            if (noneActionImprovingTileScores.Item2 == lowestShanten)
             {
-                if (improvingTileCount[i] > improvingTileCount[maxTileNum])
-                {
-                    maxTileNum = i;
-                }
+                improvingTileCount[ats.Count] = noneActionImprovingTileScores.Item1;
+            }
+            for (int i = 0; i < improvingTileCount.Length - 1; i++)
+            {
+                maxTileNum = improvingTileCount[i] > improvingTileCount[i + 1] ? i : i + 1;
             }
             ats.Add(new Action(0));
             return ats[maxTileNum];
