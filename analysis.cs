@@ -197,11 +197,11 @@ namespace mahjongNEA
                     }
                 }
             }
-            for (int i = 0; i < neededTileScore.Length; i++)
-            {
-                //defensive play, add slider to choose difficulty
-                neededTileScore[i] -= (tileCount[ts[i].tileID] - 1) * safety;
-            }
+            //for (int i = 0; i < neededTileScore.Length; i++)
+            //{
+            //    //defensive play, add slider to choose difficulty
+            //    neededTileScore[i] -= (tileCount[ts[i].tileID] - 1) * safety;
+            //}
             return neededTileScore;
         }
 
@@ -273,7 +273,8 @@ namespace mahjongNEA
                 lowestShanten = Math.Min(lowestShanten, countShanten(tempTS, k + 1));
                 if (ats[i].typeOfAction != 4)
                 {
-                    foreach (int j in getImprovingTileScores(tempTS, k + 1, tileCount))
+                    int[] gits = getImprovingTileScores(tempTS, k + 1, tileCount);
+                    foreach (int j in gits)
                     {
                         maxTileNum = Math.Max(j, maxTileNum);
                     }
@@ -293,9 +294,13 @@ namespace mahjongNEA
             {
                 improvingTileCount[ats.Count] = noneActionImprovingTileScores.Item1;
             }
-            for (int i = 0; i < improvingTileCount.Length - 1; i++)
+            maxTileNum = 0;
+            for (int i = 1; i < improvingTileCount.Length; i++)
             {
-                maxTileNum = improvingTileCount[i] > improvingTileCount[i + 1] ? i : i + 1;
+                if (improvingTileCount[maxTileNum] < improvingTileCount[i])
+                {
+                    maxTileNum = i;
+                }
             }
             ats.Add(new Action(0));
             return ats[maxTileNum];

@@ -26,6 +26,10 @@ namespace mahjongNEA
         public MainWindow()
         {
             InitializeComponent();
+            StartPage s = new StartPage();
+            Frame f = new Frame();
+            displayGrid.Children.Add(f);
+            f.Content = s;
         }
 
         private void MenuItem_Help_Click(object sender, RoutedEventArgs e)

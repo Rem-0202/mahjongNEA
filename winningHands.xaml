@@ -49,10 +49,9 @@
         <LineBreak/>
         The score of a hand is determined by this table of faan values to scores.
         <LineBreak/>
-        <LineBreak/>
     </Paragraph>
-    <Table>
-        <TableRowGroup Paragraph.TextAlignment="Left">
+    <Table TextAlignment="Left">
+        <TableRowGroup Paragraph.TextAlignment="Justify" Paragraph.FontSize="22">
             <TableRow FontWeight="Bold">
                 <TableCell>
                     <Paragraph>
@@ -69,6 +68,14 @@
                         Score (Self Pick):
                     </Paragraph>
                 </TableCell>
+                <TableCell>
+                    <Paragraph>
+                    </Paragraph>
+                </TableCell>
+                <TableCell>
+                    <Paragraph>
+                    </Paragraph>
+                </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell>
@@ -83,7 +90,7 @@
                 </TableCell>
                 <TableCell>
                     <Paragraph>
-                        N/A (Self-Pick starts at 1 faan)
+                        N/A (at least 1 faan)
                     </Paragraph>
                 </TableCell>
             </TableRow>
@@ -310,4 +317,14 @@
             </TableRow>
         </TableRowGroup>
     </Table>
+    <Paragraph>
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+    </Paragraph>
 </FlowDocument>
