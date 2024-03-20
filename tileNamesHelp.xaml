@@ -2,6 +2,15 @@
               xmlns:local="clr-namespace:mahjongNEA"
               ColumnWidth="400" FontSize="14" FontFamily="Georgia">
     <Paragraph FontSize="22">
+        There are 4 identical copies of each of the following tiles in a game.
+        The rank of each tile is indicated by a number on the tile.
+    </Paragraph>
+    <Paragraph FontSize="30">
+        <Bold>
+            Ranked tiles:
+        </Bold>
+    </Paragraph>
+    <Paragraph FontSize="22">
         <Bold>
             Characters
         </Bold>
@@ -67,8 +76,13 @@
         </InlineUIContainer>
         <LineBreak/>
     </Paragraph>
+    <Paragraph FontSize="30">
+        <Bold>
+            Honor tiles:
+        </Bold>
+    </Paragraph>
     <Paragraph FontSize="22">
-        <Bold>Winds</Bold>: 
+        <Bold>Winds</Bold> : 
         East, South, West and North
         <LineBreak/>
         <LineBreak/>
@@ -83,7 +97,7 @@
         <LineBreak/>
     </Paragraph>
     <Paragraph FontSize="22">
-        <Bold>Dragons</Bold>: 
+        <Bold>Dragons</Bold> : 
         Red, Green and White
         <LineBreak/>
         <LineBreak/>
@@ -96,8 +110,16 @@
         </InlineUIContainer>
         <LineBreak/>
     </Paragraph>
+    <Paragraph FontSize="30">
+        <Bold>
+            Bonus tiles:
+        </Bold>
+    </Paragraph>
+    <Paragraph FontSize="25">
+        Only one copy of each bonus tiles exist in a game.
+    </Paragraph>
     <Paragraph FontSize="22">
-        <Bold>Flowers</Bold>:
+        <Bold>Flowers</Bold> :
         Plum blossom, Orchid, Chrysanthemum and Bamboo
         <LineBreak/>
         Corresponding to East, South, West and North respectively.
@@ -114,7 +136,7 @@
         <LineBreak/>
     </Paragraph>
     <Paragraph FontSize="22">
-        <Bold>Seasons</Bold>:
+        <Bold>Seasons</Bold> :
         Spring, Summer, Autumn and Winter
         <LineBreak/>
         Corresponding to East, South, West and North respectively.

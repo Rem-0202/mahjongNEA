@@ -26,6 +26,10 @@ namespace mahjongNEA
         public MainWindow()
         {
             InitializeComponent();
+            StartPage s = new StartPage();
+            Frame f = new Frame();
+            displayGrid.Children.Add(f);
+            f.Content = s;
         }
 
         private void MenuItem_Help_Click(object sender, RoutedEventArgs e)
@@ -58,6 +62,7 @@ namespace mahjongNEA
                     displayGrid.Children.Add(g);
                     restartButton.Visibility = Visibility.Visible;
                     restartButton.IsEnabled = true;
+                    g.gameLoop();
                     break;
                 case false:
                     break;
@@ -76,6 +81,7 @@ namespace mahjongNEA
         //temp new game for easier debug
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
+            exposeTileToggle.IsChecked = false;
             g = new GameView(1, 0, newGameDialog.sPoints, newGameDialog.ePoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);

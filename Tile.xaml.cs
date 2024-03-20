@@ -34,6 +34,7 @@ namespace mahjongNEA
         public bool special { get; private set; }
         public bool bonus { get; private set; }
         public bool concealed { get; private set; }
+        public bool dragon { get; private set; }
 
         private static int uniqueTileNumber = 0;
 
@@ -56,6 +57,7 @@ namespace mahjongNEA
             tileID = r.ToString() + s;
             terminal = (suit == 'm' || suit == 'p' || suit == 's') && (rank == 1 || rank == 9);
             honour = suit == 'z';
+            dragon = honour && rank > 5 && rank < 9;
             suitID = suitOrder.IndexOf(suit);
             special = terminal || honour;
             bonus = suit == 'f' || suit == 'n';
@@ -119,8 +121,8 @@ namespace mahjongNEA
                 bitmap.EndInit();
                 bitmap.Freeze();
             }
-            tileImage.Height = bitmap.Height * 4 / 5;
-            tileImage.Width = bitmap.Width * 4 / 5;
+            tileImage.Height = bitmap.Height * 3.7 / 5;
+            tileImage.Width = bitmap.Width * 3.7 / 5;
             tileImage.Source = bitmap;
         }
 
@@ -155,6 +157,7 @@ namespace mahjongNEA
 
         public void setRotated()
         {
+            setImage();
             LayoutTransform = new RotateTransform(270);
             Height = tileImage.Height;
             Width = tileImage.Width * 1.1;
@@ -169,7 +172,7 @@ namespace mahjongNEA
         {
             Height += 10;
             Width += 10;
-            tileBorder.BorderThickness = new Thickness(5, 5, 5, 5);
+            tileBorder.BorderThickness = new Thickness(3);
             tileBorder.BorderBrush = Brushes.Yellow;
             glowing = true;
         }

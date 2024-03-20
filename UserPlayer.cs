@@ -53,23 +53,58 @@ namespace mahjongNEA
         public override Action getAction(Action a)
         {
             lastAction = null;
+            bool bonusWin = false;
+            bonusWin = bonusTiles.Count == 8 || bonusTiles.Count == 7;
             if (a.typeOfAction == 0)
             {
                 List<Tile> tempTS = new List<Tile>();
                 tempTS.AddRange(ownTiles);
-                if (Analysis.countShanten(tempTS, walledGroupCount) == -1)
+                if (Analysis.countShanten(tempTS, walledGroupCount) == -1 || bonusWin)
                 {
                     ActionButton skipButton = new ActionButton(ref actionEWH, false);
                     ActionButton winButton = new ActionButton(ref actionEWH, true);
                     actionButtons.Children.Add(skipButton);
                     actionButtons.Children.Add(winButton);
+                    actionEWH.Reset();
                     WaitForEvent(actionEWH);
                     actionEWH.Reset();
                     if (winButton.clicked)
                     {
                         return new Action(5);
                     }
+                    actionButtons.Children.Clear();
                 }
+                for (int i = 0; i < ownTiles.Count - 3; i++)
+                {
+                    for (int j = i + 1; j < ownTiles.Count - 2; j++)
+                    {
+                        for (int k = j + 1; k < ownTiles.Count - 1; k++)
+                        {
+                            for (int l = k + 1; l < ownTiles.Count; l++)
+                            {
+                                if (Analysis.isKong(ownTiles[i], ownTiles[j], ownTiles[k], ownTiles[l]))
+                                {
+                                    i = j = k = l = 9999;
+                                    List<Action> kongList = new List<Action>();
+                                    kongList.Add(new Action(4, ownTiles[i], new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], ownTiles[l] }));
+                                    ActionButton kongButton = new ActionButton(kongList, "Kong", ref actionEWH);
+                                    ActionButton skipButton = new ActionButton(ref actionEWH, false);
+                                    actionButtons.Children.Add(skipButton);
+                                    actionButtons.Children.Add(kongButton);
+                                    actionEWH.Reset();
+                                    WaitForEvent(actionEWH);
+                                    actionEWH.Reset();
+                                    if (kongButton.clicked)
+                                    {
+                                        return kongButton.action;
+                                    }
+                                    actionButtons.Children.Clear();
+                                }
+                            }
+                        }
+                    }
+                }
+                ewh.Reset();
                 WaitForEvent(ewh);
                 ewh.Reset();
                 lastAction = new Action(1, selectedTile);
@@ -84,7 +119,7 @@ namespace mahjongNEA
                 List<Tile> tempTS = new List<Tile>();
                 tempTS.AddRange(ownTiles);
                 tempTS.Add(a.representingTile);
-                bool win = Analysis.countShanten(tempTS, walledGroupCount) == -1;
+                bool win = Analysis.countShanten(tempTS, walledGroupCount) == -1 || bonusWin;
                 for (int i = 0; i < ownTiles.Count - 1; i++)
                 {
                     for (int k = i + 1; k < ownTiles.Count; k++)
@@ -153,6 +188,7 @@ namespace mahjongNEA
                     }
                     else if (winButton.clicked)
                     {
+                        ownTiles.Add(a.representingTile);
                         lastAction = new Action(5);
                     }
                     actionButtons.Children.Clear();

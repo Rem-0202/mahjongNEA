@@ -23,7 +23,7 @@
                 <MenuItem Header="_Auto Sort" IsCheckable="True" IsChecked="True"
                           StaysOpenOnClick="True" Checked="autoSortChecked"
                           Unchecked="autoSortUnchecked"/>
-                <MenuItem Header="_Expose all tiles" IsCheckable="True"
+                <MenuItem Header="_Expose all tiles" IsCheckable="True" x:Name="exposeTileToggle"
                           StaysOpenOnClick="True" Checked="ExposeTileMenuItem_Checked"
                           Unchecked="ExposeTileMenuItem_Checked"/>
                 <Separator/>
