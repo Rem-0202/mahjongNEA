@@ -22,14 +22,43 @@ namespace mahjongNEA
     public partial class MainWindow : Window
     {
         public GameView g;
+        public StartPageUserControl s;
         public static bool autoSort = true;
         public MainWindow()
         {
             InitializeComponent();
-            StartPage s = new StartPage();
-            Frame f = new Frame();
-            displayGrid.Children.Add(f);
-            f.Content = s;
+            s = new StartPageUserControl();
+            s.PreviewMouseDown += frame_MouseDown;
+            displayGrid.Children.Add(s);
+        }
+
+        private void frame_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (s.tutorial != null)
+            {
+                if (s.tutorial == true)
+                {
+                    helpWindow h = new helpWindow();
+                    h.ShowDialog();
+                }
+                displayGrid.Children.Clear();
+                switch (new newGameDialog().ShowDialog())
+                {
+                    case true:
+                        g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                        displayGrid.Children.Clear();
+                        displayGrid.Children.Add(g);
+                        restartButton.Visibility = Visibility.Visible;
+                        restartButton.IsEnabled = true;
+                        g.gameLoop();
+                        break;
+                    case false:
+                        //s = new
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void MenuItem_Help_Click(object sender, RoutedEventArgs e)

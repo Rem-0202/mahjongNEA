@@ -205,7 +205,7 @@ namespace mahjongNEA
             return neededTileScore;
         }
 
-        public static (int, int) getImprovingTileScores_OneTileLess(List<Tile> ts, int k, Dictionary<string, int> tileCount)
+        public static int[] getImprovingTileScores_OneTileLess(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
             Dictionary<string, int> tileShantens = new Dictionary<string, int>();
             foreach (string x in tileCount.Keys)
@@ -238,7 +238,7 @@ namespace mahjongNEA
                     neededTileScore += tileCount[s] * 10;
                 }
             }
-            return (neededTileScore, lowest);
+            return new int[] { neededTileScore, lowest };
         }
 
         public static Action chooseDiscard(List<Tile> ts, int k, Dictionary<string, int> tileCount)
@@ -261,8 +261,8 @@ namespace mahjongNEA
             tempTS.AddRange(ts);
             int[] improvingTileCount = new int[ats.Count + 1];
             int maxTileNum = -1;
-            (int, int) noneActionImprovingTileScores = getImprovingTileScores_OneTileLess(tempTS, k, tileCount);
-            (int, int) pongImprovingTileScores;
+            int[] noneActionImprovingTileScores = getImprovingTileScores_OneTileLess(tempTS, k, tileCount);
+            int[] pongImprovingTileScores;
             int lowestShanten = 999;
             for (int i = 0; i < ats.Count; i++)
             {
@@ -283,16 +283,16 @@ namespace mahjongNEA
                 else
                 {
                     pongImprovingTileScores = getImprovingTileScores_OneTileLess(tempTS, k + 1, tileCount);
-                    if (pongImprovingTileScores.Item2 <= lowestShanten)
+                    if (pongImprovingTileScores[1] <= lowestShanten)
                     {
-                        improvingTileCount[i] = pongImprovingTileScores.Item1;
+                        improvingTileCount[i] = pongImprovingTileScores[0];
                     }
                 }
             }
             maxTileNum = 0;
-            if (noneActionImprovingTileScores.Item2 <= lowestShanten)
+            if (noneActionImprovingTileScores[1] <= lowestShanten)
             {
-                improvingTileCount[ats.Count] = noneActionImprovingTileScores.Item1;
+                improvingTileCount[ats.Count] = noneActionImprovingTileScores[0];
             }
             maxTileNum = 0;
             for (int i = 1; i < improvingTileCount.Length; i++)
