@@ -21,7 +21,7 @@ namespace mahjongNEA
     /// </summary>
     public partial class StartPageUserControl : UserControl
     {
-        public bool? tutorial = null;
+        public bool tutorial;
         public StartPageUserControl()
         {
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace mahjongNEA
             }
         }
 
-        private void StartButton_Click(object sender, RoutedEventArgs e)
+        private void startButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if ((string)startButton.Content == "Start Tutorial")
             {
@@ -51,7 +51,7 @@ namespace mahjongNEA
             else tutorial = false;
         }
 
-        private void SecondaryButton_Click(object sender, RoutedEventArgs e)
+        private void secondaryButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if ((string)startButton.Content == "Start Tutorial")
             {

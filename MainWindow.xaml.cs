@@ -28,20 +28,16 @@ namespace mahjongNEA
         {
             InitializeComponent();
             s = new StartPageUserControl();
-            s.PreviewMouseDown += frame_MouseDown;
+            s.PreviewMouseUp += frame_MouseUp;
             displayGrid.Children.Add(s);
         }
 
-        private void frame_MouseDown(object sender, MouseButtonEventArgs e)
+        private void frame_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (s.tutorial != null)
+            if (s.tutorial == true)
             {
-                if (s.tutorial == true)
-                {
-                    helpWindow h = new helpWindow();
-                    h.ShowDialog();
-                }
-                displayGrid.Children.Clear();
+                helpWindow h = new helpWindow();
+                h.ShowDialog();
                 switch (new newGameDialog().ShowDialog())
                 {
                     case true:
@@ -53,7 +49,24 @@ namespace mahjongNEA
                         g.gameLoop();
                         break;
                     case false:
-                        //s = new
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (new newGameDialog().ShowDialog())
+                {
+                    case true:
+                        g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                        displayGrid.Children.Clear();
+                        displayGrid.Children.Add(g);
+                        restartButton.Visibility = Visibility.Visible;
+                        restartButton.IsEnabled = true;
+                        g.gameLoop();
+                        break;
+                    case false:
                         break;
                     default:
                         break;

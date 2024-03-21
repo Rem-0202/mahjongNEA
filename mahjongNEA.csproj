@@ -351,7 +351,9 @@
     <Resource Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="startupcheck.txt" />
+    <Content Include="startupcheck.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

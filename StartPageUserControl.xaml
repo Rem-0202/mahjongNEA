@@ -25,7 +25,7 @@
         <Border BorderBrush="Black" BorderThickness="1" Padding="1"
                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
                 Grid.RowSpan="4"/>
-        <Grid Grid.Row="3" Grid.Column="2">
+        <Grid Grid.Row="3" Grid.Column="2" x:Name="twoButtonsGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.6*"/>
                 <ColumnDefinition Width="0.5*"/>
@@ -41,12 +41,14 @@
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
             <Button Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                    Content="Start" x:Name="startButton" Click="StartButton_Click"
+                    Content="Start" x:Name="startButton"
+                    MouseDown="startButton_MouseDown"
                     FontSize="30" VerticalContentAlignment="Center" 
                     HorizontalContentAlignment="Center"
                     Background="Aqua"/>
             <Button Grid.Row="3" Grid.Column="2"
-                    Content="Redo Tutorial" x:Name="secondaryButton" Click="SecondaryButton_Click"
+                    Content="Redo Tutorial" x:Name="secondaryButton"
+                    MouseDown="secondaryButton_MouseDown"
                     FontSize="18" VerticalContentAlignment="Top" 
                     HorizontalContentAlignment="Center"
                     Background="Transparent" BorderBrush="Transparent"
