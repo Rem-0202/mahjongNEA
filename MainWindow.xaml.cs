@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,12 +33,27 @@ namespace mahjongNEA
             displayGrid.Children.Add(s);
         }
 
+        protected void WaitForEvent(EventWaitHandle eventHandle)
+        {
+            var frame = new DispatcherFrame();
+            new Thread(() =>
+            {
+                eventHandle.WaitOne();
+                frame.Continue = false;
+            }).Start();
+            Dispatcher.PushFrame(frame);
+        }
+
         private void frame_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
+            TutorialUserControl t = new TutorialUserControl(ewh);
             if (s.tutorial == true)
             {
-                helpWindow h = new helpWindow();
-                h.ShowDialog();
+                displayGrid.Children.Clear();
+                displayGrid.Children.Add(t);
+                ewh.Reset();
+                WaitForEvent(ewh);
             }
             switch (new newGameDialog().ShowDialog())
             {

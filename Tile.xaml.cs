@@ -113,7 +113,7 @@ namespace mahjongNEA
         {
             var bitmap = new BitmapImage();
             string imageName = concealed ? "concealed" : tileID;
-            using (FileStream stream = new FileStream($"{imageName}.jpg", FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream($"tiles\\{imageName}.jpg", FileMode.Open, FileAccess.Read))
             {
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;

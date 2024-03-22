@@ -1,0 +1,73 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:local="clr-namespace:mahjongNEA"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+    <Paragraph FontSize="18">
+        <Bold FontSize="22">Heavenly Hand:</Bold>
+        <LineBreak/>
+        The dealer wins with the initial hand.
+        <LineBreak/>
+        <LineBreak/>
+        <Bold FontSize="22">Earthly Hand:</Bold>
+        <LineBreak/>
+        Non dealer players win with the dealer's first discard.
+        <LineBreak/>
+        <LineBreak/>
+        <Bold FontSize="22">Thirteen Orphans:</Bold>
+        <LineBreak/>
+        The complete hand contains one of all terminal or honour tiles, with one of them repeating.
+        <LineBreak/>
+        e.g.:
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="tiles/1m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/9m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/1s.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/9s.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/1p.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/9p.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/2z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/3z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/4z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/5z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/6z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/8z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/8z.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+        <LineBreak/>
+        <Bold FontSize="22">Great Winds:</Bold>
+        <LineBreak/>
+        The complete hand contains all 4 winds as melds
+        <LineBreak/>
+        e.g.:
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="tiles/2z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/2z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/2z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/3z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/3z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/3z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/4z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/4z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/4z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/5z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/5z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/5z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/1p.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/1p.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+        <LineBreak/>
+        <Bold FontSize="22">All Kongs:</Bold>
+        <LineBreak/>
+        The winning hand has 4 kongs and an eye.
+        <LineBreak/>
+        <LineBreak/>
+    </Paragraph>
+</FlowDocument>

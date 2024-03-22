@@ -47,21 +47,21 @@ namespace mahjongNEA
         private void tileNamesHelp(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "Tile Names: ";
-            LoadFlowDocumentToRTB(@"../../tileNamesHelp.xaml");
+            LoadFlowDocumentToRTB(@"helpDocs\tileNamesHelp.xaml");
             winningHandsCollapse();
         }
 
         private void roundProgressionHelp(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "Round Progression: ";
-            LoadFlowDocumentToRTB(@"../../roundProgression.xaml");
+            LoadFlowDocumentToRTB(@"helpDocs\roundProgression.xaml");
             winningHandsCollapse();
         }
 
         private void roundsDisruptions(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "Disruption to Rounds";
-            LoadFlowDocumentToRTB(@"../../roundDisruptions.xaml");
+            LoadFlowDocumentToRTB(@"helpDocs\roundDisruptions.xaml");
             winningHandsCollapse();
         }
 
@@ -108,61 +108,61 @@ namespace mahjongNEA
         private void WinningHandsItems1_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "1 Faan Winning Hands";
-            LoadFlowDocumentToRTB(@"../../faan1.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan1.xaml");
         }
 
         private void WinningHandsItems2_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "2 Faan Winning Hands";
-            LoadFlowDocumentToRTB(@"../../faan2.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan2.xaml");
         }
 
         private void WinningHandsItems3_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "3 Faan Winning Hands";
-            LoadFlowDocumentToRTB(@"../../faan3.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan3.xaml");
         }
 
         private void WinningHandsItems5_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "5 Faan Winning Hands";
-            LoadFlowDocumentToRTB(@"../../faan5.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan5.xaml");
         }
 
         private void WinningHandsItems6_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "6 Faan Winning Hands";
-            LoadFlowDocumentToRTB(@"../../faan6.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan6.xaml");
         }
 
         private void WinningHandsItems7_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "7 Faan Winning Hands";
-            LoadFlowDocumentToRTB(@"../../faan7.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan7.xaml");
         }
 
         private void WinningHandsItems8_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "8 Faan Winning Hands";
-            LoadFlowDocumentToRTB(@"../../faan8.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan8.xaml");
         }
 
         private void WinningHandsItems10_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "10 Faan Winning Hands";
-            LoadFlowDocumentToRTB(@"../../faan10.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan10.xaml");
         }
 
         private void WinningHandsItems13_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "13 Faan Winning Hands (Maximum Faan)";
-            LoadFlowDocumentToRTB(@"../../faan13.xaml");
+            LoadFlowDocumentToRTB(@"faans\faan13.xaml");
         }
 
         private void WinningHandsListItem_Selected(object sender, RoutedEventArgs e)
         {
             helpTitle.Text = "Winning Hands";
-            LoadFlowDocumentToRTB(@"../../winningHands.xaml");
+            LoadFlowDocumentToRTB(@"helpDocs\winningHands.xaml");
         }
     }
 }

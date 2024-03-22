@@ -11,14 +11,58 @@
         <LineBreak/>
         A meld can be one of the following:
         <LineBreak/>
-        <Bold FontSize="18">Kong:</Bold> 3 of the same tile.
+        <Bold FontSize="18">Pong:</Bold> 3 of the same tile.
         <LineBreak/>
-        <Bold FontSize="18">Pong:</Bold> 4 of the same tile.
+        <Run FontSize="15">A Pong of three "Character 6" tiles:</Run>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="tiles/6m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/6m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/6m.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+        <LineBreak/>
+        <Bold FontSize="18">Kong:</Bold> 4 of the same tile.
+        <LineBreak/>
+        <Run FontSize="15">A Pong of four "Green Dragon" tiles:</Run>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
         <LineBreak/>
         <Bold FontSize="18">Chow:</Bold> 3 consecutive tiles of the same suit.
         <LineBreak/>
+        <Run FontSize="15">A Chow of "Dots 4, 5 and 6" tiles:</Run>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="tiles/4p.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/5p.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/6p.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
         <LineBreak/>
         <Bold FontSize="18">Eye:</Bold> a pair of the same tile.
+        <LineBreak/>
+        <Run FontSize="15">An Eye of "Bamboo 2" tiles:</Run>
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="tiles/2s.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/2s.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+        <LineBreak/>
         <LineBreak/>
         <LineBreak/>
         Melds formed counts towards the 4 needed whether it is walled or not.

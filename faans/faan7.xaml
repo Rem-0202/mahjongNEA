@@ -1,0 +1,34 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:local="clr-namespace:mahjongNEA"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+    <Paragraph FontSize="18">
+        <Bold FontSize="22">All one suit:</Bold>
+        <LineBreak/>
+        All of the tiles in the winning hand is the same suit.
+        <LineBreak/>
+        e.g.:
+        <LineBreak/>
+        <InlineUIContainer>
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,0,0,2" Source="tiles/1m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/1m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/1m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/2m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/3m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/4m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/5m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/5m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/6m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/7m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/8m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/9m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/9m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/9m.jpg"/>
+            </StackPanel>
+        </InlineUIContainer>
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+        <LineBreak/>
+    </Paragraph>
+</FlowDocument>

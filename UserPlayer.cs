@@ -15,7 +15,7 @@ namespace mahjongNEA
     class UserPlayer : Player
     {
         private Tile selectedTile;
-        EventWaitHandle actionEWH = new EventWaitHandle(false, EventResetMode.ManualReset);
+        private EventWaitHandle actionEWH = new EventWaitHandle(false, EventResetMode.ManualReset);
 
         private EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
         public StackPanel actionButtons;
