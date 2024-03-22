@@ -42,13 +42,13 @@
             </Grid.RowDefinitions>
             <Button Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
                     Content="Start" x:Name="startButton"
-                    MouseDown="startButton_MouseDown"
+                    PreviewMouseDown="startButton_MouseDown"
                     FontSize="30" VerticalContentAlignment="Center" 
                     HorizontalContentAlignment="Center"
                     Background="Aqua"/>
             <Button Grid.Row="3" Grid.Column="2"
                     Content="Redo Tutorial" x:Name="secondaryButton"
-                    MouseDown="secondaryButton_MouseDown"
+                    PreviewMouseDown="secondaryButton_MouseDown"
                     FontSize="18" VerticalContentAlignment="Top" 
                     HorizontalContentAlignment="Center"
                     Background="Transparent" BorderBrush="Transparent"

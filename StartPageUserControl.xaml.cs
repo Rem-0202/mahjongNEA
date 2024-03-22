@@ -36,9 +36,9 @@ namespace mahjongNEA
                     firstStartUp = "false";
                 }
             }
-            using (StreamWriter sr = new StreamWriter("startupcheck.txt"))
+            using (StreamWriter sw = new StreamWriter("startupcheck.txt"))
             {
-                sr.WriteLine("false");
+                sw.WriteLine("false");
             }
         }
 

@@ -38,39 +38,21 @@ namespace mahjongNEA
             {
                 helpWindow h = new helpWindow();
                 h.ShowDialog();
-                switch (new newGameDialog().ShowDialog())
-                {
-                    case true:
-                        g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
-                        displayGrid.Children.Clear();
-                        displayGrid.Children.Add(g);
-                        restartButton.Visibility = Visibility.Visible;
-                        restartButton.IsEnabled = true;
-                        g.gameLoop();
-                        break;
-                    case false:
-                        break;
-                    default:
-                        break;
-                }
             }
-            else
+            switch (new newGameDialog().ShowDialog())
             {
-                switch (new newGameDialog().ShowDialog())
-                {
-                    case true:
-                        g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
-                        displayGrid.Children.Clear();
-                        displayGrid.Children.Add(g);
-                        restartButton.Visibility = Visibility.Visible;
-                        restartButton.IsEnabled = true;
-                        g.gameLoop();
-                        break;
-                    case false:
-                        break;
-                    default:
-                        break;
-                }
+                case true:
+                    g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                    displayGrid.Children.Clear();
+                    displayGrid.Children.Add(g);
+                    restartButton.Visibility = Visibility.Visible;
+                    restartButton.IsEnabled = true;
+                    g.gameLoop();
+                    break;
+                case false:
+                    break;
+                default:
+                    break;
             }
         }
 
