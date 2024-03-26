@@ -23,15 +23,15 @@ namespace mahjongNEA
         private static Regex numbersOnlyRegex = new Regex("[0-9]+");
         public static int sPoints = 15000;
         public static int ePoints = 30000;
-        public static int pWind = 1;
-        public static int uWind = 1;
+        public static int pWind = 0;
+        public static int uWind = 0;
         public newGameDialog()
         {
             InitializeComponent();
             startingPoints.Text = sPoints.ToString();
             endingPoints.Text = ePoints.ToString();
-            pWindSelector.SelectedIndex = pWind - 1;
-            uWindSelector.SelectedIndex = uWind - 1;
+            pWindSelector.SelectedIndex = pWind;
+            uWindSelector.SelectedIndex = uWind;
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -46,8 +46,8 @@ namespace mahjongNEA
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            pWind = pWindSelector.SelectedIndex + 1;
-            uWind = uWindSelector.SelectedIndex + 1;
+            pWind = pWindSelector.SelectedIndex;
+            uWind = uWindSelector.SelectedIndex;
             int sp = Convert.ToInt32(startingPoints.Text);
             int ep = Convert.ToInt32(endingPoints.Text);
             if ((ep - sp) < 1000)

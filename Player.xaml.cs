@@ -23,6 +23,7 @@ namespace mahjongNEA
     public partial class Player : UserControl
     {
         public bool ownTurn;
+        protected bool lastTileBonus = false;
         public List<Action> actionsDone;
         protected static string windNames = "東E南S西W北N";
         protected Dictionary<string, int> tileCount;
@@ -61,6 +62,7 @@ namespace mahjongNEA
 
         public virtual void addTile(Tile t)
         {
+            lastTileBonus = t.bonus;
             if (t.bonus)
             {
                 t.interactive = false;

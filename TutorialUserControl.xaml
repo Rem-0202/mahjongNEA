@@ -22,7 +22,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        
+
         <Button Grid.Row="3" Grid.Column="4"
                 BorderBrush="DimGray" BorderThickness="1" x:Name="nextPageButton"
                 Click="nextPageButton_Click">
@@ -35,7 +35,12 @@
                        StretchDirection="Both" Stretch="Uniform"/>
             </StackPanel>
         </Button>
-        <Button Grid.Row="3" Grid.Column="3"
+        <Button Grid.Row="3" Grid.Column="4" IsEnabled="False" Visibility="Hidden"
+                BorderBrush="DimGray" BorderThickness="1" x:Name="endButton"
+                Click="cancelButton_Click">
+            End Tutorial
+        </Button>
+        <Button Grid.Row="3" Grid.Column="3" Visibility="Hidden" IsEnabled="False"
                 BorderBrush="DimGray" BorderThickness="1" x:Name="previousPageButton"
                 Click="previousPageButton_Click">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
@@ -50,5 +55,8 @@
         <Button x:Name="cancelButton" Grid.Row="3" Grid.Column="1"
                 BorderBrush="DimGray" BorderThickness="1" FontSize="16"
                 Click="cancelButton_Click" Content="Skip Tutorial"/>
+        <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" x:Name="MediaDisplayGrid">
+            <MediaElement x:Name="TutorialMediaElement" MediaEnded="TutorialMediaElement_MediaEnded"/>
+        </Grid>
     </Grid>
 </UserControl>

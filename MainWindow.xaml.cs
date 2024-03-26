@@ -142,5 +142,14 @@ namespace mahjongNEA
                 g.toggleExposeTiles();
             }
         }
+
+        private void MenuItem_RedoTutorial_Click(object sender, RoutedEventArgs e)
+        {
+            EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
+            ExternalTutorialWindow etw = new ExternalTutorialWindow(ewh);
+            etw.Show();
+            WaitForEvent(ewh);
+            etw.Close();
+        }
     }
 }

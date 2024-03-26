@@ -54,7 +54,7 @@ namespace mahjongNEA
         {
             lastAction = null;
             bool bonusWin = false;
-            bonusWin = bonusTiles.Count == 8 || bonusTiles.Count == 7;
+            bonusWin = bonusTiles.Count == 8 || bonusTiles.Count == 7 && lastTileBonus;
             if (a.typeOfAction == 0)
             {
                 List<Tile> tempTS = new List<Tile>();
