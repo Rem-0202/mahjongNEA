@@ -84,11 +84,11 @@ namespace mahjongNEA
                             {
                                 if (Analysis.isKong(ownTiles[i], ownTiles[j], ownTiles[k], ownTiles[l]))
                                 {
-                                    i = j = k = l = 9999;
                                     List<Action> kongList = new List<Action>();
                                     kongList.Add(new Action(4, ownTiles[i], new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], ownTiles[l] }));
                                     ActionButton kongButton = new ActionButton(kongList, "Kong", ref actionEWH);
                                     ActionButton skipButton = new ActionButton(ref actionEWH, false);
+                                    i = j = k = l = 9999;
                                     actionButtons.Children.Add(skipButton);
                                     actionButtons.Children.Add(kongButton);
                                     actionEWH.Reset();

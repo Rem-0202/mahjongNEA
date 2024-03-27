@@ -136,7 +136,6 @@ namespace mahjongNEA
                                         if (Analysis.isKong(ownTiles[i], ownTiles[j], ownTiles[k], ownTiles[l]))
                                         {
                                             konged = true;
-                                            i = j = k = l = 9999;
                                             List<Action> kongList = new List<Action>();
                                             kongList.Add(new Action(4, ownTiles[i], new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], ownTiles[l] }));
                                             List<Action> tempActionList = new List<Action>();
@@ -148,6 +147,8 @@ namespace mahjongNEA
                                             {
                                                 lastAction = Analysis.chooseAction(ownTiles, walledGroupCount, tempActionList, tileCount);
                                             }
+                                            j = k = l = 9999;
+                                            i += 3;
                                         }
                                     }
                                 }
