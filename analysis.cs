@@ -12,6 +12,8 @@ namespace mahjongNEA
     static class Analysis
     {
         public static int safety = 5;
+        public static int offensiveSuit = 30;
+        public static int offensiveWind = 3;
         private static int differentSpecialTiles(List<Tile> ownTiles)
         {
             int s = 0;
@@ -176,6 +178,23 @@ namespace mahjongNEA
 
         public static int[] getImprovingTileScores(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
+            Dictionary<char, int> suitScores = new Dictionary<char, int>();
+            suitScores.Add('m', 0);
+            suitScores.Add('s', 0);
+            suitScores.Add('p', 0);
+            foreach (Tile t in ts)
+            {
+                if (suitScores.ContainsKey(t.suit)) suitScores[t.suit] += 1;
+            }
+            int bestSuitScore = Math.Max(Math.Max(suitScores['m'], suitScores['s']), suitScores['p']);
+            char bestSuit = 'm';
+            foreach (char x in suitScores.Keys)
+            {
+                if (suitScores[x] == bestSuitScore)
+                {
+                    bestSuit = x;
+                }
+            }
             List<Tile> originalCopy = new List<Tile>();
             originalCopy.AddRange(ts);
             int oShanten = countShanten(originalCopy, k);
@@ -197,11 +216,22 @@ namespace mahjongNEA
                     }
                 }
             }
-            //for (int i = 0; i < neededTileScore.Length; i++)
-            //{
-            //    //defensive play, add slider to choose difficulty
-            //    neededTileScore[i] -= (tileCount[ts[i].tileID] - 1) * safety;
-            //}
+
+            //defensive play
+            for (int i = 0; i < neededTileScore.Length; i++)
+            {
+                neededTileScore[i] -= (tileCount[ts[i].tileID] - 1) * safety;
+            }
+
+            //OffensivePlay: best suit + winds
+            for (int i = 0; i < neededTileScore.Length; i++)
+            {
+                if (ts[i].suit == bestSuit)
+                {
+                    neededTileScore[i] -= offensiveSuit;
+                }
+            }
+
             return neededTileScore;
         }
 
@@ -290,10 +320,6 @@ namespace mahjongNEA
                 }
             }
             maxTileNum = 0;
-            if (noneActionImprovingTileScores[1] <= lowestShanten)
-            {
-                improvingTileCount[ats.Count] = noneActionImprovingTileScores[0];
-            }
             maxTileNum = 0;
             for (int i = 1; i < improvingTileCount.Length; i++)
             {
@@ -301,6 +327,10 @@ namespace mahjongNEA
                 {
                     maxTileNum = i;
                 }
+            }
+            if (noneActionImprovingTileScores[1] < lowestShanten)
+            {
+                improvingTileCount[ats.Count] = noneActionImprovingTileScores[0];
             }
             ats.Add(new Action(0));
             return ats[maxTileNum];

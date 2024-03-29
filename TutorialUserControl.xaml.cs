@@ -21,7 +21,6 @@ namespace mahjongNEA
     /// </summary>
     public partial class TutorialUserControl : UserControl
     {
-        public bool cancel;
         private EventWaitHandle ewh;
         string[] tutorialGifUriArray;
         private int currentTutorialIndex;
@@ -29,7 +28,6 @@ namespace mahjongNEA
         {
             InitializeComponent();
             this.ewh = ewh;
-            cancel = false;
             currentTutorialIndex = 0;
             tutorialGifUriArray = new string[2];
             tutorialGifUriArray[0] = @"test.gif";
@@ -47,7 +45,6 @@ namespace mahjongNEA
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
-            cancel = true;
             ewh.Set();
         }
 

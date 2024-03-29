@@ -53,8 +53,32 @@ namespace mahjongNEA
                 displayGrid.Children.Clear();
                 displayGrid.Children.Add(t);
                 ewh.Reset();
-                WaitForEvent(ewh);
+                waitForTutorialEnd(ewh);
             }
+            else
+            {
+                switch (new newGameDialog().ShowDialog())
+                {
+                    case true:
+                        g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                        displayGrid.Children.Clear();
+                        displayGrid.Children.Add(g);
+                        restartButton.Visibility = Visibility.Visible;
+                        restartButton.IsEnabled = true;
+                        g.gameLoop();
+                        break;
+                    case false:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void waitForTutorialEnd(EventWaitHandle ewh)
+        {
+            ewh.Reset();
+            WaitForEvent(ewh);
             switch (new newGameDialog().ShowDialog())
             {
                 case true:
@@ -66,8 +90,10 @@ namespace mahjongNEA
                     g.gameLoop();
                     break;
                 case false:
+                    waitForTutorialEnd(ewh);
                     break;
                 default:
+                    waitForTutorialEnd(ewh);
                     break;
             }
         }
