@@ -11,8 +11,8 @@ namespace mahjongNEA
 {
     static class Analysis
     {
-        public static int safety = 0;
-        public static int offensiveSuit = 15;
+        public static int safety = 5;
+        public static int offensiveSuit = 30;
         public static int offensiveWind = 3;
         private static int differentSpecialTiles(List<Tile> ownTiles)
         {
@@ -217,6 +217,21 @@ namespace mahjongNEA
                 }
             }
 
+            //defensive play
+            for (int i = 0; i < neededTileScore.Length; i++)
+            {
+                neededTileScore[i] -= (tileCount[ts[i].tileID] - 1) * safety;
+            }
+
+            //OffensivePlay: best suit + winds
+            for (int i = 0; i < neededTileScore.Length; i++)
+            {
+                if (ts[i].suit == bestSuit)
+                {
+                    neededTileScore[i] -= offensiveSuit;
+                }
+            }
+
             return neededTileScore;
         }
 
@@ -253,7 +268,7 @@ namespace mahjongNEA
                     neededTileScore += tileCount[s] * 10;
                 }
             }
-            return new int[] { neededTileScore , lowest };
+            return new int[] { neededTileScore, lowest };
         }
 
         public static Action chooseDiscard(List<Tile> ts, int k, Dictionary<string, int> tileCount)
