@@ -180,6 +180,8 @@ namespace mahjongNEA
 
         public virtual void acceptAction()
         {
+            Action a;
+            Tile[] ts;
             if (lastAction != null)
             {
                 switch (lastAction.typeOfAction)
@@ -204,7 +206,10 @@ namespace mahjongNEA
                             }
                         }
                         walledGroupCount++;
-                        actionsDone.Add(lastAction);
+                        ts = new Tile[lastAction.allTiles.Count];
+                        lastAction.allTiles.CopyTo(ts);
+                        a = new Action(lastAction.typeOfAction, Tile.stringToTile(lastAction.representingTile.tileID), ts.ToList());
+                        actionsDone.Add(a);
                         break;
                     case 3:
                         foreach (Tile t in lastAction.allTiles)
@@ -223,7 +228,10 @@ namespace mahjongNEA
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
                         walledGroupCount++;
-                        actionsDone.Add(lastAction);
+                        ts = new Tile[lastAction.allTiles.Count];
+                        lastAction.allTiles.CopyTo(ts);
+                        a = new Action(lastAction.typeOfAction, Tile.stringToTile(lastAction.representingTile.tileID), ts.ToList());
+                        actionsDone.Add(a);
                         break;
                     case 4:
                         foreach (Tile t in lastAction.allTiles)
@@ -242,7 +250,10 @@ namespace mahjongNEA
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
                         walledGroupCount++;
-                        actionsDone.Add(lastAction);
+                        ts = new Tile[lastAction.allTiles.Count];
+                        lastAction.allTiles.CopyTo(ts);
+                        a = new Action(lastAction.typeOfAction, Tile.stringToTile(lastAction.representingTile.tileID), ts.ToList());
+                        actionsDone.Add(a);
                         break;
                 }
                 updateTileDisplay();

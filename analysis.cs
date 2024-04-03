@@ -231,7 +231,6 @@ namespace mahjongNEA
                     neededTileScore[i] -= offensiveSuit;
                 }
             }
-
             return neededTileScore;
         }
 
