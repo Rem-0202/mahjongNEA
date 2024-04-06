@@ -52,10 +52,12 @@ namespace mahjongNEA
             }
             faanPairs = new Dictionary<string, int>();
             setFaanPairs();
-            foreach (int i in faanPairs.Values)
-            {
-                faan += i;
-            }
+        }
+
+        public int getFaan()
+        {
+            faan = 0;
+            return faan;
         }
 
         private void setFaanPairs()
