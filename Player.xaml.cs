@@ -25,7 +25,7 @@ namespace mahjongNEA
         public bool ownTurn;
         protected bool lastTileBonus = false;
         public List<Action> actionsDone;
-        protected static string windNames = "東E南S西W北N";
+        protected static string[] windNames = { "東 East", "南 South", "西 West", "北 North" };
         protected Dictionary<string, int> tileCount;
         protected int walledGroupCount;
         public Action lastAction { get; protected set; }
@@ -52,7 +52,7 @@ namespace mahjongNEA
             wind = w;
             nextTurn = false;
             walledGroupCount = 0;
-            windText.Text = $"{windNames[wind * 2]}{windNames[wind * 2 + 1]}";
+            windText.Text = $"{windNames[wind]}";
             if (pWind == w)
             {
                 windText.Foreground = Brushes.DarkRed;
