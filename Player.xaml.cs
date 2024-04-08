@@ -181,7 +181,7 @@ namespace mahjongNEA
         public virtual void acceptAction()
         {
             Action a;
-            Tile[] ts;
+            List<Tile> ts;
             if (lastAction != null)
             {
                 switch (lastAction.typeOfAction)
@@ -206,8 +206,11 @@ namespace mahjongNEA
                             }
                         }
                         walledGroupCount++;
-                        ts = new Tile[lastAction.allTiles.Count];
-                        lastAction.allTiles.CopyTo(ts);
+                        ts = new List<Tile>();
+                        foreach (Tile t in lastAction.allTiles)
+                        {
+                            ts.Add(Tile.stringToTile(t.tileID));
+                        }
                         a = new Action(lastAction.typeOfAction, Tile.stringToTile(lastAction.representingTile.tileID), ts.ToList());
                         actionsDone.Add(a);
                         break;
@@ -228,8 +231,11 @@ namespace mahjongNEA
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
                         walledGroupCount++;
-                        ts = new Tile[lastAction.allTiles.Count];
-                        lastAction.allTiles.CopyTo(ts);
+                        ts = new List<Tile>();
+                        foreach (Tile t in lastAction.allTiles)
+                        {
+                            ts.Add(Tile.stringToTile(t.tileID));
+                        }
                         a = new Action(lastAction.typeOfAction, Tile.stringToTile(lastAction.representingTile.tileID), ts.ToList());
                         actionsDone.Add(a);
                         break;
@@ -250,8 +256,11 @@ namespace mahjongNEA
                             t.VerticalAlignment = VerticalAlignment.Bottom;
                         }
                         walledGroupCount++;
-                        ts = new Tile[lastAction.allTiles.Count];
-                        lastAction.allTiles.CopyTo(ts);
+                        ts = new List<Tile>();
+                        foreach (Tile t in lastAction.allTiles)
+                        {
+                            ts.Add(Tile.stringToTile(t.tileID));
+                        }
                         a = new Action(lastAction.typeOfAction, Tile.stringToTile(lastAction.representingTile.tileID), ts.ToList());
                         actionsDone.Add(a);
                         break;
