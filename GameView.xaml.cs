@@ -195,12 +195,13 @@ namespace mahjongNEA
                         {
                             endTurn = true;
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, currentPlayer.ownTiles, h.faanPairs, 1000);
+                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone);
                             ww.ShowDialog();
                             break;
                         }
                         if (lastAction.typeOfAction == 4)
                         {
+                            currentPlayer.acceptAction();
                             lastAction = currentPlayer.getAction(new Action(0));
                         }
                         currentPlayer.acceptAction();
@@ -253,7 +254,7 @@ namespace mahjongNEA
                                         currentPlayer.toggleExposeTile();
                                     }
                                     HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000);
+                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone);
                                     ww.ShowDialog();
                                     break;
                                 }
@@ -289,7 +290,7 @@ namespace mahjongNEA
                                 }
                             }
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000);
+                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone);
                             ww.ShowDialog();
                             break;
                         case 4:

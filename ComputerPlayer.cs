@@ -124,7 +124,6 @@ namespace mahjongNEA
                     }
                     else
                     {
-                        bool konged = false;
                         List<Action> tempActionList = new List<Action>();
                         for (int i = 0; i < ownTiles.Count - 3; i++)
                         {
@@ -136,7 +135,6 @@ namespace mahjongNEA
                                     {
                                         if (Analysis.isKong(ownTiles[i], ownTiles[j], ownTiles[k], ownTiles[l]))
                                         {
-                                            konged = true;
                                             List<Action> kongList = new List<Action>();
                                             kongList.Add(new Action(4, ownTiles[i], new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], ownTiles[l] }));
                                             tempActionList.AddRange(kongList);
