@@ -22,13 +22,16 @@ namespace mahjongNEA
     public partial class StartPageUserControl : UserControl
     {
         public bool tutorial;
+        public string username;
         public StartPageUserControl()
         {
             InitializeComponent();
             string firstStartUp;
+            string username = "";
             using (StreamReader sr = new StreamReader("startupcheck.txt"))
             {
                 firstStartUp = sr.ReadLine();
+                username = sr.ReadLine();
                 if (firstStartUp == "true")
                 {
                     startButton.Content = "Start Tutorial";
@@ -39,6 +42,7 @@ namespace mahjongNEA
             using (StreamWriter sw = new StreamWriter("startupcheck.txt"))
             {
                 sw.WriteLine("false");
+                sw.WriteLine(username);
             }
         }
 

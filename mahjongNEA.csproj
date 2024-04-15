@@ -113,6 +113,9 @@
     <Compile Include="TutorialUserControl.xaml.cs">
       <DependentUpon>TutorialUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Username.xaml.cs">
+      <DependentUpon>Username.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserPlayer.cs" />
     <Compile Include="WinWindow.xaml.cs">
       <DependentUpon>WinWindow.xaml</DependentUpon>
@@ -228,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TutorialUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Username.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
