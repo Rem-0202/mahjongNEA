@@ -22,13 +22,10 @@ namespace mahjongNEA
             {
                 if (t.special)
                 {
-                    foreach (Tile x in temp)
+                    if (!temp.Contains(t))
                     {
-                        if (!temp.Contains(x))
-                        {
-                            s++;
-                            temp.Add(x);
-                        }
+                        s++;
+                        temp.Add(t);
                     }
                 }
             }
@@ -319,9 +316,13 @@ namespace mahjongNEA
                 }
             }
             maxTileNum = 0;
-            if (noneActionImprovingTileScores[1] <= lowestShanten)
+            if (noneActionImprovingTileScores[1] == lowestShanten)
             {
                 improvingTileCount[ats.Count] = noneActionImprovingTileScores[0];
+            }
+            else if (noneActionImprovingTileScores[1] < lowestShanten)
+            {
+                return new Action(0);
             }
             for (int i = 1; i < improvingTileCount.Length; i++)
             {
