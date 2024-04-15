@@ -47,28 +47,57 @@ namespace mahjongNEA
         private void frame_MouseUp(object sender, MouseButtonEventArgs e)
         {
             EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
+            ewh.Reset();
             TutorialUserControl t = new TutorialUserControl(ewh);
             if (s.tutorial == true)
             {
                 displayGrid.Children.Clear();
                 displayGrid.Children.Add(t);
-                ewh.Reset();
-                WaitForEvent(ewh);
+                bool end = false;
+                while (!end)
+                {
+                    WaitForEvent(ewh);
+                    switch (new newGameDialog().ShowDialog())
+                    {
+                        case true:
+                            end = true;
+                            g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                            displayGrid.Children.Clear();
+                            displayGrid.Children.Add(g);
+                            restartButton.Visibility = Visibility.Visible;
+                            restartButton.IsEnabled = true;
+                            g.gameLoop();
+                            ewh.Reset();
+                            break;
+                        case false:
+                            ewh.Reset();
+                            break;
+                        default:
+                            ewh.Reset();
+                            break;
+                    }
+                }
             }
-            switch (new newGameDialog().ShowDialog())
+            else
             {
-                case true:
-                    g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
-                    displayGrid.Children.Clear();
-                    displayGrid.Children.Add(g);
-                    restartButton.Visibility = Visibility.Visible;
-                    restartButton.IsEnabled = true;
-                    g.gameLoop();
-                    break;
-                case false:
-                    break;
-                default:
-                    break;
+                switch (new newGameDialog().ShowDialog())
+                {
+                    case true:
+                        g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                        displayGrid.Children.Clear();
+                        displayGrid.Children.Add(g);
+                        restartButton.Visibility = Visibility.Visible;
+                        restartButton.IsEnabled = true;
+                        g.gameLoop();
+                        ewh.Reset();
+                        break;
+                    case false:
+                        ewh.Reset();
+                        break;
+                    default:
+                        ewh.Reset();
+                        break;
+                }
             }
         }
 

@@ -216,7 +216,7 @@ namespace mahjongNEA
                         lastAction.representingTile.unconcealTile();
                         lastAction.representingTile.unhover();
                         lastAction.representingTile.interactive = false;
-                        lastAction.representingTile.Margin = new Thickness(6, 6, 6, 6);
+                        lastAction.representingTile.Margin = new Thickness(6);
                         lastAction.representingTile.glow();
                         discardPanel.Children.Add(lastAction.representingTile);
                     }

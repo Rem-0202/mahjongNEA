@@ -151,7 +151,7 @@ namespace mahjongNEA
                         {
                             lastAction = Analysis.chooseAction(ownTiles, walledGroupCount, tempActionList, tileCount);
                         }
-                        if (lastAction.typeOfAction != 4)
+                        else
                         {
                             lastAction = Analysis.chooseDiscard(ownTiles, walledGroupCount, tileCount);
                         }
