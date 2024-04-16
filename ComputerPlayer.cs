@@ -11,7 +11,7 @@ namespace mahjongNEA
 {
     class ComputerPlayer : Player
     {
-        public ComputerPlayer(int wind, int points, int pWind) : base(wind, points, pWind)
+        public ComputerPlayer(int wind, int points, int pWind, string n) : base(wind, points, pWind, n)
         {
             InitializeComponent();
             tileCount = new Dictionary<string, int>();

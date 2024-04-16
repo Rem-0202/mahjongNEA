@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.Windows.Threading;
 using System.IO;
+using System.Text.RegularExpressions;
 
 
 //TODO:
@@ -33,8 +34,9 @@ namespace mahjongNEA
     public partial class GameView : UserControl
     {
         public bool messyDiscard;
-        private string username;
+        public string username;
         private Action lastAction;
+        private static Regex usernameRegex = new Regex(@"^[a-zA-Z]$");
         public static Random rng = new Random();
         public int prevailingWind { get; private set; }
         public int playerWind { get; private set; }
@@ -53,12 +55,7 @@ namespace mahjongNEA
             this.prevailingWind = prevailingWind;
             this.startingPoints = startingPoints;
             this.endingPoints = endingPoints;
-            players = new Player[4];
-            players[playerWind % 4] = new UserPlayer(playerWind, startingPoints, userActionButtons, prevailingWind);
-            players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints, prevailingWind);
-            players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints, prevailingWind);
-            players[(playerWind + 3) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints, prevailingWind);
-            setUpGame();
+
             //code for showing discarded tiles, change later when implemented discard and add removing from discarded pile
             //TODO: add discarded pile list, unlink tile with grid and link grid with discarded tile list
             //TODO: change so that random placement + stack on top each other
@@ -76,15 +73,52 @@ namespace mahjongNEA
             //}
         }
 
+        private void usernameBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !usernameRegex.IsMatch(e.Text);
+        }
+
+        private void setNames()
+        {
+            if (usernameBox.Text.Length > 0 && usernameBox.Text.Length < 20 && usernameBox.Text.Trim() != "")
+            {
+                username = (string)usernameBox.Text;
+                players = new Player[4];
+                players[playerWind % 4] = new UserPlayer(playerWind, startingPoints, userActionButtons, prevailingWind, username);
+                players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints, prevailingWind, "CPU 1");
+                players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints, prevailingWind, "CPU 2");
+                players[(playerWind + 3) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints, prevailingWind, "CPU 3");
+                usernameGrid.Children.Clear();
+                main.Children.Remove(usernameGrid);
+                setUpGame();
+                gameLoop();
+            }
+        }
+
+        private void usernameBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = usernameBox.Text.Trim() == "";
+            }
+            if (e.Key == Key.Enter)
+            {
+                setNames();
+            }
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            setNames();
+        }
+
+        private void usernameBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            e.CancelCommand();
+        }
+
         private void setUpGame()
         {
-            using (StreamReader sr = new StreamReader("startupcheck.txt"))
-            {
-                sr.ReadLine();
-                username = sr.ReadLine();
-            }
-            Username u = new Username(username);
-            u.show
             discardedTiles.Clear();
             discardPanel.Children.Clear();
             userPlayerGrid.Children.Clear();
@@ -96,11 +130,11 @@ namespace mahjongNEA
             {
                 if (p is ComputerPlayer)
                 {
-                    tempPlayers[Array.IndexOf(players, p)] = new ComputerPlayer(p.wind, p.points, p.pWind);
+                    tempPlayers[Array.IndexOf(players, p)] = new ComputerPlayer(p.wind, p.points, p.pWind, p.name);
                 }
                 else if (p is UserPlayer)
                 {
-                    tempPlayers[Array.IndexOf(players, p)] = new UserPlayer(p.wind, p.points, userActionButtons, p.pWind);
+                    tempPlayers[Array.IndexOf(players, p)] = new UserPlayer(p.wind, p.points, userActionButtons, p.pWind, p.name);
                 }
             }
             if (exposedTile)
@@ -204,7 +238,7 @@ namespace mahjongNEA
                         {
                             endTurn = true;
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone);
+                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
                             ww.ShowDialog();
                             break;
                         }
@@ -263,7 +297,7 @@ namespace mahjongNEA
                                         currentPlayer.toggleExposeTile();
                                     }
                                     HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone);
+                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
                                     ww.ShowDialog();
                                     break;
                                 }
@@ -299,7 +333,7 @@ namespace mahjongNEA
                                 }
                             }
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone);
+                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
                             ww.ShowDialog();
                             break;
                         case 4:

@@ -20,9 +20,10 @@ namespace mahjongNEA
     public partial class WinWindow : Window
     {
         private static string[] windNames = { "東 East", "南 South", "西 West", "北 North" };
-        public WinWindow(int pw, int uw, List<Tile> ts, Dictionary<string, int> faanPairs, int points, List<Action> walledGroups)
+        public WinWindow(int pw, int uw, List<Tile> ts, Dictionary<string, int> faanPairs, int points, List<Action> walledGroups, string name)
         {
             InitializeComponent();
+            nameBlock.Text = name;
             pWindTB.Text = $"{windNames[pw]}";
             uWindTB.Text = $"{windNames[uw]}";
             scoreTB.Text = points.ToString();

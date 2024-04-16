@@ -66,7 +66,7 @@ namespace mahjongNEA
                             displayGrid.Children.Add(g);
                             restartButton.Visibility = Visibility.Visible;
                             restartButton.IsEnabled = true;
-                            g.gameLoop();
+                            //g.gameLoop();
                             ewh.Reset();
                             break;
                         case false:
@@ -88,7 +88,7 @@ namespace mahjongNEA
                         displayGrid.Children.Add(g);
                         restartButton.Visibility = Visibility.Visible;
                         restartButton.IsEnabled = true;
-                        g.gameLoop();
+                        //g.gameLoop();
                         ewh.Reset();
                         break;
                     case false:
@@ -131,7 +131,7 @@ namespace mahjongNEA
                     displayGrid.Children.Add(g);
                     restartButton.Visibility = Visibility.Visible;
                     restartButton.IsEnabled = true;
-                    g.gameLoop();
+                    //g.gameLoop();
                     break;
                 case false:
                     break;
@@ -145,23 +145,6 @@ namespace mahjongNEA
             g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
-        }
-
-        //temp new game for easier debug
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-            exposeTileToggle.IsChecked = false;
-            g = new GameView(1, 0, newGameDialog.sPoints, newGameDialog.ePoints);
-            displayGrid.Children.Clear();
-            displayGrid.Children.Add(g);
-        }
-
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
-        {
-            if (g != null)
-            {
-                g.gameLoop();
-            }
         }
 
         private void ExposeTileMenuItem_Checked(object sender, RoutedEventArgs e)

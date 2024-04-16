@@ -69,7 +69,7 @@ namespace mahjongNEA
             uniqueTileNumber++;
         }
 
-        public Tile(int r, char s, bool u)
+        public Tile(int r, char s, bool _)
         {
             InitializeComponent();
             interactive = false;

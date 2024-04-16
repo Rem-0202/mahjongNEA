@@ -34,9 +34,6 @@
                 <MenuItem Header="Help _Documents" Click="MenuItem_Help_Click"/>
                 <MenuItem Header="_Redo Tutorial" Click="MenuItem_RedoTutorial_Click"/>
             </MenuItem>
-            <!-- easier debug temp new game -->
-            <MenuItem Header="_Temp New Game" Margin="0,0,5,0" Click="MenuItem_Click_1"/>
-            <MenuItem Header="T_est" Margin="0,0,5,0" Click="MenuItem_Click_2"/>
         </Menu>
         <Grid x:Name="displayGrid" Grid.Row="1"/>
     </Grid>

@@ -23,6 +23,7 @@ namespace mahjongNEA
     public partial class Player : UserControl
     {
         public bool ownTurn;
+        public string name;
         protected bool lastTileBonus = false;
         public List<Action> actionsDone;
         protected static string[] windNames = { "東 East", "南 South", "西 West", "北 North" };
@@ -40,9 +41,11 @@ namespace mahjongNEA
 
         public bool exposeAllTiles = false;
 
-        public Player(int w, int points, int pWind)
+        public Player(int w, int points, int pWind, string n)
         {
             InitializeComponent();
+            name = n;
+            nameText.Text = name;
             this.pWind = pWind;
             ownTiles = new List<Tile>();
             walledTiles = new List<Tile>();
@@ -152,6 +155,7 @@ namespace mahjongNEA
             bonusTileDisplay.LayoutTransform = new RotateTransform(180.0);
             windText.LayoutTransform = new RotateTransform(180.0);
             scoreText.LayoutTransform = new RotateTransform(180.0);
+            nameText.LayoutTransform = new RotateTransform(180.0);
         }
 
         public bool changePointsByAmount(int c)
@@ -169,12 +173,14 @@ namespace mahjongNEA
         public void glow()
         {
             indicatorBar.BorderBrush = Brushes.Red;
+            indicatorBar.Background = Brushes.Aqua;
             indicatorBar.BorderThickness = new Thickness(1.5);
         }
 
         public void unglow()
         {
             indicatorBar.BorderBrush = Brushes.Black;
+            indicatorBar.Background = Brushes.Transparent;
             indicatorBar.BorderThickness = new Thickness(0.5);
         }
 

@@ -20,7 +20,7 @@ namespace mahjongNEA
         private EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
         public StackPanel actionButtons;
 
-        public UserPlayer(int wind, int points, UIElement actionButtons, int pWind) : base(wind, points, pWind)
+        public UserPlayer(int wind, int points, UIElement actionButtons, int pWind, string n) : base(wind, points, pWind, n)
         {
             InitializeComponent();
             this.actionButtons = (StackPanel)actionButtons;

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:mahjongNEA"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid x:Name="main">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5*"/>
@@ -20,6 +20,28 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="2" Grid.Column="1" x:Name="usernameGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Foreground="Gray" VerticalAlignment="Bottom" Grid.ColumnSpan="2"
+                       Grid.Row="1" FontSize="25">Enter Player Name: </TextBlock>
+            <TextBox Grid.Row="2" FontSize="25" x:Name="usernameBox" Grid.ColumnSpan="2"
+                     DataObject.Pasting="usernameBox_Pasting"
+                     PreviewTextInput="usernameBox_PreviewTextInput"
+                     PreviewKeyDown="usernameBox_PreviewKeyDown"
+                     VerticalContentAlignment="Center"/>
+            <Button x:Name="OKButton" Click="OKButton_Click" Grid.Row="3" Grid.Column="1"
+                    Content="OK" FontSize="25"/>
+        </Grid>
         <StackPanel x:Name="userActionButtons" Grid.Column="1" Grid.Row="3"
                     Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <Grid x:Name="leftPlayerGrid" Grid.Row="1" Grid.Column="0"
