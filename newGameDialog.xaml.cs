@@ -20,7 +20,7 @@ namespace mahjongNEA
     /// </summary>
     public partial class newGameDialog : Window
     {
-        private static Regex numbersOnlyRegex = new Regex("[0-9]+");
+        private static Regex numbersOnlyRegex = new Regex(@"^-{0}\d+$");
         public static int sPoints = 15000;
         public static int ePoints = 30000;
         public static int pWind = 0;

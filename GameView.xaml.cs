@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 using System.Windows.Threading;
+using System.IO;
 
 
 //TODO:
@@ -32,6 +33,7 @@ namespace mahjongNEA
     public partial class GameView : UserControl
     {
         public bool messyDiscard;
+        private string username;
         private Action lastAction;
         public static Random rng = new Random();
         public int prevailingWind { get; private set; }
@@ -76,6 +78,13 @@ namespace mahjongNEA
 
         private void setUpGame()
         {
+            using (StreamReader sr = new StreamReader("startupcheck.txt"))
+            {
+                sr.ReadLine();
+                username = sr.ReadLine();
+            }
+            Username u = new Username(username);
+            u.show
             discardedTiles.Clear();
             discardPanel.Children.Clear();
             userPlayerGrid.Children.Clear();
