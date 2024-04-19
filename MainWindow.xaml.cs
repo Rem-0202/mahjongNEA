@@ -131,7 +131,7 @@ namespace mahjongNEA
                     displayGrid.Children.Add(g);
                     restartButton.Visibility = Visibility.Visible;
                     restartButton.IsEnabled = true;
-                    //g.gameLoop();
+                    exposeTileToggle.IsChecked = false;
                     break;
                 case false:
                     break;
@@ -145,6 +145,9 @@ namespace mahjongNEA
             g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
+            exposeTileToggle.Checked -= ExposeTileMenuItem_Checked;
+            exposeTileToggle.IsChecked = false;
+            exposeTileToggle.Checked += ExposeTileMenuItem_Checked;
         }
 
         private void ExposeTileMenuItem_Checked(object sender, RoutedEventArgs e)
@@ -163,5 +166,7 @@ namespace mahjongNEA
             WaitForEvent(ewh);
             etw.Close();
         }
+
+
     }
 }

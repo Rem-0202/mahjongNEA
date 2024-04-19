@@ -316,11 +316,7 @@ namespace mahjongNEA
                 }
             }
             maxTileNum = 0;
-            if (noneActionImprovingTileScores[1] == lowestShanten)
-            {
-                improvingTileCount[ats.Count] = noneActionImprovingTileScores[0];
-            }
-            else if (noneActionImprovingTileScores[1] < lowestShanten)
+            if (noneActionImprovingTileScores[1] < lowestShanten)
             {
                 return new Action(0);
             }
@@ -331,7 +327,7 @@ namespace mahjongNEA
                     maxTileNum = i;
                 }
             }
-            ats.Add(new Action(0));
+            //ats.Add(new Action(0));
             return ats[maxTileNum];
         }
 

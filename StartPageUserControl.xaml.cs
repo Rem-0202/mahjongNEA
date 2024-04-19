@@ -28,9 +28,11 @@ namespace mahjongNEA
         {
             InitializeComponent();
             string firstStartUp;
+            string tempusername;
             using (StreamReader sr = new StreamReader("startupcheck.txt"))
             {
                 firstStartUp = sr.ReadLine();
+                tempusername = sr.ReadLine();
                 if (firstStartUp == "true")
                 {
                     startButton.Content = "Start Tutorial";
@@ -41,6 +43,7 @@ namespace mahjongNEA
             using (StreamWriter sw = new StreamWriter("startupcheck.txt"))
             {
                 sw.WriteLine("false");
+                sw.WriteLine(tempusername);
             }
         }
 

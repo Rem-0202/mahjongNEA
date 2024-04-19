@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mahjongNEA"
         mc:Ignorable="d"
-        Title="WinWindow" Height="450" Width="800">
+        Title="WinDow" Height="450" Width="800">
     <Border BorderBrush="Black" BorderThickness="1"
                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
         <Grid>
@@ -61,7 +61,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.7*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -74,17 +74,17 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="Prevailing Wind: " Grid.Row="1" Grid.Column="0" 
                                Grid.ColumnSpan="2" FontSize="14"
-                               HorizontalAlignment="Center"
+                               HorizontalAlignment="Left" Margin="6,0,0,0"
                                VerticalAlignment="Center"/>
                     <Separator Grid.Row="2" Grid.ColumnSpan="3"></Separator>
                     <TextBlock Text="Player Wind: " Grid.Row="3" Grid.Column="0"
                                Grid.ColumnSpan="2" FontSize="14"
-                               HorizontalAlignment="Center"
+                               HorizontalAlignment="Left" Margin="6,0,0,0"
                                VerticalAlignment="Center"/>
                     <Separator Grid.Row="4" Grid.ColumnSpan="3"></Separator>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Points:"
-                               HorizontalAlignment="Center" FontSize="14"
-                               VerticalAlignment="Center"></TextBlock>
+                               HorizontalAlignment="Left" FontSize="14"
+                               VerticalAlignment="Center" Margin="6,0,0,0"/>
                     <TextBlock Grid.Row="1" Grid.Column="2" FontSize="14"
                                HorizontalAlignment="Center" x:Name="pWindTB"
                                VerticalAlignment="Center"/>

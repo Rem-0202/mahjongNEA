@@ -48,6 +48,7 @@ namespace mahjongNEA
         private bool exposedTile = false;
         private List<Tile> discardedTiles = new List<Tile>();
         private bool lastDiscard = false;
+        private string tempStartup;
         public GameView(int prevailingWind, int playerWind, int startingPoints, int endingPoints)
         {
             InitializeComponent();
@@ -55,7 +56,12 @@ namespace mahjongNEA
             this.prevailingWind = prevailingWind;
             this.startingPoints = startingPoints;
             this.endingPoints = endingPoints;
-
+            using (StreamReader sr = new StreamReader("startupcheck.txt"))
+            {
+                tempStartup = sr.ReadLine();
+                username = sr.ReadLine();
+            }
+            usernameBox.Text = username;
             //code for showing discarded tiles, change later when implemented discard and add removing from discarded pile
             //TODO: add discarded pile list, unlink tile with grid and link grid with discarded tile list
             //TODO: change so that random placement + stack on top each other
@@ -80,9 +86,14 @@ namespace mahjongNEA
 
         private void setNames()
         {
-            if (usernameBox.Text.Length > 0 && usernameBox.Text.Length < 20 && usernameBox.Text.Trim() != "")
+            if (usernameBox.Text.Length > 0 && usernameBox.Text.Length < 25)
             {
-                username = (string)usernameBox.Text;
+                username = usernameBox.Text;
+                using (StreamWriter sw = new StreamWriter("startupcheck.txt"))
+                {
+                    sw.WriteLine(tempStartup);
+                    sw.WriteLine(username);
+                }
                 players = new Player[4];
                 players[playerWind % 4] = new UserPlayer(playerWind, startingPoints, userActionButtons, prevailingWind, username);
                 players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints, prevailingWind, "CPU 1");
@@ -92,6 +103,10 @@ namespace mahjongNEA
                 main.Children.Remove(usernameGrid);
                 setUpGame();
                 gameLoop();
+            }
+            else
+            {
+                MessageBox.Show("Username must be between 1 to 25 characters long!");
             }
         }
 
@@ -239,6 +254,7 @@ namespace mahjongNEA
                             endTurn = true;
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
                             WinWindow ww = new WinWindow(prevailingWind, playerIndex, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                            if (!exposedTile) toggleExposeTiles();
                             ww.ShowDialog();
                             break;
                         }
@@ -298,6 +314,7 @@ namespace mahjongNEA
                                     }
                                     HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
                                     WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                                    if (!exposedTile) toggleExposeTiles();
                                     ww.ShowDialog();
                                     break;
                                 }
@@ -334,6 +351,7 @@ namespace mahjongNEA
                             }
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
                             WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                            if (!exposedTile) toggleExposeTiles();
                             ww.ShowDialog();
                             break;
                         case 4:
@@ -430,6 +448,7 @@ namespace mahjongNEA
                         dt.Stop();
                     }
                 } while (!endTurn);
+                endTurn = false;
                 foreach (Player p in players)
                 {
                     if (p.points >= endingPoints)
@@ -471,5 +490,13 @@ namespace mahjongNEA
             }).Start();
             Dispatcher.PushFrame(frame);
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            usernameBox.Focus();
+            usernameBox.SelectAll();
+        }
+
+
     }
 }

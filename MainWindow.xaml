@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mahjongNEA"
         mc:Ignorable="d"
-        Title="Mahcheung" Height="450" Width="800">
+        Title="Mahjong" Height="450" Width="800">
     <Grid x:Name="overallGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
