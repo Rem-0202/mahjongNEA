@@ -253,7 +253,7 @@ namespace mahjongNEA
                         {
                             endTurn = true;
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
                             if (!exposedTile) toggleExposeTiles();
                             ww.ShowDialog();
                             break;
@@ -313,7 +313,7 @@ namespace mahjongNEA
                                         currentPlayer.toggleExposeTile();
                                     }
                                     HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
                                     if (!exposedTile) toggleExposeTiles();
                                     ww.ShowDialog();
                                     break;
@@ -353,7 +353,7 @@ namespace mahjongNEA
                             discardPanel.Children.Remove(lastAction.representingTile);
                             currentPlayer.addTile(lastAction.representingTile);
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
                             if (!exposedTile) toggleExposeTiles();
                             ww.ShowDialog();
                             break;

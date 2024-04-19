@@ -19,6 +19,7 @@ namespace mahjongNEA
         private int faan;
         private string tileString;
         private string fullTileString;
+        public List<Tile> tempFullTS;
         public Dictionary<string, int> faanPairs;
 
         public HandCheck(List<Tile> ts, List<Action> walledTS, List<Tile> bonuses, bool selfDrawn, int roundWind, int selfWind)
@@ -38,7 +39,7 @@ namespace mahjongNEA
                 tileString += t.tileID;
             }
             fullTileString = "";
-            List<Tile> tempFullTS = new List<Tile>();
+            tempFullTS = new List<Tile>();
             tempFullTS.AddRange(ts);
             foreach (Action a in walledTS)
             {

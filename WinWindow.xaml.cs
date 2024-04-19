@@ -31,13 +31,6 @@ namespace mahjongNEA
             {
                 tileDisplay.Children.Add(Tile.stringToTile(t.tileID));
             }
-            foreach (Action a in walledGroups)
-            {
-                foreach (Tile t in a.allTiles)
-                {
-                    tileDisplay.Children.Add(new Tile(t.rank, t.suit, false));
-                }
-            }
             for (int i = 0; i < faanPairs.Keys.Count; i++)
             {
                 TextBlock tb = new TextBlock();
