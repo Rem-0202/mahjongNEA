@@ -320,6 +320,10 @@ namespace mahjongNEA
             {
                 return new Action(0);
             }
+            //else if (noneActionImprovingTileScores[1] == lowestShanten)
+            //{
+            //    improvingTileCount[improvingTileCount.Length - 1] = noneActionImprovingTileScores[0] - 120;
+            //}
             for (int i = 1; i < improvingTileCount.Length; i++)
             {
                 if (improvingTileCount[maxTileNum] < improvingTileCount[i])
@@ -327,7 +331,7 @@ namespace mahjongNEA
                     maxTileNum = i;
                 }
             }
-            //ats.Add(new Action(0));
+            ats.Add(new Action(0));
             return ats[maxTileNum];
         }
 

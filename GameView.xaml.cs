@@ -349,6 +349,9 @@ namespace mahjongNEA
                                     currentPlayer.toggleExposeTile();
                                 }
                             }
+                            discardedTiles.Remove(lastAction.representingTile);
+                            discardPanel.Children.Remove(lastAction.representingTile);
+                            currentPlayer.addTile(lastAction.representingTile);
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
                             WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, currentPlayer.ownTiles, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
                             if (!exposedTile) toggleExposeTiles();

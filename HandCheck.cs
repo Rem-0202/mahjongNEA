@@ -25,7 +25,6 @@ namespace mahjongNEA
         {
             List<Tile> tempTS = new List<Tile>();
             tempTS.AddRange(ts);
-            Analysis.sortTiles(ref tempTS);
             this.ts = tempTS;
             this.walledTS = walledTS;
             this.bonuses = bonuses;
@@ -45,6 +44,7 @@ namespace mahjongNEA
             {
                 tempFullTS.AddRange(a.allTiles);
             }
+            Analysis.sortTiles(ref tempTS);
             Analysis.sortTiles(ref tempFullTS);
             foreach (Tile t in tempFullTS)
             {
