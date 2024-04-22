@@ -115,33 +115,73 @@ namespace mahjongNEA
             {
                 if (a.typeOfAction != 2)
                 {
-                    b = false;
+                    return false;
                 }
             }
-            bool removed = true;
+            Regex removeHonourPair = new Regex(@"([2-8])z\1");
+            MatchCollection mc = removeHonourPair.Matches(fullTileString);
+            if (mc.Count > 1 || (mc.Count == 0 && fullTileString.Contains('z'))) return false;
             List<Tile> tempTS = new List<Tile>();
             tempTS.AddRange(ts);
-            while (removed)
+            Dictionary<string, int> numTiles = new Dictionary<string, int>();
+            foreach (Tile t in tempTS)
             {
-                removed = false;
-                for (int i = 0; i < ts.Count - 2; i++)
+                if (!numTiles.ContainsKey(t.tileID)) numTiles.Add(t.tileID, 1); else numTiles[t.tileID]++;
+            }
+            string current;
+            string previous1;
+            string previous2;
+            int i = numTiles.Count;
+            do
+            {
+                i = Math.Min(numTiles.Count - 1, i - 1);
+                while (numTiles.Values.ElementAt(i) % 2 != 0)
                 {
-                    for (int j = i; i < ts.Count - 1; i++)
+                    current = numTiles.Keys.ElementAt(i);
+                    if (!(current[0] == '2' || current[0] == '1'))
                     {
-                        for (int k = j; i < ts.Count; i++)
+                        previous1 = (Convert.ToInt32(current[0].ToString()) - 1).ToString() + current[1];
+                        previous2 = (Convert.ToInt32(current[0].ToString()) - 2).ToString() + current[1];
+                        if (numTiles.ContainsKey(previous1) && numTiles.ContainsKey(previous2))
                         {
-                            if (Analysis.isChow(tempTS[i], tempTS[j], tempTS[k]))
-                            {
-                                removed = true;
-                                tempTS.RemoveAt(i);
-                                tempTS.RemoveAt(j);
-                                tempTS.RemoveAt(k);
-                            }
+                            numTiles[current]--;
+                            numTiles[previous1]--;
+                            numTiles[previous2]--;
+                            if (numTiles[current] == 0) numTiles.Remove(current);
+                            if (numTiles[previous1] == 0) numTiles.Remove(previous1);
+                            if (numTiles[previous2] == 0) numTiles.Remove(previous2);
                         }
+                        else break;
+                    }
+                    if (numTiles.Count - 1 < i) break;
+                }
+            } while (i > 0);
+            i = numTiles.Count;
+            if (numTiles.Count == 1 && numTiles[numTiles.Keys.ElementAt(numTiles.Count - 1)] == 2) return true;
+            do
+            {
+                i = Math.Min(numTiles.Count - 1, i - 1);
+                while (numTiles.Count > i && numTiles.Count != 1)
+                {
+                    current = numTiles.Keys.ElementAt(i);
+                    if (!(current[0] == '2' || current[0] == '1'))
+                    {
+                        previous1 = (Convert.ToInt32(current[0].ToString()) - 1).ToString() + current[1];
+                        previous2 = (Convert.ToInt32(current[0].ToString()) - 2).ToString() + current[1];
+                        if (numTiles.ContainsKey(previous1) && numTiles.ContainsKey(previous2))
+                        {
+                            numTiles[current]--;
+                            numTiles[previous1]--;
+                            numTiles[previous2]--;
+                            if (numTiles[current] == 0) numTiles.Remove(current);
+                            if (numTiles[previous1] == 0) numTiles.Remove(previous1);
+                            if (numTiles[previous2] == 0) numTiles.Remove(previous2);
+                        }
+                        else break;
                     }
                 }
-            }
-            return tempTS.Count == 2 && tempTS[0] == tempTS[1] && b;
+            } while (i > 0);
+            return numTiles.Count == 1 && numTiles[numTiles.Keys.ElementAt(numTiles.Count - 1)] == 2;
         }
         private bool selfPick() => selfDrawn;
         private int honour()
