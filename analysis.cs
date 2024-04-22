@@ -14,7 +14,7 @@ namespace mahjongNEA
         public static int safety = 5;
         public static int offensiveSuit = 30;
         public static int offensiveWind = 3;
-        private static int differentSpecialTiles(List<Tile> ownTiles)
+        public static int differentSpecialTiles(List<Tile> ownTiles)
         {
             int s = 0;
             List<Tile> temp = new List<Tile>();
@@ -32,7 +32,7 @@ namespace mahjongNEA
             return s;
         }
 
-        private static int specialTiles(List<Tile> ownTiles)
+        public static int specialTiles(List<Tile> ownTiles)
         {
             int s = 0;
             foreach (Tile t in ownTiles)

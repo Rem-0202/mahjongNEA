@@ -74,19 +74,22 @@ namespace mahjongNEA
                 if (smallBonus()) faanPairs.Add("Small Bonus", 3);
                 if (bonusSeries()) faanPairs.Add("Bonus Series", 2);
                 if (thirteenOrphans()) faanPairs.Add("Thirteen Orphans", 13);
+                else if (mixedOrphan()) faanPairs.Add("Mixed Orphan", 1);
                 if (allKongs()) faanPairs.Add("All Kongs", 13);
                 if (greatWinds()) faanPairs.Add("Great Winds", 13);
                 if (allHonours()) faanPairs.Add("All Honours", 10);
                 if (orphans()) faanPairs.Add("Orphans", 10);
                 if (nineGates()) faanPairs.Add("Nine Gates", 10);
-                if (triplets()) faanPairs.Add("Triplets", 3);
-                if (selftriplets()) faanPairs.Add("Self Triplets", 8);
+                if (triplets())
+                {
+                    if (closedHand()) faanPairs.Add("Self Triplets", 8);
+                    else faanPairs.Add("Triplets", 3);
+                }
                 if (greatDragons()) faanPairs.Add("Great Dragons", 5);
                 if (allOneSuit()) faanPairs.Add("All One Suit", 7);
                 if (smallWinds()) faanPairs.Add("Small Winds", 3);
                 if (smallDragons()) faanPairs.Add("Small Dragons", 3);
                 if (mixedOneSuit()) faanPairs.Add("Mixed One Suit", 3);
-                if (mixedOrphan()) faanPairs.Add("Mixed Orphan", 1);
                 if (noBonuses()) faanPairs.Add("No Bonuses", 1);
                 if (commonHand()) faanPairs.Add("Common Hand", 1);
                 if (selfPick()) faanPairs.Add("Self Pick", 1);
@@ -118,9 +121,12 @@ namespace mahjongNEA
                     return false;
                 }
             }
-            Regex removeHonourPair = new Regex(@"([2-8])z\1");
-            MatchCollection mc = removeHonourPair.Matches(fullTileString);
+            Regex removeHonour = new Regex(@"([2-8]z)\1");
+            MatchCollection mc = removeHonour.Matches(fullTileString);
             if (mc.Count > 1 || (mc.Count == 0 && fullTileString.Contains('z'))) return false;
+            removeHonour = new Regex(@"([2-8]z)\1\1");
+            mc = removeHonour.Matches(fullTileString);
+            if (mc.Count != 0) return false;
             List<Tile> tempTS = new List<Tile>();
             tempTS.AddRange(ts);
             Dictionary<string, int> numTiles = new Dictionary<string, int>();
@@ -365,8 +371,10 @@ namespace mahjongNEA
         #region 13faan
         private bool thirteenOrphans()
         {
-            Regex thirteenOrphanRegex = new Regex(@"[1m]{1,2}[9m]{1,2}[1p]{1,2}[9p]{1,2}[1s]{1,2}[9s]{1,2}[2z]{1,2}[3z]{1,2}[4z]{1,2}[5z]{1,2}[6z]{1,2}[7z]{1,2}[8z]{1,2}");
-            return thirteenOrphanRegex.IsMatch(fullTileString) && fullTileString.Length == 28;
+            int uniqueSpecialCount = Analysis.differentSpecialTiles(ts);
+            int specialCount = Analysis.specialTiles(ts);
+            int s = 13 - uniqueSpecialCount - (specialCount > uniqueSpecialCount ? 1 : 0);
+            return s == -1;
         }
         private bool allKongs() => fullTileString.Length == 36;
         private bool greatWinds()
