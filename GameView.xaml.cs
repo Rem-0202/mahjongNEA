@@ -152,7 +152,7 @@ namespace mahjongNEA
                     tempPlayers[Array.IndexOf(players, p)] = new UserPlayer(p.wind, p.points, userActionButtons, p.pWind, p.name);
                 }
             }
-            unExposeTiles();
+            if (exposedTile) exposeTiles(); else unExposeTiles();
             players = tempPlayers;
             userPlayerGrid.Children.Add(players[playerWind % 4]);
             rightPlayerGrid.Children.Add(players[(playerWind + 1) % 4]);
@@ -199,27 +199,36 @@ namespace mahjongNEA
 
         public void toggleSort()
         {
-            foreach (Player p in players)
+            if (players != null)
             {
-                p.sortTiles();
+                foreach (Player p in players)
+                {
+                    p.sortTiles();
+                }
             }
         }
 
         public void exposeTiles()
         {
             exposedTile = true;
-            foreach (Player p in players)
+            if (players != null)
             {
-                p.exposeTile();
+                foreach (Player p in players)
+                {
+                    p.exposeTile();
+                }
             }
         }
 
         public void unExposeTiles()
         {
             exposedTile = false;
-            foreach (Player p in players)
+            if (players != null)
             {
-                p.unExposeTile();
+                foreach (Player p in players)
+                {
+                    p.unExposeTile();
+                }
             }
         }
 
