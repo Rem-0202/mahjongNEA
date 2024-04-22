@@ -175,23 +175,6 @@ namespace mahjongNEA
 
         public static int[] getImprovingTileScores(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
-            //Dictionary<char, int> suitScores = new Dictionary<char, int>();
-            //suitScores.Add('m', 0);
-            //suitScores.Add('s', 0);
-            //suitScores.Add('p', 0);
-            //foreach (Tile t in ts)
-            //{
-            //    if (suitScores.ContainsKey(t.suit)) suitScores[t.suit] += 1;
-            //}
-            //int bestSuitScore = Math.Max(Math.Max(suitScores['m'], suitScores['s']), suitScores['p']);
-            //char bestSuit = 'm';
-            //foreach (char x in suitScores.Keys)
-            //{
-            //    if (suitScores[x] == bestSuitScore)
-            //    {
-            //        bestSuit = x;
-            //    }
-            //}
             List<Tile> originalCopy = new List<Tile>();
             originalCopy.AddRange(ts);
             int oShanten = countShanten(originalCopy, k);
@@ -214,20 +197,11 @@ namespace mahjongNEA
                 }
             }
 
-            ////defensive play
-            //for (int i = 0; i < neededTileScore.Length; i++)
-            //{
-            //    neededTileScore[i] -= (tileCount[ts[i].tileID] - 1) * safety;
-            //}
-
-            ////OffensivePlay: best suit + winds
-            //for (int i = 0; i < neededTileScore.Length; i++)
-            //{
-            //    if (ts[i].suit == bestSuit)
-            //    {
-            //        neededTileScore[i] -= offensiveSuit;
-            //    }
-            //}
+            //code for defensive play
+            for (int i = 0; i < neededTileScore.Length; i++)
+            {
+                neededTileScore[i] -= (tileCount[ts[i].tileID] - 1) * safety;
+            }
             return neededTileScore;
         }
 
@@ -320,10 +294,6 @@ namespace mahjongNEA
             {
                 return new Action(0);
             }
-            //else if (noneActionImprovingTileScores[1] == lowestShanten)
-            //{
-            //    improvingTileCount[improvingTileCount.Length - 1] = noneActionImprovingTileScores[0] - 120;
-            //}
             for (int i = 1; i < improvingTileCount.Length; i++)
             {
                 if (improvingTileCount[maxTileNum] < improvingTileCount[i])

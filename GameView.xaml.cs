@@ -62,21 +62,6 @@ namespace mahjongNEA
                 username = sr.ReadLine();
             }
             usernameBox.Text = username;
-            //code for showing discarded tiles, change later when implemented discard and add removing from discarded pile
-            //TODO: add discarded pile list, unlink tile with grid and link grid with discarded tile list
-            //TODO: change so that random placement + stack on top each other
-            //for (int column = 0; column < 12; column++)
-            //{
-            //    for (int row = 0; row < 7; row++)
-            //    {
-            //        Tile n = availableTiles[rng.Next(availableTiles.Count)];
-            //        n.LayoutTransform = new RotateTransform(rng.NextDouble() * 360);
-            //        Grid.SetRow(n, row);
-            //        Grid.SetColumn(n, column);
-            //        availableTiles.Remove(n);
-            //        messyDiscardGrid.Children.Add(n);
-            //    }
-            //}
         }
 
         private void usernameBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -308,7 +293,6 @@ namespace mahjongNEA
                         lastDiscard = true;
                         if (maxChoice == 4)
                         {
-                            //handle end turn
                             MessageBox.Show("No tiles left. Ending turn.");
                             endTurn = true;
                             break;

@@ -162,7 +162,6 @@ namespace mahjongNEA
             at.Start();
             WaitForEvent(ewh);
             return lastAction;
-            //temp return to avoid crashing for testing
         }
 
         public override void updateTileDisplay()

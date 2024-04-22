@@ -28,7 +28,6 @@
                 <Separator/>
                 <MenuItem Header="Analysis _Mode"/>
             </MenuItem>
-            <!-- add messy discard option off by default -->
             <MenuItem Header="_Help" Margin="0,0,5,0">
                 <MenuItem Header="Help _Documents" Click="MenuItem_Help_Click"/>
                 <MenuItem Header="_Redo Tutorial" Click="MenuItem_RedoTutorial_Click"/>
