@@ -152,11 +152,7 @@ namespace mahjongNEA
                     tempPlayers[Array.IndexOf(players, p)] = new UserPlayer(p.wind, p.points, userActionButtons, p.pWind, p.name);
                 }
             }
-            if (exposedTile)
-            {
-                exposedTile = false;
-                toggleExposeTiles();
-            }
+            unExposeTiles();
             players = tempPlayers;
             userPlayerGrid.Children.Add(players[playerWind % 4]);
             rightPlayerGrid.Children.Add(players[(playerWind + 1) % 4]);
@@ -209,12 +205,21 @@ namespace mahjongNEA
             }
         }
 
-        public void toggleExposeTiles()
+        public void exposeTiles()
         {
-            exposedTile = !exposedTile;
+            exposedTile = true;
             foreach (Player p in players)
             {
-                p.toggleExposeTile();
+                p.exposeTile();
+            }
+        }
+
+        public void unExposeTiles()
+        {
+            exposedTile = false;
+            foreach (Player p in players)
+            {
+                p.unExposeTile();
             }
         }
 
@@ -254,7 +259,7 @@ namespace mahjongNEA
                             endTurn = true;
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
                             WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
-                            if (!exposedTile) toggleExposeTiles();
+                            currentPlayer.exposeTile();
                             ww.ShowDialog();
                             break;
                         }
@@ -308,13 +313,9 @@ namespace mahjongNEA
                                 if (lastAction.typeOfAction == 5)
                                 {
                                     endTurn = true;
-                                    if (currentPlayer is ComputerPlayer)
-                                    {
-                                        currentPlayer.toggleExposeTile();
-                                    }
+                                    currentPlayer.exposeTile();
                                     HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
                                     WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
-                                    if (!exposedTile) toggleExposeTiles();
                                     ww.ShowDialog();
                                     break;
                                 }
@@ -342,19 +343,12 @@ namespace mahjongNEA
                         case 5:
                             currentPlayer = playerActions.First(e => e.Value.typeOfAction == 5).Key;
                             endTurn = true;
-                            if (currentPlayer is ComputerPlayer)
-                            {
-                                if (!currentPlayer.exposeAllTiles)
-                                {
-                                    currentPlayer.toggleExposeTile();
-                                }
-                            }
+                            currentPlayer.exposeTile();
                             discardedTiles.Remove(lastAction.representingTile);
                             discardPanel.Children.Remove(lastAction.representingTile);
                             currentPlayer.addTile(lastAction.representingTile);
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
                             WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
-                            if (!exposedTile) toggleExposeTiles();
                             ww.ShowDialog();
                             break;
                         case 4:

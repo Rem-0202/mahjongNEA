@@ -91,9 +91,15 @@ namespace mahjongNEA
             Dispatcher.PushFrame(frame);
         }
 
-        public void toggleExposeTile()
+        public void exposeTile()
         {
-            exposeAllTiles = !exposeAllTiles;
+            exposeAllTiles = true;
+            updateTileDisplay();
+        }
+
+        public void unExposeTile()
+        {
+            exposeAllTiles = false;
             updateTileDisplay();
         }
 

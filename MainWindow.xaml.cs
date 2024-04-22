@@ -154,7 +154,15 @@ namespace mahjongNEA
         {
             if (g != null)
             {
-                g.toggleExposeTiles();
+                g.exposeTiles();
+            }
+        }
+
+        private void ExposeTileMenuItem_unChecked(object sender, RoutedEventArgs e)
+        {
+            if (g != null)
+            {
+                g.unExposeTiles();
             }
         }
 

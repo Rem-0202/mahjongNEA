@@ -71,24 +71,27 @@ namespace mahjongNEA
                 faanPairs.Add("Honours", honour());
                 faanPairs.Add("Bonuses", windBonus());
                 if (greatBonus()) faanPairs.Add("Great Bonus", 8);
-                if (smallBonus()) faanPairs.Add("Small Bonus", 3);
-                if (bonusSeries()) faanPairs.Add("Bonus Series", 2);
+                else if (smallBonus()) faanPairs.Add("Small Bonus", 3);
+                else if (bonusSeries()) faanPairs.Add("Bonus Series", 2);
                 if (thirteenOrphans()) faanPairs.Add("Thirteen Orphans", 13);
                 else if (mixedOrphan()) faanPairs.Add("Mixed Orphan", 1);
-                if (allKongs()) faanPairs.Add("All Kongs", 13);
-                if (greatWinds()) faanPairs.Add("Great Winds", 13);
-                if (allHonours()) faanPairs.Add("All Honours", 10);
                 if (orphans()) faanPairs.Add("Orphans", 10);
-                if (nineGates()) faanPairs.Add("Nine Gates", 10);
-                if (triplets())
+                if (allKongs()) faanPairs.Add("All Kongs", 13);
+                else if (triplets())
                 {
                     if (closedHand()) faanPairs.Add("Self Triplets", 8);
                     else faanPairs.Add("Triplets", 3);
                 }
+                if (greatWinds()) faanPairs.Add("Great Winds", 13);
+                else if (smallWinds()) faanPairs.Add("Small Winds", 3);
+                if (allOneSuit())
+                {
+                    if (nineGates()) faanPairs.Add("Nine Gates", 10);
+                    else if (fullTileString.Contains('z')) faanPairs.Add("All Honours", 10);
+                    else faanPairs.Add("All One Suit", 7);
+                }
                 if (greatDragons()) faanPairs.Add("Great Dragons", 5);
-                if (allOneSuit()) faanPairs.Add("All One Suit", 7);
-                if (smallWinds()) faanPairs.Add("Small Winds", 3);
-                if (smallDragons()) faanPairs.Add("Small Dragons", 3);
+                else if (smallDragons()) faanPairs.Add("Small Dragons", 3);
                 if (mixedOneSuit()) faanPairs.Add("Mixed One Suit", 3);
                 if (noBonuses()) faanPairs.Add("No Bonuses", 1);
                 if (commonHand()) faanPairs.Add("Common Hand", 1);
@@ -326,37 +329,10 @@ namespace mahjongNEA
 
         #region 8faan
         private bool greatBonus() => bonuses.Count == 8;
-        private bool selftriplets()
-        {
-            bool b = triplets();
-            return b && closedHand();
-        }
         private bool greatDragons() => new Regex(@"(([6-8]z)\2\2\2?)").Matches(fullTileString).Count == 3;
         #endregion
 
         #region 10faan
-        private bool allHonours()
-        {
-            string distinctSuits = "";
-            foreach (Tile t in ts)
-            {
-                if (!distinctSuits.Contains(t.suit))
-                {
-                    distinctSuits += t.suit;
-                }
-            }
-            foreach (Action a in walledTS)
-            {
-                foreach (Tile t in a.allTiles)
-                {
-                    if (!distinctSuits.Contains(t.suit))
-                    {
-                        distinctSuits += t.suit;
-                    }
-                }
-            }
-            return distinctSuits == "z";
-        }
         private bool orphans() => !new Regex(@"([2-8][spmz])").IsMatch(fullTileString);
         private bool nineGates()
         {
@@ -364,7 +340,7 @@ namespace mahjongNEA
             string tileStringCopy = $"{tileString}";
             Regex removeSuitRegex = new Regex(@"([mspz])");
             tileStringCopy = removeSuitRegex.Replace(tileStringCopy, "");
-            return nineGatesRegex.IsMatch(tileStringCopy) && tileStringCopy.Length == 14 && allOneSuit();
+            return nineGatesRegex.IsMatch(tileStringCopy) && tileStringCopy.Length == 14;
         }
         #endregion
 

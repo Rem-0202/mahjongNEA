@@ -23,9 +23,8 @@
                 <MenuItem Header="_Auto Sort" IsCheckable="True" IsChecked="True"
                           StaysOpenOnClick="True" Checked="autoSortChecked"
                           Unchecked="autoSortUnchecked"/>
-                <MenuItem Header="_Expose all tiles" IsCheckable="True" x:Name="exposeTileToggle"
-                          StaysOpenOnClick="True" Checked="ExposeTileMenuItem_Checked"
-                          Unchecked="ExposeTileMenuItem_Checked"/>
+                <MenuItem Header="_Toggle expose all tiles" x:Name="exposeTileToggle" Checked="ExposeTileMenuItem_Checked"
+                          Unchecked="ExposeTileMenuItem_unChecked" IsCheckable="True" StaysOpenOnClick="True"/>
                 <Separator/>
                 <MenuItem Header="Analysis _Mode"/>
             </MenuItem>
