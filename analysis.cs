@@ -20,13 +20,10 @@ namespace mahjongNEA
             List<Tile> temp = new List<Tile>();
             foreach (Tile t in ownTiles)
             {
-                if (t.special)
+                if (t.special && !temp.Contains(t))
                 {
-                    if (!temp.Contains(t))
-                    {
-                        s++;
-                        temp.Add(t);
-                    }
+                    s++;
+                    temp.Add(t);
                 }
             }
             return s;
@@ -322,6 +319,12 @@ namespace mahjongNEA
                 }
                 return ts;
             }
+        }
+
+        public static int faanToScore(int faan, bool selfDrawn)
+        {
+            int[] converter = { 100, 200, 400, 800, 1600, 2400, 3200, 4800, 6400, 9600, 12800, 19200, 25600, 38400 };
+            return converter[Math.Min(faan, 13)] * (selfDrawn ? 3 : 2) / 2;
         }
 
         // Standard shanten: 8-2g-t-p

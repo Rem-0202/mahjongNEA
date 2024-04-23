@@ -252,7 +252,7 @@ namespace mahjongNEA
                         {
                             endTurn = true;
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, Analysis.faanToScore(h.faan, true), currentPlayer.actionsDone, currentPlayer.name);
                             currentPlayer.exposeTile();
                             ww.ShowDialog();
                             break;
@@ -308,7 +308,7 @@ namespace mahjongNEA
                                     endTurn = true;
                                     currentPlayer.exposeTile();
                                     HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, Analysis.faanToScore(h.faan, true), currentPlayer.actionsDone, currentPlayer.name);
                                     ww.ShowDialog();
                                     break;
                                 }
@@ -341,7 +341,10 @@ namespace mahjongNEA
                             discardPanel.Children.Remove(lastAction.representingTile);
                             currentPlayer.addTile(lastAction.representingTile);
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, 1000, currentPlayer.actionsDone, currentPlayer.name);
+                            int score = Analysis.faanToScore(h.faan, false);
+                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
+                            currentPlayer.changePointsByAmount(score);
+                            //DEDUCT FROM OTHER PLAYERS
                             ww.ShowDialog();
                             break;
                         case 4:

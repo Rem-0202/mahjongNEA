@@ -16,7 +16,7 @@ namespace mahjongNEA
         private bool selfDrawn;
         private int roundWind;
         private int selfWind;
-        private int faan;
+        public int faan;
         private string tileString;
         private string fullTileString;
         public List<Tile> tempFullTS;
