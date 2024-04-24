@@ -210,8 +210,10 @@ namespace mahjongNEA
             bool endGame = false;
             int playerIndex = prevailingWind;
             int maxChoice;
-            DispatcherTimer dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(1);
+            DispatcherTimer dt = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
             dt.Tick += timer_Tick;
             do
             {
@@ -344,7 +346,7 @@ namespace mahjongNEA
                             score = Analysis.faanToScore(h.faan, false);
                             WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
                             currentPlayer.changePointsByAmount(score);
-                            players[playerIndex].changePointsByAmount(-score);
+                            players[discardedPlayerIndex].changePointsByAmount(-score);
                             ww.ShowDialog();
                             break;
                         case 4:
@@ -456,6 +458,7 @@ namespace mahjongNEA
                     setUpGame();
                 }
             } while (!endGame);
+            ((Panel)Parent).Children.Remove(this);
             //end game screen
         }
 

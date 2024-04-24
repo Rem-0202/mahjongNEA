@@ -51,7 +51,6 @@ namespace mahjongNEA
             TutorialUserControl t = new TutorialUserControl(ewh);
             if (s.tutorial == true)
             {
-                displayGrid.Children.Clear();
                 displayGrid.Children.Add(t);
                 bool end = false;
                 while (!end)
@@ -108,10 +107,7 @@ namespace mahjongNEA
         private void autoSortChecked(object sender, RoutedEventArgs e)
         {
             autoSort = true;
-            if (g != null)
-            {
-                g.toggleSort();
-            }
+            g?.toggleSort();
         }
 
         private void autoSortUnchecked(object sender, RoutedEventArgs e)
@@ -150,18 +146,12 @@ namespace mahjongNEA
 
         private void ExposeTileMenuItem_Checked(object sender, RoutedEventArgs e)
         {
-            if (g != null)
-            {
-                g.exposeTiles();
-            }
+            g?.exposeTiles();
         }
 
         private void ExposeTileMenuItem_unChecked(object sender, RoutedEventArgs e)
         {
-            if (g != null)
-            {
-                g.unExposeTiles();
-            }
+            g?.unExposeTiles();
         }
 
         private void MenuItem_RedoTutorial_Click(object sender, RoutedEventArgs e)
@@ -172,7 +162,5 @@ namespace mahjongNEA
             WaitForEvent(ewh);
             etw.Close();
         }
-
-
     }
 }

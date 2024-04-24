@@ -53,8 +53,7 @@ namespace mahjongNEA
         public override Action getAction(Action a)
         {
             lastAction = null;
-            bool bonusWin = false;
-            bonusWin = bonusTiles.Count == 8 || bonusTiles.Count == 7 && lastTileBonus;
+            bool bonusWin = bonusTiles.Count == 8 || bonusTiles.Count == 7 && lastTileBonus;
             if (a.typeOfAction == 0)
             {
                 List<Tile> tempTS = new List<Tile>();
@@ -84,8 +83,10 @@ namespace mahjongNEA
                             {
                                 if (Analysis.isKong(ownTiles[i], ownTiles[j], ownTiles[k], ownTiles[l]))
                                 {
-                                    List<Action> kongList = new List<Action>();
-                                    kongList.Add(new Action(4, ownTiles[i], new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], ownTiles[l] }));
+                                    List<Action> kongList = new List<Action>
+                                    {
+                                        new Action(4, ownTiles[i], new List<Tile>() { ownTiles[i], ownTiles[k], ownTiles[j], ownTiles[l] })
+                                    };
                                     ActionButton kongButton = new ActionButton(kongList, "Kong", ref actionEWH);
                                     ActionButton skipButton = new ActionButton(ref actionEWH, false);
                                     i = j = k = l = 9999;

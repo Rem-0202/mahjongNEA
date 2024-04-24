@@ -90,6 +90,9 @@
       <DependentUpon>ActionButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ComputerPlayer.cs" />
+    <Compile Include="EndWindow.xaml.cs">
+      <DependentUpon>EndWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExternalTutorialWindow.xaml.cs">
       <DependentUpon>ExternalTutorialWindow.xaml</DependentUpon>
     </Compile>
@@ -166,6 +169,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="EndWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ExternalTutorialWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
