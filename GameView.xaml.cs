@@ -208,18 +208,17 @@ namespace mahjongNEA
             Player currentPlayer;
             bool endTurn = false;
             bool endGame = false;
-            int roundNumber = 0;
             int playerIndex = prevailingWind;
             int maxChoice;
             DispatcherTimer dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromSeconds(1);
+            dt.Tick += timer_Tick;
             do
             {
                 Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
                 currentPlayer = players[playerIndex];
                 lastAction = new Action(0);
                 drawTile(currentPlayer);
-                dt.Interval = TimeSpan.FromSeconds(1);
-                dt.Tick += timer_Tick;
                 do
                 {
                     currentPlayer = players[playerIndex];
@@ -231,7 +230,6 @@ namespace mahjongNEA
                     players[(playerIndex + 1) % 4].nextTurn = true;
                     if (lastAction.typeOfAction == 0)
                     {
-                        roundNumber++;
                         lastAction = currentPlayer.getAction(lastAction);
                         if (lastAction.typeOfAction == 5)
                         {
@@ -272,6 +270,7 @@ namespace mahjongNEA
                         lastAction.representingTile.Margin = new Thickness(6);
                         lastAction.representingTile.glow();
                         discardPanel.Children.Add(lastAction.representingTile);
+                        discardedPlayerIndex = playerIndex;
                     }
                     playerActions.Clear();
                     playerActions.Add(players[(playerIndex + 1) % 4], players[(playerIndex + 1) % 4].getAction(lastAction));
@@ -294,7 +293,6 @@ namespace mahjongNEA
                         {
                             if (lastAction.typeOfAction == 0)
                             {
-                                roundNumber++;
                                 lastAction = currentPlayer.getAction(lastAction);
                                 if (lastAction.typeOfAction == 5)
                                 {
@@ -346,19 +344,7 @@ namespace mahjongNEA
                             score = Analysis.faanToScore(h.faan, false);
                             WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
                             currentPlayer.changePointsByAmount(score);
-
-                            //temp:
-                            foreach (Player p in players)
-                            {
-                                if (p != currentPlayer)
-                                {
-                                    p.changePointsByAmount(-score / 3);
-                                }
-                            }
-                            //tempend
-
-
-                            //DEDUCT FROM OTHER PLAYERS
+                            players[playerIndex].changePointsByAmount(-score);
                             ww.ShowDialog();
                             break;
                         case 4:
@@ -407,6 +393,7 @@ namespace mahjongNEA
                             lastAction = new Action(0);
                             break;
                         case 2:
+                            discardedPlayerIndex = playerIndex;
                             playerIndex = (playerIndex + 1) % 4;
                             currentPlayer = players[playerIndex];
                             Array.ForEach(players, (e) => e.unglow());
@@ -436,6 +423,7 @@ namespace mahjongNEA
                             }
                             break;
                         case 0:
+                            discardedPlayerIndex = playerIndex;
                             playerIndex = (playerIndex + 1) % 4;
                             currentPlayer = players[playerIndex];
                             lastAction = new Action(0);
