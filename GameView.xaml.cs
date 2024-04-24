@@ -1,29 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Threading;
 using System.Windows.Threading;
-using System.IO;
-using System.Text.RegularExpressions;
-
-
-//TODO:
-//1) gameview ask each player for action with input action(last action)
-//2) each player returns their wanted action
-//3) accept actions based on wanted action list
-//4) call acccepted player action to perform action
 
 
 namespace mahjongNEA
@@ -37,6 +22,7 @@ namespace mahjongNEA
         public string username;
         private Action lastAction;
         private static Regex usernameRegex = new Regex(@"^[a-zA-Z]$");
+        private int score;
         public static Random rng = new Random();
         public int prevailingWind { get; private set; }
         public int playerWind { get; private set; }
@@ -47,8 +33,8 @@ namespace mahjongNEA
         private EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
         private bool exposedTile = false;
         private List<Tile> discardedTiles = new List<Tile>();
-        private bool lastDiscard = false;
         private string tempStartup;
+        private int discardedPlayerIndex;
         public GameView(int prevailingWind, int playerWind, int startingPoints, int endingPoints)
         {
             InitializeComponent();
@@ -71,7 +57,7 @@ namespace mahjongNEA
 
         private void setNames()
         {
-            if (usernameBox.Text.Length > 0 && usernameBox.Text.Length < 25)
+            if (usernameBox.Text.Length > 0 && usernameBox.Text.Length < 15)
             {
                 username = usernameBox.Text;
                 using (StreamWriter sw = new StreamWriter("startupcheck.txt"))
@@ -91,7 +77,7 @@ namespace mahjongNEA
             }
             else
             {
-                MessageBox.Show("Username must be between 1 to 25 characters long!");
+                MessageBox.Show("Username must be between 1 to 15 characters long!");
             }
         }
 
@@ -225,13 +211,13 @@ namespace mahjongNEA
             int roundNumber = 0;
             int playerIndex = prevailingWind;
             int maxChoice;
+            DispatcherTimer dt = new DispatcherTimer();
             do
             {
                 Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
                 currentPlayer = players[playerIndex];
                 lastAction = new Action(0);
                 drawTile(currentPlayer);
-                DispatcherTimer dt = new DispatcherTimer();
                 dt.Interval = TimeSpan.FromSeconds(1);
                 dt.Tick += timer_Tick;
                 do
@@ -243,7 +229,6 @@ namespace mahjongNEA
                     Array.ForEach(players, e => e.nextTurn = false);
                     currentPlayer.ownTurn = true;
                     players[(playerIndex + 1) % 4].nextTurn = true;
-                    //end turn handling
                     if (lastAction.typeOfAction == 0)
                     {
                         roundNumber++;
@@ -252,8 +237,17 @@ namespace mahjongNEA
                         {
                             endTurn = true;
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, Analysis.faanToScore(h.faan, true), currentPlayer.actionsDone, currentPlayer.name);
+                            score = Analysis.faanToScore(h.faan, true);
+                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
                             currentPlayer.exposeTile();
+                            currentPlayer.changePointsByAmount(score);
+                            foreach (Player p in players)
+                            {
+                                if (p != currentPlayer)
+                                {
+                                    p.changePointsByAmount(-score / 3);
+                                }
+                            }
                             ww.ShowDialog();
                             break;
                         }
@@ -290,7 +284,6 @@ namespace mahjongNEA
                     }
                     if (availableTiles.Count == 0)
                     {
-                        lastDiscard = true;
                         if (maxChoice == 4)
                         {
                             MessageBox.Show("No tiles left. Ending turn.");
@@ -308,8 +301,17 @@ namespace mahjongNEA
                                     endTurn = true;
                                     currentPlayer.exposeTile();
                                     HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
-                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, Analysis.faanToScore(h.faan, true), currentPlayer.actionsDone, currentPlayer.name);
+                                    score = Analysis.faanToScore(h.faan, true);
+                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
                                     ww.ShowDialog();
+                                    currentPlayer.changePointsByAmount(score);
+                                    foreach (Player p in players)
+                                    {
+                                        if (p != currentPlayer)
+                                        {
+                                            p.changePointsByAmount(-score / 3);
+                                        }
+                                    }
                                     break;
                                 }
                                 currentPlayer.acceptAction();
@@ -341,9 +343,21 @@ namespace mahjongNEA
                             discardPanel.Children.Remove(lastAction.representingTile);
                             currentPlayer.addTile(lastAction.representingTile);
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
-                            int score = Analysis.faanToScore(h.faan, false);
+                            score = Analysis.faanToScore(h.faan, false);
                             WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
                             currentPlayer.changePointsByAmount(score);
+
+                            //temp:
+                            foreach (Player p in players)
+                            {
+                                if (p != currentPlayer)
+                                {
+                                    p.changePointsByAmount(-score / 3);
+                                }
+                            }
+                            //tempend
+
+
                             //DEDUCT FROM OTHER PLAYERS
                             ww.ShowDialog();
                             break;
@@ -444,7 +458,7 @@ namespace mahjongNEA
                 endTurn = false;
                 foreach (Player p in players)
                 {
-                    if (p.points >= endingPoints)
+                    if (p.points >= endingPoints || p.points < 0)
                     {
                         endGame = true;
                     }
@@ -489,7 +503,5 @@ namespace mahjongNEA
             usernameBox.Focus();
             usernameBox.SelectAll();
         }
-
-
     }
 }

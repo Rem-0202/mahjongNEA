@@ -116,7 +116,6 @@ namespace mahjongNEA
         }
         private bool commonHand()
         {
-            bool b = true;
             foreach (Action a in walledTS)
             {
                 if (a.typeOfAction != 2)
@@ -355,10 +354,7 @@ namespace mahjongNEA
         private bool allKongs() => fullTileString.Length == 36;
         private bool greatWinds()
         {
-            Regex removeWindsRegex = new Regex(@"(([2-5]z)\2\2\2?)");
-            string tileStringCopy = $"{fullTileString}";
-            tileStringCopy = removeWindsRegex.Replace(fullTileString, "", 4);
-            return tileStringCopy.Length == 4;
+            return new Regex(@"(([2-5]z)\2\2\2?)").Replace(fullTileString, "", 4).Length == 4;
         }
         #endregion
     }

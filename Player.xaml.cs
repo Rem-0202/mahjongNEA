@@ -164,11 +164,10 @@ namespace mahjongNEA
             nameText.LayoutTransform = new RotateTransform(180.0);
         }
 
-        public bool changePointsByAmount(int c)
+        public void changePointsByAmount(int c)
         {
             points += c;
             scoreText.Text = points.ToString();
-            return points <= 0;
         }
 
         public virtual Action getAction(Action a)

@@ -17,13 +17,13 @@ namespace mahjongNEA
             tileCount = new Dictionary<string, int>();
             for (int i = 1; i <= 9; i++)
             {
-                tileCount.Add($"{i.ToString()}m", 4);
-                tileCount.Add($"{i.ToString()}p", 4);
-                tileCount.Add($"{i.ToString()}s", 4);
+                tileCount.Add($"{i}m", 4);
+                tileCount.Add($"{i}p", 4);
+                tileCount.Add($"{i}s", 4);
             }
             for (int i = 2; i <= 8; i++)
             {
-                tileCount.Add($"{i.ToString()}z", 4);
+                tileCount.Add($"{i}z", 4);
             }
         }
 
