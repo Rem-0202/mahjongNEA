@@ -257,10 +257,10 @@ namespace mahjongNEA
             List<Tile> tempTS = new List<Tile>();
             tempTS.AddRange(ts);
             int[] improvingTileCount = new int[ats.Count + 1];
-            int maxTileNum = -1;
             int[] noneActionImprovingTileScores = getImprovingTileScores_OneTileLess(tempTS, k, tileCount);
             int[] actionImprovingTileScores;
             int lowestShanten = 999;
+            int maxTileNum;
             for (int i = 0; i < ats.Count; i++)
             {
                 tempTS.Clear();
