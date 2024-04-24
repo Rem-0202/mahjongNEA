@@ -458,8 +458,9 @@ namespace mahjongNEA
                     setUpGame();
                 }
             } while (!endGame);
+            EndWindow ew = new EndWindow(players);
+            ew.ShowDialog();
             ((Panel)Parent).Children.Remove(this);
-            //end game screen
         }
 
         private void timer_Tick(object sender, EventArgs e)

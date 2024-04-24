@@ -187,9 +187,10 @@ namespace mahjongNEA
                         }
                         else break;
                     }
+                    else break;
                 }
             } while (i > 0);
-            return numTiles.Count == 1 && numTiles[numTiles.Keys.ElementAt(numTiles.Count - 1)] == 2;
+            return numTiles.Count == 1 && numTiles.Values.ElementAt(0) == 2;
         }
         private bool selfPick() => selfDrawn;
         private int honour()

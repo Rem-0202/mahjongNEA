@@ -15,10 +15,45 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
+        <Button x:Name="OKButton" IsDefault="True" Grid.Row="2" Grid.Column="3"
+                Content="OK"/>
+        <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2"
+              x:Name="playerGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="name1" FontSize="25" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock x:Name="name2" FontSize="25" Grid.Row="1" Grid.Column="0"/>
+            <TextBlock x:Name="name3" FontSize="25" Grid.Row="2" Grid.Column="0"/>
+            <TextBlock x:Name="name4" FontSize="25" Grid.Row="3" Grid.Column="0"/>
+            <TextBlock x:Name="points1" FontSize="25" Grid.Row="0" Grid.Column="1"/>
+            <TextBlock x:Name="points2" FontSize="25" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock x:Name="points3" FontSize="25" Grid.Row="2" Grid.Column="1"/>
+            <TextBlock x:Name="points4" FontSize="25" Grid.Row="3" Grid.Column="1"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Source="rank1.jpg" Grid.Row="0"/>
+            <Image Source="rank2.jpg" Grid.Row="1"/>
+            <Image Source="rank3.jpg" Grid.Row="2"/>
+            <Image Source="rank4.jpg" Grid.Row="3"/>
+        </Grid>
     </Grid>
 </Window>
