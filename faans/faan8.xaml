@@ -10,20 +10,20 @@
         <LineBreak/>
         <InlineUIContainer>
             <StackPanel Orientation="Horizontal">
-                <Image Margin="0,0,0,2" Source="tiles/6z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/6z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/6z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/8z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/8z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/8z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/5p.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/6s.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/7s.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/1p.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/1p.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/6z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/6z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/6z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/8z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/8z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/8z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/5p.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/6s.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/7s.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/1p.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/1p.jpg" RenderSize="44, 60" Height="60" Width="44"/>
             </StackPanel>
         </InlineUIContainer>
         <LineBreak/>

@@ -17,9 +17,9 @@
         <LineBreak/>
         <InlineUIContainer>
             <StackPanel Orientation="Horizontal">
-                <Image Margin="0,0,0,2" Source="tiles/6m.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/6m.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/6m.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/6m.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/6m.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/6m.jpg" RenderSize="44, 60" Height="60" Width="44"/>
             </StackPanel>
         </InlineUIContainer>
         <LineBreak/>
@@ -30,10 +30,10 @@
         <LineBreak/>
         <InlineUIContainer>
             <StackPanel Orientation="Horizontal">
-                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/7z.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/7z.jpg" RenderSize="44, 60" Height="60" Width="44"/>
             </StackPanel>
         </InlineUIContainer>
         <LineBreak/>
@@ -44,9 +44,9 @@
         <LineBreak/>
         <InlineUIContainer>
             <StackPanel Orientation="Horizontal">
-                <Image Margin="0,0,0,2" Source="tiles/4p.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/5p.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/6p.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/4p.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/5p.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/6p.jpg" RenderSize="44, 60" Height="60" Width="44"/>
             </StackPanel>
         </InlineUIContainer>
         <LineBreak/>
@@ -57,8 +57,8 @@
         <LineBreak/>
         <InlineUIContainer>
             <StackPanel Orientation="Horizontal">
-                <Image Margin="0,0,0,2" Source="tiles/2s.jpg"/>
-                <Image Margin="0,0,0,2" Source="tiles/2s.jpg"/>
+                <Image Margin="0,0,0,2" Source="tiles/2s.jpg" RenderSize="44, 60" Height="60" Width="44"/>
+                <Image Margin="0,0,0,2" Source="tiles/2s.jpg" RenderSize="44, 60" Height="60" Width="44"/>
             </StackPanel>
         </InlineUIContainer>
         <LineBreak/>
