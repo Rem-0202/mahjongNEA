@@ -19,13 +19,13 @@
                 <MenuItem Header="_New Game" Click="MenuItem_Click"/>
                 <MenuItem Header="_Restart" x:Name="restartButton" Visibility="Collapsed"
                           Click="restartButton_Click" IsEnabled="False"/>
-                <Separator/>
-                <MenuItem Header="_Auto Sort" IsCheckable="True" IsChecked="True"
+                <Separator x:Name="collapseSeparator" Visibility="Collapsed"/>
+                <MenuItem Header="_Auto Sort" IsCheckable="True" IsChecked="True" x:Name="autoSortMenu"
                           StaysOpenOnClick="True" Checked="autoSortChecked"
-                          Unchecked="autoSortUnchecked"/>
+                          Unchecked="autoSortUnchecked" Visibility="Collapsed"/>
                 <MenuItem Header="_Toggle expose all tiles" x:Name="exposeTileToggle" Checked="ExposeTileMenuItem_Checked"
-                          Unchecked="ExposeTileMenuItem_unChecked" IsCheckable="True" StaysOpenOnClick="True"/>
-                <Separator/>
+                          Unchecked="ExposeTileMenuItem_unChecked" IsCheckable="True" StaysOpenOnClick="True"
+                          Visibility="Collapsed"/>
             </MenuItem>
             <MenuItem Header="_Help" Margin="0,0,5,0">
                 <MenuItem Header="Help _Documents" Click="MenuItem_Help_Click"/>

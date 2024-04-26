@@ -173,6 +173,7 @@ namespace mahjongNEA
                     if (k.bonus) i--;
                 }
             }
+            gameviewStateChanged.Invoke(this, "endSetup");
         }
 
         public void toggleSort()

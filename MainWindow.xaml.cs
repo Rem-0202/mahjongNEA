@@ -170,16 +170,27 @@ namespace mahjongNEA
 
         private void subscribeGameViewChange(object sender, string e)
         {
-            if (e == "endGame")
+            switch (e)
             {
-                displayGrid.Children.Clear();
-                s = new StartPageUserControl();
-                s.PreviewMouseUp += frame_MouseUp;
-                displayGrid.Children.Add(s);
-            }
-            else if (e == "endTurn")
-            {
-                exposeTileToggle.IsChecked = false;
+                case "endGame":
+                    displayGrid.Children.Clear();
+                    s = new StartPageUserControl();
+                    s.PreviewMouseUp += frame_MouseUp;
+                    displayGrid.Children.Add(s);
+                    exposeTileToggle.Visibility = Visibility.Collapsed;
+                    autoSortMenu.Visibility = Visibility.Collapsed;
+                    collapseSeparator.Visibility = Visibility.Collapsed;
+                    break;
+                case "endTurn":
+                    exposeTileToggle.IsChecked = false;
+                    break;
+                case "endSetup":
+                    exposeTileToggle.Visibility = Visibility.Visible;
+                    autoSortMenu.Visibility = Visibility.Visible;
+                    collapseSeparator.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
             }
         }
     }
