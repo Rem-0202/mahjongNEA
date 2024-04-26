@@ -82,6 +82,7 @@ namespace mahjongNEA
                     if (closedHand()) faanPairs.Add("Self Triplets", 8);
                     else faanPairs.Add("Triplets", 3);
                 }
+                else if (closedHand()) faanPairs.Add("Closed Hand", 1);
                 if (greatWinds()) faanPairs.Add("Great Winds", 13);
                 else if (smallWinds()) faanPairs.Add("Small Winds", 3);
                 if (allOneSuit())
