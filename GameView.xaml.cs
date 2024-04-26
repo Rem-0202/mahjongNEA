@@ -35,6 +35,13 @@ namespace mahjongNEA
         private List<Tile> discardedTiles = new List<Tile>();
         private string tempStartup;
         private int discardedPlayerIndex;
+
+        public event EventHandler<string> gameviewStateChanged;
+
+
+
+
+
         public GameView(int prevailingWind, int playerWind, int startingPoints, int endingPoints)
         {
             InitializeComponent();
@@ -123,7 +130,7 @@ namespace mahjongNEA
                     tempPlayers[Array.IndexOf(players, p)] = new UserPlayer(p.wind, p.points, userActionButtons, p.pWind, p.name);
                 }
             }
-            if (exposedTile) exposeTiles(); else unExposeTiles();
+            unExposeTiles();
             players = tempPlayers;
             userPlayerGrid.Children.Add(players[playerWind % 4]);
             rightPlayerGrid.Children.Add(players[(playerWind + 1) % 4]);
@@ -338,10 +345,10 @@ namespace mahjongNEA
                         case 5:
                             currentPlayer = playerActions.First(e => e.Value.typeOfAction == 5).Key;
                             endTurn = true;
-                            currentPlayer.exposeTile();
                             discardedTiles.Remove(lastAction.representingTile);
                             discardPanel.Children.Remove(lastAction.representingTile);
                             currentPlayer.addTile(lastAction.representingTile);
+                            currentPlayer.exposeTile();
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
                             score = Analysis.faanToScore(h.faan, false);
                             WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
@@ -455,12 +462,14 @@ namespace mahjongNEA
                 }
                 if (!endGame)
                 {
+                    gameviewStateChanged.Invoke(this, "endTurn");
+                    userActionButtons.Children.Clear();
                     setUpGame();
                 }
             } while (!endGame);
             EndWindow ew = new EndWindow(players);
             ew.ShowDialog();
-            ((Panel)Parent).Children.Remove(this);
+            gameviewStateChanged.Invoke(this, "endGame");
         }
 
         private void timer_Tick(object sender, EventArgs e)

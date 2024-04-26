@@ -44,10 +44,7 @@ namespace mahjongNEA
                     selectedTile = t;
                 }
             }
-            catch (Exception k)
-            {
-                MessageBox.Show(k.Message);
-            }
+            catch { }
         }
 
         public override Action getAction(Action a)

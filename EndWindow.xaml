@@ -20,8 +20,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <Button x:Name="OKButton" IsDefault="True" Grid.Row="2" Grid.Column="3"
-                Content="OK"/>
+        <Button x:Name="OKButton" Grid.Row="2" Grid.Column="3" Click="OKButton_Click" 
+                IsDefault="True" Content="OK"/>
         <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2"
               x:Name="playerGrid">
             <Grid.ColumnDefinitions>

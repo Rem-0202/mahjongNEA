@@ -161,6 +161,7 @@ namespace mahjongNEA
                         }
                         else break;
                     }
+                    else break;
                     if (numTiles.Count - 1 < i) break;
                 }
             } while (i > 0);

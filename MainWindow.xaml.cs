@@ -51,6 +51,7 @@ namespace mahjongNEA
             TutorialUserControl t = new TutorialUserControl(ewh);
             if (s.tutorial == true)
             {
+                displayGrid.Children.Clear();
                 displayGrid.Children.Add(t);
                 bool end = false;
                 while (!end)
@@ -61,6 +62,7 @@ namespace mahjongNEA
                         case true:
                             end = true;
                             g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                            g.gameviewStateChanged += subscribeGameViewChange;
                             displayGrid.Children.Clear();
                             displayGrid.Children.Add(g);
                             restartButton.Visibility = Visibility.Visible;
@@ -82,6 +84,7 @@ namespace mahjongNEA
                 {
                     case true:
                         g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                        g.gameviewStateChanged += subscribeGameViewChange;
                         displayGrid.Children.Clear();
                         displayGrid.Children.Add(g);
                         restartButton.Visibility = Visibility.Visible;
@@ -121,6 +124,7 @@ namespace mahjongNEA
             {
                 case true:
                     g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+                    g.gameviewStateChanged += subscribeGameViewChange;
                     displayGrid.Children.Clear();
                     displayGrid.Children.Add(g);
                     restartButton.Visibility = Visibility.Visible;
@@ -137,6 +141,7 @@ namespace mahjongNEA
         private void restartButton_Click(object sender, RoutedEventArgs e)
         {
             g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
+            g.gameviewStateChanged += subscribeGameViewChange;
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
             exposeTileToggle.Checked -= ExposeTileMenuItem_Checked;
@@ -161,6 +166,21 @@ namespace mahjongNEA
             etw.Show();
             WaitForEvent(ewh);
             etw.Close();
+        }
+
+        private void subscribeGameViewChange(object sender, string e)
+        {
+            if (e == "endGame")
+            {
+                displayGrid.Children.Clear();
+                s = new StartPageUserControl();
+                s.PreviewMouseUp += frame_MouseUp;
+                displayGrid.Children.Add(s);
+            }
+            else if (e == "endTurn")
+            {
+                exposeTileToggle.IsChecked = false;
+            }
         }
     }
 }

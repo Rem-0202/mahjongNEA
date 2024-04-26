@@ -27,9 +27,21 @@ namespace mahjongNEA
             pWindTB.Text = $"{windNames[pw]}";
             uWindTB.Text = $"{windNames[uw]}";
             scoreTB.Text = points.ToString();
+            List<string> tileIDs = new List<string>();
             foreach (Tile t in ts)
             {
-                tileDisplay.Children.Add(Tile.stringToTile(t.tileID));
+                tileIDs.Add(t.tileID);
+            }
+            foreach (Action a in walledGroups)
+            {
+                foreach (Tile t in a.allTiles)
+                {
+                    tileIDs.Add(t.tileID);
+                }
+            }
+            foreach (string s in tileIDs)
+            {
+                tileDisplay.Children.Add(Tile.stringToTile(s));
             }
             for (int i = 0; i < faanPairs.Keys.Count; i++)
             {

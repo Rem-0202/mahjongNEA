@@ -78,6 +78,7 @@ namespace mahjongNEA
             tileID = r.ToString() + s;
             terminal = (suit == 'm' || suit == 'p' || suit == 's') && (rank == 1 || rank == 9);
             honour = suit == 'z';
+            dragon = honour && rank > 5 && rank < 9;
             suitID = suitOrder.IndexOf(suit);
             special = terminal || honour;
             bonus = suit == 'f' || suit == 'n';

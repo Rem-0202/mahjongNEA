@@ -31,7 +31,7 @@ namespace mahjongNEA
                 changed = true;
                 for (int i = 0; i < players.Length - 1; i++)
                 {
-                    if (players[ints[i]].points < players[ints[i+1]].points)
+                    if (players[ints[i]].points < players[ints[i + 1]].points)
                     {
                         temp = ints[i];
                         ints[i] = ints[i + 1];
@@ -48,6 +48,11 @@ namespace mahjongNEA
             points2.Text = players[ints[1]].points.ToString();
             points3.Text = players[ints[2]].points.ToString();
             points4.Text = players[ints[3]].points.ToString();
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
