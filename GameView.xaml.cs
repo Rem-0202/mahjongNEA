@@ -22,6 +22,7 @@ namespace mahjongNEA
         public string username;
         private Action lastAction;
         private static Regex usernameRegex = new Regex(@"^[a-zA-Z]$");
+        private int startingPlayerWind;
         private int score;
         public static Random rng = new Random();
         public int prevailingWind { get; private set; }
@@ -123,11 +124,11 @@ namespace mahjongNEA
             {
                 if (p is ComputerPlayer)
                 {
-                    tempPlayers[Array.IndexOf(players, p)] = new ComputerPlayer(p.wind, p.points, p.pWind, p.name);
+                    tempPlayers[p.wind] = new ComputerPlayer(p.wind, p.points, p.pWind, p.name);
                 }
                 else if (p is UserPlayer)
                 {
-                    tempPlayers[Array.IndexOf(players, p)] = new UserPlayer(p.wind, p.points, userActionButtons, p.pWind, p.name);
+                    tempPlayers[p.wind] = new UserPlayer(playerWind, p.points, userActionButtons, p.pWind, p.name);
                 }
             }
             unExposeTiles();
@@ -216,7 +217,8 @@ namespace mahjongNEA
             Player currentPlayer;
             bool endTurn = false;
             bool endGame = false;
-            int playerIndex = prevailingWind;
+            int playerIndex;
+            Dictionary<Player, Action> playerActions;
             int maxChoice;
             DispatcherTimer dt = new DispatcherTimer
             {
@@ -225,7 +227,8 @@ namespace mahjongNEA
             dt.Tick += timer_Tick;
             do
             {
-                Dictionary<Player, Action> playerActions = new Dictionary<Player, Action>();
+                playerIndex = prevailingWind;
+                playerActions = new Dictionary<Player, Action>();
                 currentPlayer = players[playerIndex];
                 lastAction = new Action(0);
                 drawTile(currentPlayer);
@@ -246,7 +249,7 @@ namespace mahjongNEA
                             endTurn = true;
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
                             score = Analysis.faanToScore(h.faan, true);
-                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
+                            WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, score, currentPlayer.name);
                             currentPlayer.exposeTile();
                             currentPlayer.changePointsByAmount(score);
                             foreach (Player p in players)
@@ -310,7 +313,7 @@ namespace mahjongNEA
                                     currentPlayer.exposeTile();
                                     HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, true, prevailingWind, currentPlayer.wind);
                                     score = Analysis.faanToScore(h.faan, true);
-                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
+                                    WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.name);
                                     ww.ShowDialog();
                                     currentPlayer.changePointsByAmount(score);
                                     foreach (Player p in players)
@@ -352,7 +355,7 @@ namespace mahjongNEA
                             currentPlayer.exposeTile();
                             HandCheck h = new HandCheck(currentPlayer.ownTiles, currentPlayer.actionsDone, currentPlayer.bonusTiles, false, prevailingWind, currentPlayer.wind);
                             score = Analysis.faanToScore(h.faan, false);
-                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.actionsDone, currentPlayer.name);
+                            WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.name);
                             currentPlayer.changePointsByAmount(score);
                             players[discardedPlayerIndex].changePointsByAmount(-score);
                             ww.ShowDialog();
@@ -465,6 +468,16 @@ namespace mahjongNEA
                 {
                     gameviewStateChanged.Invoke(this, "endTurn");
                     userActionButtons.Children.Clear();
+                    foreach (Player p in players)
+                    {
+                        p.wind = (p.wind + 1) % 4;
+                    }
+                    playerWind = (playerWind + 1) % 4;
+                    if (playerWind == startingPlayerWind)
+                    {
+                        endGame = true;
+                        break;
+                    }
                     setUpGame();
                 }
             } while (!endGame);

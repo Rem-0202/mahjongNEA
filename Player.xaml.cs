@@ -33,7 +33,7 @@ namespace mahjongNEA
         public List<Tile> ownTiles;
         public List<Tile> walledTiles { get; protected set; }
         public List<Tile> bonusTiles { get; protected set; }
-        public int wind { get; private set; }  //0 = 東(E)  1 = 南(S)  2 = 西(W)  3 = 北(N)
+        public int wind;  //0 = 東(E)  1 = 南(S)  2 = 西(W)  3 = 北(N)
         public int pWind { get; set; }
         public int points { get; private set; }
 
@@ -185,7 +185,7 @@ namespace mahjongNEA
         public void unglow()
         {
             indicatorBar.BorderBrush = Brushes.Black;
-            indicatorBar.Background = Brushes.Transparent;
+            indicatorBar.Background = Brushes.WhiteSmoke;
             indicatorBar.BorderThickness = new Thickness(0.5);
         }
 

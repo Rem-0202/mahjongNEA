@@ -31,7 +31,8 @@
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.RowSpan="4" HorizontalAlignment="Left"
                     Orientation="Horizontal" x:Name="bonusTileDisplay"/>
         <Border x:Name="indicatorBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
-                MaxWidth="500" BorderBrush="Black" BorderThickness="0.5">
+                MaxWidth="500" BorderBrush="Black" BorderThickness="0.5" 
+                Background="WhiteSmoke">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

@@ -186,7 +186,6 @@ namespace mahjongNEA
                     }
                     else if (winButton.clicked)
                     {
-                        ownTiles.Add(a.representingTile);
                         lastAction = new Action(5);
                     }
                     actionButtons.Children.Clear();

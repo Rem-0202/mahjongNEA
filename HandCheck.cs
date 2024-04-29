@@ -230,8 +230,8 @@ namespace mahjongNEA
         #region 2faan
         private bool bonusSeries()
         {
-            List<int> f = new List<int>() { 1, 2, 3, 4 };
-            List<int> n = new List<int>() { 1, 2, 3, 4 };
+            List<int> f = new List<int>() { 2, 3, 4, 5 };
+            List<int> n = new List<int>() { 2, 3, 4, 5 };
             if (bonuses.Count < 4) return false;
             else
             {

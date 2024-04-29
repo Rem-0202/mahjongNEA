@@ -56,7 +56,14 @@
                 BorderBrush="DimGray" BorderThickness="1" FontSize="16"
                 Click="cancelButton_Click" Content="Skip Tutorial"/>
         <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" x:Name="MediaDisplayGrid">
-            <MediaElement x:Name="TutorialMediaElement" MediaEnded="TutorialMediaElement_MediaEnded"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" x:Name="TitleTextBlock" FontSize="30" FontWeight="Bold" Margin="20,5,0,5"
+                       VerticalAlignment="Center"/>
+            <MediaElement x:Name="TutorialMediaElement" MediaEnded="TutorialMediaElement_MediaEnded"
+                          Grid.Row="1"/>
         </Grid>
     </Grid>
 </UserControl>

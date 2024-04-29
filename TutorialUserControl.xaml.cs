@@ -22,24 +22,34 @@ namespace mahjongNEA
     public partial class TutorialUserControl : UserControl
     {
         private EventWaitHandle ewh;
-        string[] tutorialGifUriArray;
+        private string[] tutorialGifUriArray;
+        private string[] titleArray;
+        private int titleIndex;
         private int currentTutorialIndex;
         public TutorialUserControl(EventWaitHandle ewh)
         {
             InitializeComponent();
             this.ewh = ewh;
             currentTutorialIndex = 0;
-            tutorialGifUriArray = new string[2];
+            titleIndex = 0;
+            tutorialGifUriArray = new string[4];
+            titleArray = new string[2];
+            titleArray[0] = "Vocabularies";
+            titleArray[1] = "Rules";
+            titleArray[2] = "Game Flow";
+            titleArray[3] = "Distruptions";
             tutorialGifUriArray[0] = @"test.gif";
             tutorialGifUriArray[1] = @"test2.gif";
             TutorialMediaElement.LoadedBehavior = MediaState.Play;
             TutorialMediaElement.UnloadedBehavior = MediaState.Manual;
             TutorialMediaElement.Source = new Uri(tutorialGifUriArray[currentTutorialIndex], UriKind.Relative);
+            TitleTextBlock.Text = titleArray[titleIndex];
         }
 
         private void nextPageButton_Click(object sender, RoutedEventArgs e)
         {
             if (currentTutorialIndex < tutorialGifUriArray.Length - 1) currentTutorialIndex++;
+            titleIndex = currentTutorialIndex;
             setMedia();
         }
 
@@ -76,11 +86,13 @@ namespace mahjongNEA
             }
             TutorialMediaElement.Source = new Uri(tutorialGifUriArray[currentTutorialIndex], UriKind.Relative);
             TutorialMediaElement.Position = new TimeSpan(0, 0, 1);
+            TitleTextBlock.Text = titleArray[titleIndex];
         }
 
         private void previousPageButton_Click(object sender, RoutedEventArgs e)
         {
             if (currentTutorialIndex > 0) currentTutorialIndex--;
+            titleIndex = currentTutorialIndex;
             setMedia();
         }
 

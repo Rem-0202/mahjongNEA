@@ -20,7 +20,7 @@ namespace mahjongNEA
     public partial class WinWindow : Window
     {
         private static string[] windNames = { "東 East", "南 South", "西 West", "北 North" };
-        public WinWindow(int pw, int uw, List<Tile> ts, Dictionary<string, int> faanPairs, int points, List<Action> walledGroups, string name)
+        public WinWindow(int pw, int uw, List<Tile> ts, Dictionary<string, int> faanPairs, int points, string name)
         {
             InitializeComponent();
             nameBlock.Text = name;
@@ -30,18 +30,7 @@ namespace mahjongNEA
             List<string> tileIDs = new List<string>();
             foreach (Tile t in ts)
             {
-                tileIDs.Add(t.tileID);
-            }
-            foreach (Action a in walledGroups)
-            {
-                foreach (Tile t in a.allTiles)
-                {
-                    tileIDs.Add(t.tileID);
-                }
-            }
-            foreach (string s in tileIDs)
-            {
-                tileDisplay.Children.Add(Tile.stringToTile(s));
+                tileDisplay.Children.Add(Tile.stringToTile(t.tileID));
             }
             for (int i = 0; i < faanPairs.Keys.Count; i++)
             {
