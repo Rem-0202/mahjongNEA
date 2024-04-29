@@ -32,14 +32,15 @@ namespace mahjongNEA
             this.ewh = ewh;
             currentTutorialIndex = 0;
             titleIndex = 0;
-            tutorialGifUriArray = new string[4];
+            tutorialGifUriArray = new string[2];
             titleArray = new string[2];
-            titleArray[0] = "Vocabularies";
-            titleArray[1] = "Rules";
-            titleArray[2] = "Game Flow";
-            titleArray[3] = "Distruptions";
-            tutorialGifUriArray[0] = @"test.gif";
-            tutorialGifUriArray[1] = @"test2.gif";
+            titleArray[0] = "Terminologies";
+            titleArray[1] = "Terminologies";
+            //titleArray[1] = "Rules";
+            //titleArray[2] = "Game Flow";
+            //titleArray[3] = "Distruptions";
+            tutorialGifUriArray[0] = @"tutorial\vocab1.gif";
+            tutorialGifUriArray[1] = @"tutorial\vocab2.gif";
             TutorialMediaElement.LoadedBehavior = MediaState.Play;
             TutorialMediaElement.UnloadedBehavior = MediaState.Manual;
             TutorialMediaElement.Source = new Uri(tutorialGifUriArray[currentTutorialIndex], UriKind.Relative);
@@ -85,7 +86,7 @@ namespace mahjongNEA
                 previousPageButton.IsEnabled = true;
             }
             TutorialMediaElement.Source = new Uri(tutorialGifUriArray[currentTutorialIndex], UriKind.Relative);
-            TutorialMediaElement.Position = new TimeSpan(0, 0, 1);
+            TutorialMediaElement.Position = new TimeSpan(0, 0, 0);
             TitleTextBlock.Text = titleArray[titleIndex];
         }
 
