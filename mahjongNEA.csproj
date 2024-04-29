@@ -120,6 +120,9 @@
     <Compile Include="WinWindow.xaml.cs">
       <DependentUpon>WinWindow.xaml</DependentUpon>
     </Compile>
+    <Content Include="tutorial\vocab1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Page Include="ActionButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
