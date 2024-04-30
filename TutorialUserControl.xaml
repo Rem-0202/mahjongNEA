@@ -37,7 +37,7 @@
         </Button>
         <Button Grid.Row="3" Grid.Column="4" IsEnabled="False" Visibility="Hidden"
                 BorderBrush="DimGray" BorderThickness="1" x:Name="endButton"
-                Click="cancelButton_Click">
+                Click="cancelButton_Click" FontSize="15">
             End Tutorial
         </Button>
         <Button Grid.Row="3" Grid.Column="3" Visibility="Hidden" IsEnabled="False"
