@@ -32,12 +32,12 @@ namespace mahjongNEA
         public int startingPoints { get; private set; }
         public int endingPoints { get; private set; }
         private EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
-        private bool exposedTile = false;
         private List<Tile> discardedTiles = new List<Tile>();
         private string tempStartup;
         private int discardedPlayerIndex;
 
         public event EventHandler<string> gameviewStateChanged;
+        public event EventHandler<string> gameState;
 
 
 
@@ -47,6 +47,7 @@ namespace mahjongNEA
         {
             InitializeComponent();
             this.playerWind = playerWind;
+            startingPlayerWind = playerWind;
             this.prevailingWind = prevailingWind;
             this.startingPoints = startingPoints;
             this.endingPoints = endingPoints;
@@ -190,7 +191,6 @@ namespace mahjongNEA
 
         public void exposeTiles()
         {
-            exposedTile = true;
             if (players != null)
             {
                 foreach (Player p in players)
@@ -202,7 +202,6 @@ namespace mahjongNEA
 
         public void unExposeTiles()
         {
-            exposedTile = false;
             if (players != null)
             {
                 foreach (Player p in players)
@@ -252,6 +251,7 @@ namespace mahjongNEA
                             WinWindow ww = new WinWindow(prevailingWind, playerIndex, h.tempFullTS, h.faanPairs, score, currentPlayer.name);
                             currentPlayer.exposeTile();
                             currentPlayer.changePointsByAmount(score);
+                            gameState.Invoke(this, $"{currentPlayer.name} Won");
                             foreach (Player p in players)
                             {
                                 if (p != currentPlayer)
@@ -264,10 +264,12 @@ namespace mahjongNEA
                         }
                         if (lastAction.typeOfAction == 4)
                         {
+                            gameState.Invoke(this, $"{currentPlayer.name} declared a Kong");
                             currentPlayer.acceptAction();
                             lastAction = currentPlayer.getAction(new Action(0));
                         }
                         currentPlayer.acceptAction();
+                        gameState.Invoke(this, $"{currentPlayer.name} discarded a tile");
                     }
                     if (lastAction.typeOfAction == 1)
                     {
@@ -284,6 +286,7 @@ namespace mahjongNEA
                         lastAction.representingTile.glow();
                         discardPanel.Children.Add(lastAction.representingTile);
                         discardedPlayerIndex = playerIndex;
+                        gameState.Invoke(this, $"{currentPlayer.name} discarded a tile");
                     }
                     playerActions.Clear();
                     playerActions.Add(players[(playerIndex + 1) % 4], players[(playerIndex + 1) % 4].getAction(lastAction));
@@ -316,6 +319,7 @@ namespace mahjongNEA
                                     WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.name);
                                     ww.ShowDialog();
                                     currentPlayer.changePointsByAmount(score);
+                                    gameState.Invoke(this, $"{currentPlayer.name} Won");
                                     foreach (Player p in players)
                                     {
                                         if (p != currentPlayer)
@@ -328,6 +332,7 @@ namespace mahjongNEA
                                 currentPlayer.acceptAction();
                                 if (lastAction.typeOfAction == 1)
                                 {
+                                    gameState.Invoke(this, $"{currentPlayer.name} discarded a tile");
                                     if (discardPanel.Children.Count > 0)
                                     {
                                         Tile temp = (Tile)discardPanel.Children[discardPanel.Children.Count - 1];
@@ -358,10 +363,12 @@ namespace mahjongNEA
                             WinWindow ww = new WinWindow(prevailingWind, currentPlayer.wind, h.tempFullTS, h.faanPairs, score, currentPlayer.name);
                             currentPlayer.changePointsByAmount(score);
                             players[discardedPlayerIndex].changePointsByAmount(-score);
+                            gameState.Invoke(this, $"{currentPlayer.name} Won");
                             ww.ShowDialog();
                             break;
                         case 4:
                             currentPlayer = playerActions.First(e => e.Value.typeOfAction == 4).Key;
+                            gameState.Invoke(this, $"{currentPlayer.name} declared a Kong");
                             Array.ForEach(players, (e) => e.unglow());
                             currentPlayer.glow();
                             playerIndex = Array.IndexOf(players, currentPlayer);
@@ -385,6 +392,7 @@ namespace mahjongNEA
                             break;
                         case 3:
                             currentPlayer = playerActions.First(e => e.Value.typeOfAction == 3).Key;
+                            gameState.Invoke(this, $"{currentPlayer.name} declared a Pong");
                             playerIndex = Array.IndexOf(players, currentPlayer);
                             Array.ForEach(players, (e) => e.unglow());
                             currentPlayer.glow();
@@ -409,6 +417,7 @@ namespace mahjongNEA
                             discardedPlayerIndex = playerIndex;
                             playerIndex = (playerIndex + 1) % 4;
                             currentPlayer = players[playerIndex];
+                            gameState.Invoke(this, $"{currentPlayer.name} declared a Chow");
                             Array.ForEach(players, (e) => e.unglow());
                             currentPlayer.glow();
                             if (!(currentPlayer is UserPlayer))
@@ -445,7 +454,6 @@ namespace mahjongNEA
                             currentPlayer.glow();
                             break;
                         default:
-                            MessageBox.Show("this line shouldn't run, check switch case in gameview.cs");
                             break;
                     }
                     if (!(currentPlayer is UserPlayer))

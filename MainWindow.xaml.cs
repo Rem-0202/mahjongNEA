@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -28,6 +29,7 @@ namespace mahjongNEA
         public MainWindow()
         {
             InitializeComponent();
+            Application.Current.MainWindow.WindowState = WindowState.Maximized;
             s = new StartPageUserControl();
             s.PreviewMouseUp += frame_MouseUp;
             displayGrid.Children.Add(s);
@@ -63,6 +65,7 @@ namespace mahjongNEA
                             end = true;
                             g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
                             g.gameviewStateChanged += subscribeGameViewChange;
+                            g.gameState += changeStatusBar;
                             displayGrid.Children.Clear();
                             displayGrid.Children.Add(g);
                             restartButton.Visibility = Visibility.Visible;
@@ -85,6 +88,7 @@ namespace mahjongNEA
                     case true:
                         g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
                         g.gameviewStateChanged += subscribeGameViewChange;
+                        g.gameState += changeStatusBar;
                         displayGrid.Children.Clear();
                         displayGrid.Children.Add(g);
                         restartButton.Visibility = Visibility.Visible;
@@ -125,6 +129,7 @@ namespace mahjongNEA
                 case true:
                     g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
                     g.gameviewStateChanged += subscribeGameViewChange;
+                    g.gameState += changeStatusBar;
                     displayGrid.Children.Clear();
                     displayGrid.Children.Add(g);
                     restartButton.Visibility = Visibility.Visible;
@@ -142,6 +147,7 @@ namespace mahjongNEA
         {
             g = new GameView(newGameDialog.pWind, newGameDialog.uWind, newGameDialog.sPoints, newGameDialog.ePoints);
             g.gameviewStateChanged += subscribeGameViewChange;
+            g.gameState += changeStatusBar;
             displayGrid.Children.Clear();
             displayGrid.Children.Add(g);
             exposeTileToggle.Checked -= ExposeTileMenuItem_Checked;
@@ -170,6 +176,7 @@ namespace mahjongNEA
 
         private void subscribeGameViewChange(object sender, string e)
         {
+            statusBar.Text = "";
             switch (e)
             {
                 case "endGame":
@@ -183,6 +190,7 @@ namespace mahjongNEA
                     break;
                 case "endTurn":
                     exposeTileToggle.IsChecked = false;
+                    windBar.Text = g?.prevailingWind.ToString();
                     break;
                 case "endSetup":
                     exposeTileToggle.Visibility = Visibility.Visible;
@@ -192,6 +200,11 @@ namespace mahjongNEA
                 default:
                     break;
             }
+        }
+
+        private void changeStatusBar(object sender, string e)
+        {
+            statusBar.Text = e;
         }
     }
 }

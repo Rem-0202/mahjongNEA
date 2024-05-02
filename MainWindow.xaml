@@ -27,9 +27,20 @@
                           Unchecked="ExposeTileMenuItem_unChecked" IsCheckable="True" StaysOpenOnClick="True"
                           Visibility="Collapsed"/>
             </MenuItem>
-            <MenuItem Header="_Help" Margin="0,0,5,0">
+            <MenuItem Header="_Help" Margin="0,0,200,0">
                 <MenuItem Header="Help _Documents" Click="MenuItem_Help_Click"/>
                 <MenuItem Header="_Redo Tutorial" Click="MenuItem_RedoTutorial_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="statusBarMenuItem" IsEnabled="False"
+                      HorizontalContentAlignment="Center">
+                <MenuItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Current Game: "/>
+                        <TextBlock x:Name="statusBar" Margin="5,0,100,0"/>
+                        <TextBlock Text="Prevailing Wind: "/>
+                        <TextBlock x:Name="windBar"/>
+                    </StackPanel>
+                </MenuItem.Header>
             </MenuItem>
         </Menu>
         <Grid x:Name="displayGrid" Grid.Row="1"/>
