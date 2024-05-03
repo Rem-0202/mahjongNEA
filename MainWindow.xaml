@@ -36,7 +36,7 @@
                 <MenuItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Current Game: "/>
-                        <TextBlock x:Name="statusBar" Margin="5,0,100,0"/>
+                        <TextBlock x:Name="statusBar" Margin="5,0,0,0" Width="250"/>
                         <TextBlock Text="Prevailing Wind: "/>
                         <TextBlock x:Name="windBar"/>
                     </StackPanel>

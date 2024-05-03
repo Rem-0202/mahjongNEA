@@ -26,6 +26,7 @@ namespace mahjongNEA
         public GameView g;
         public StartPageUserControl s;
         public static bool autoSort = true;
+        private static string[] windNames = { "東 East", "南 South", "西 West", "北 North" };
         public MainWindow()
         {
             InitializeComponent();
@@ -190,12 +191,12 @@ namespace mahjongNEA
                     break;
                 case "endTurn":
                     exposeTileToggle.IsChecked = false;
-                    windBar.Text = g?.prevailingWind.ToString();
                     break;
                 case "endSetup":
                     exposeTileToggle.Visibility = Visibility.Visible;
                     autoSortMenu.Visibility = Visibility.Visible;
                     collapseSeparator.Visibility = Visibility.Visible;
+                    windBar.Text = windNames[(int)(g?.prevailingWind)];
                     break;
                 default:
                     break;
