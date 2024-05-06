@@ -38,7 +38,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="mahjongNEA.ExternalTutorialWindow" BaseTypeListCollapsed="true">
-    <Position X="6.25" Y="2.5" Width="1.5" />
+    <Position X="8" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAEQAAACAAAAAAAAAAAA=</HashCode>
       <FileName>ExternalTutorialWindow.xaml.cs</FileName>
@@ -77,7 +77,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="mahjongNEA.newGameDialog" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="5.25" Width="1.5" />
+    <Position X="6.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABACAAAAAAAAAFAAAAAgAAIAAAAAAAgAAgAAAAAAgAA=</HashCode>
       <FileName>newGameDialog.xaml.cs</FileName>
@@ -93,7 +93,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="mahjongNEA.StartPageUserControl" BaseTypeListCollapsed="true">
-    <Position X="6.25" Y="5" Width="1.5" />
+    <Position X="9.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAgAAAAA=</HashCode>
       <FileName>StartPageUserControl.xaml.cs</FileName>
@@ -124,7 +124,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="mahjongNEA.WinWindow" BaseTypeListCollapsed="true">
-    <Position X="8" Y="4" Width="1.5" />
+    <Position X="6.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
       <FileName>WinWindow.xaml.cs</FileName>
