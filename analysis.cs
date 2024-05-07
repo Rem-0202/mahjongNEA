@@ -12,8 +12,6 @@ namespace mahjongNEA
     static class Analysis
     {
         public static int safety = 5;
-        public static int offensiveSuit = 30;
-        public static int offensiveWind = 3;
         public static int differentSpecialTiles(List<Tile> ownTiles)
         {
             int s = 0;

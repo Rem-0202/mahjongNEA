@@ -114,7 +114,7 @@ namespace mahjongNEA
                     else if (tempActionList.Count != 0)
                     {
                         lastAction = Analysis.chooseAction(ownTiles, walledGroupCount, tempActionList, tileCount);
-                    }
+                    }   
                 }
                 else if (a.typeOfAction == 0)
                 {
