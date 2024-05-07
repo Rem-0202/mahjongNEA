@@ -48,22 +48,29 @@ namespace mahjongNEA
         {
             pWind = pWindSelector.SelectedIndex;
             uWind = uWindSelector.SelectedIndex;
-            int sp = Convert.ToInt32(startingPoints.Text);
-            int ep = Convert.ToInt32(endingPoints.Text);
-            if ((ep - sp) < 1000)
+            if (startingPoints.Text.Length == 0 || endingPoints.Text.Length == 0)
             {
-                MessageBox.Show("Ending points has to be at least 1000 larger than starting points!");
-            }
-            else if (sp < 1000)
-            {
-                MessageBox.Show("Starting points must be more than 1000!");
+                MessageBox.Show("Please enter a number for the points");
             }
             else
             {
-                DialogResult = true;
-                sPoints = sp;
-                ePoints = ep;
-                Close();
+                int sp = Convert.ToInt32(startingPoints.Text);
+                int ep = Convert.ToInt32(endingPoints.Text);
+                if ((ep - sp) < 1000)
+                {
+                    MessageBox.Show("Ending points has to be at least 1000 larger than starting points!");
+                }
+                else if (sp < 1000)
+                {
+                    MessageBox.Show("Starting points must be more than 1000!");
+                }
+                else
+                {
+                    DialogResult = true;
+                    sPoints = sp;
+                    ePoints = ep;
+                    Close();
+                }
             }
         }
 
