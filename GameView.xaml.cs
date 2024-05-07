@@ -38,14 +38,13 @@ namespace mahjongNEA
 
         public event EventHandler<string> gameviewStateChanged;
         public event EventHandler<string> gameState;
-
-
-
+        //the two custom events for MainWindow to update toggles and status bar accordingly
 
 
         public GameView(int prevailingWind, int playerWind, int startingPoints, int endingPoints)
         {
             InitializeComponent();
+            //initialize variables needed for starting a game
             this.playerWind = playerWind;
             startingPlayerWind = playerWind;
             this.prevailingWind = prevailingWind;
@@ -57,6 +56,7 @@ namespace mahjongNEA
                 username = sr.ReadLine();
             }
             usernameBox.Text = username;
+            //reads and set previously saved username
         }
 
         private void usernameBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -66,6 +66,7 @@ namespace mahjongNEA
 
         private void setNames()
         {
+            //checks if username is allowed and save username to file for use next time
             if (usernameBox.Text.Length > 0 && usernameBox.Text.Length < 15)
             {
                 username = usernameBox.Text;
@@ -79,10 +80,12 @@ namespace mahjongNEA
                 players[(playerWind + 1) % 4] = new ComputerPlayer((playerWind + 1) % 4, startingPoints, prevailingWind, "CPU 1");
                 players[(playerWind + 2) % 4] = new ComputerPlayer((playerWind + 2) % 4, startingPoints, prevailingWind, "CPU 2");
                 players[(playerWind + 3) % 4] = new ComputerPlayer((playerWind + 3) % 4, startingPoints, prevailingWind, "CPU 3");
+                //initialize players and names
                 usernameGrid.Children.Clear();
                 main.Children.Remove(usernameGrid);
                 setUpGame();
                 gameLoop();
+                //starts the game loop
             }
             else
             {
@@ -134,6 +137,7 @@ namespace mahjongNEA
             }
             unExposeTiles();
             players = tempPlayers;
+            //resets players with their winds
             userPlayerGrid.Children.Add(players[playerWind % 4]);
             rightPlayerGrid.Children.Add(players[(playerWind + 1) % 4]);
             topPlayerGrid.Children.Add(players[(playerWind + 2) % 4]);
@@ -142,6 +146,7 @@ namespace mahjongNEA
             players[(playerWind + 2) % 4].LayoutTransform = new RotateTransform(180.0);
             players[(playerWind + 2) % 4].flipTiles();
             players[(playerWind + 3) % 4].LayoutTransform = new RotateTransform(90.0);
+            //places players in their seats, user player should always be at the bottom facing the user 
             availableTiles = new List<Tile>();
             for (int i = 1; i <= 9; i++)
             {
@@ -164,6 +169,7 @@ namespace mahjongNEA
                 availableTiles.Add(new Tile(i, 'n'));
                 availableTiles.Add(new Tile(i, 'f'));
             }
+            //initialize all the tiles needed in one match
             Tile k;
             foreach (Player p in players)
             {
@@ -213,6 +219,17 @@ namespace mahjongNEA
 
         public void gameLoop()
         {
+            /*
+             * Overall working of the gameloop:
+             *   requests the current player for an action
+             *   requests all other three users with the previous action
+             *   accepts based on the type of the action (win > kong > pong > chow > discard)
+             * 
+             * The game loop also handles most of the visuals of the game
+             *   visuals update according to actions performed by players
+             * 
+             */
+            //declare necessary variables for a game
             Player currentPlayer;
             bool endTurn = false;
             bool endGame = false;
@@ -224,6 +241,7 @@ namespace mahjongNEA
                 Interval = TimeSpan.FromSeconds(1)
             };
             dt.Tick += timer_Tick;
+            //repeats the game until any player has a negative score or reaches ending score
             do
             {
                 playerIndex = prevailingWind;
@@ -231,6 +249,7 @@ namespace mahjongNEA
                 currentPlayer = players[playerIndex];
                 lastAction = new Action(0);
                 drawTile(currentPlayer);
+                //main loop of a game
                 do
                 {
                     currentPlayer = players[playerIndex];
