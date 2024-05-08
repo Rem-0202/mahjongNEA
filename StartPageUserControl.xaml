@@ -22,7 +22,7 @@
             <RowDefinition Height=".2*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <Image Grid.Row="2" Grid.Column="2"/>
+        <Image Grid.Row="2" Grid.Column="2" Source="logo.png"/>
         <Border BorderBrush="Black" BorderThickness="1" Padding="1"
                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
                 Grid.RowSpan="4"/>
