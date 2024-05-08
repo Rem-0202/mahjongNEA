@@ -49,6 +49,7 @@ namespace mahjongNEA
 
         public override Action getAction(Action a)
         {
+            //prompts user with button for actions or detect user click for discarding tile
             lastAction = null;
             bool bonusWin = bonusTiles.Count == 8 || bonusTiles.Count == 7 && lastTileBonus;
             if (a.typeOfAction == 0)
@@ -196,7 +197,6 @@ namespace mahjongNEA
                 lastAction = new Action(0);
             }
             return lastAction;
-            //temp return to avoid crashing for testing
         }
     }
 }

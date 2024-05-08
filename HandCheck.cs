@@ -61,6 +61,7 @@ namespace mahjongNEA
 
         private void setFaanPairs()
         {
+            //calling all meethods to calculate the separate faan values
             if (Analysis.countShanten(ts, walledTS.Count) != -1)
             {
                 if (greatBonus()) faanPairs.Add("Great Bonus", 8); else if (smallBonus()) faanPairs.Add("Small Bonus", 3);
@@ -117,6 +118,8 @@ namespace mahjongNEA
         }
         private bool commonHand()
         {
+            //the only hand that cannot be checked by simple regex or iteration
+            //needs four melds of chow and one pair
             foreach (Action a in walledTS)
             {
                 if (a.typeOfAction != 2)
@@ -130,6 +133,7 @@ namespace mahjongNEA
             removeHonour = new Regex(@"([2-8]z)\1\1");
             mc = removeHonour.Matches(fullTileString);
             if (mc.Count != 0) return false;
+            //cannot contain honour melds or more than one honour pair
             List<Tile> tempTS = new List<Tile>();
             tempTS.AddRange(ts);
             Dictionary<string, int> numTiles = new Dictionary<string, int>();
@@ -141,6 +145,9 @@ namespace mahjongNEA
             string previous1;
             string previous2;
             int i = numTiles.Count;
+            //minimally removes melds of chow to prevent removing groups of three tiles spanning two different melds
+            //alternatively could use decomposition of tiles
+            //  if decomposition of tiles is used might bring performance issue unless it is also used for all other checks and in analysis
             do
             {
                 i = Math.Min(numTiles.Count - 1, i - 1);
@@ -168,6 +175,7 @@ namespace mahjongNEA
             } while (i > 0);
             i = numTiles.Count;
             if (numTiles.Count == 1 && numTiles[numTiles.Keys.ElementAt(numTiles.Count - 1)] == 2) return true;
+            //remove remaining melds until two tiles left
             do
             {
                 i = Math.Min(numTiles.Count - 1, i - 1);
@@ -192,6 +200,7 @@ namespace mahjongNEA
                     else break;
                 }
             } while (i > 0);
+            //check for the remaining pair
             return numTiles.Count == 1 && numTiles.Values.ElementAt(0) == 2;
         }
         private bool selfPick() => selfDrawn;

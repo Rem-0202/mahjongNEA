@@ -227,6 +227,7 @@ namespace mahjongNEA
              * 
              * The game loop also handles most of the visuals of the game
              *   visuals update according to actions performed by players
+             *   show other windows upon end of turn or game
              * 
              */
             //declare necessary variables for a game

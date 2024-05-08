@@ -97,9 +97,15 @@ namespace mahjongNEA
 
         public static int countShanten(List<Tile> ts, int g)
         {
+            //shanten algorithm, formula for standard shanten: 8 - 2*g - p - t, needs at least 1 pair
+            //shanten is the number of tiles needed to be changed in order to reach a complete hand, lower is better
+            //shanten is -1 when complete hand
+            //pair is a kind of taatsu
             int s = 8;
             int t = 0;
             int p = 0;
+            //starting values
+
             List<Tile> tempCopy = new List<Tile>();
             sortTiles(ref ts);
             int uniqueSpecialCount = differentSpecialTiles(ts);
@@ -107,6 +113,7 @@ namespace mahjongNEA
             if (ts.Count >= 13)
             {
                 s = Math.Min(s, 13 - uniqueSpecialCount - (specialCount > uniqueSpecialCount ? 1 : 0));
+                //special case for 13 orphans
             }
             if (ts.Count > 3)
             {
@@ -124,12 +131,14 @@ namespace mahjongNEA
                                 tempCopy.Remove(ts[j]);
                                 tempCopy.Remove(ts[k]);
                                 s = Math.Min(s, countShanten(tempCopy, g + 1));
+                                //recursion to remove melded tiles, +1 to groups
                             }
                             if (ts[i] == ts[j] && ts[i] == ts[k])
                             {
                                 i++;
                                 j = 20;
                                 k = 20;
+                                //skipping if removed
                             }
                         }
                     }
@@ -137,6 +146,7 @@ namespace mahjongNEA
             }
             if (ts.Count > 1)
             {
+                //count pairs and taatsu
                 for (int i = 0; i < ts.Count - 1; i++)
                 {
                     if (ts[i] == ts[i + 1])
@@ -156,7 +166,7 @@ namespace mahjongNEA
                     }
                 }
             }
-
+            //exclude cases for when taatsu more than needed
             if (p + t > ts.Count / 3)
             {
                 s = Math.Min(s, 8 - 2 * g - ts.Count / 3 - (p > 0 ? 1 : 0));
@@ -170,6 +180,8 @@ namespace mahjongNEA
 
         public static int[] getImprovingTileScores(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
+            //calculate number of tiles able to improve the hand
+            //simple iteration through all available tiles
             List<Tile> originalCopy = new List<Tile>();
             originalCopy.AddRange(ts);
             int oShanten = countShanten(originalCopy, k);
@@ -202,6 +214,8 @@ namespace mahjongNEA
 
         public static int[] getImprovingTileScores_OneTileLess(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
+            //separate case for when no tiles need to be discarded but number of tiles able to improve the hand needs to be calculated
+            //used when action without drawing tiles
             Dictionary<string, int> tileShantens = new Dictionary<string, int>();
             foreach (string x in tileCount.Keys)
             {
@@ -238,6 +252,7 @@ namespace mahjongNEA
 
         public static Action chooseDiscard(List<Tile> ts, int k, Dictionary<string, int> tileCount)
         {
+            //chooses base on highest chance of getting tiles that can improve hand
             int[] neededTileScore = getImprovingTileScores(ts, k, tileCount);
             int maxTile = 0;
             for (int i = 1; i < neededTileScore.Length; i++)
@@ -252,6 +267,10 @@ namespace mahjongNEA
 
         public static Action chooseAction(List<Tile> ts, int k, List<Action> ats, Dictionary<string, int> tileCount)
         {
+            //getting an extra group is always better than waiting for a self drawn meld if not considering specialized strategies
+            //wouldn't improve shanten number if declaring the meld means breaking one or more other taatsu or groups
+            //decision made by calculating shanten before and after the action
+            //choice of no action performed added for cases if declaring the meld doesn't improve/worsen shanten
             List<Tile> tempTS = new List<Tile>();
             tempTS.AddRange(ts);
             int[] improvingTileCount = new int[ats.Count + 1];

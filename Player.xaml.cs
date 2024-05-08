@@ -172,6 +172,7 @@ namespace mahjongNEA
 
         public virtual Action getAction(Action a)
         {
+            //will be overridden in all inherited classes
             throw new NotImplementedException();
         }
 
@@ -191,6 +192,8 @@ namespace mahjongNEA
 
         public virtual void acceptAction()
         {
+            //the same for both inherited classes
+            //updates display according to previously returned actions
             Action a;
             List<Tile> ts;
             if (lastAction != null)

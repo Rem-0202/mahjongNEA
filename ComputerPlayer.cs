@@ -60,7 +60,9 @@ namespace mahjongNEA
 
         public override Action getAction(Action a)
         {
+            //using event wait handle and thread to prevent freezing the UI
             EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
+            //decides what action to return based on the input action a
             Thread at = new Thread(() =>
             {
                 if (a.typeOfAction >= 2 && a.typeOfAction != 5)
@@ -85,6 +87,7 @@ namespace mahjongNEA
                         {
                             if (nextTurn && Analysis.isChow(ownTiles[i], ownTiles[k], a.representingTile))
                             {
+                                //only allowed to chow if player is next in turn
                                 chowList.Add(new Action(2, a.representingTile, new List<Tile>() { ownTiles[i], ownTiles[k], a.representingTile }));
                             }
                             if (Analysis.isPong(ownTiles[i], ownTiles[k], a.representingTile))
